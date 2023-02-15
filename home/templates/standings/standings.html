@@ -1,0 +1,32 @@
+{% extends "main.html"%}
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/standings.css' %}">
+
+
+{% block content %}
+<h2>FY3 Standings</h2>
+	<div class="divisions-container">
+	<section class="standings-table">
+		<h3> EAST DIVISION Section </h3>
+		<div class="table">
+			<div class="team-img"></div>
+			<div class="team-name"></div>
+			<div class="team-w"></div>
+			<div class="team-l"></div>
+			<div class="team-ptsdiff"></div>
+		</div>
+	</section>
+
+	<section class="standings-table">
+		<h3> WEST DIVISION Section </h3>
+		<div class="table">
+			<div class="team-img"></div>
+			<div class="team-name"></div>
+			<div class="team-w"></div>
+			<div class="team-l"></div>
+			<div class="team-ptsdiff"></div>
+		</div>
+	</section>
+	</div>
+{% endblock %}

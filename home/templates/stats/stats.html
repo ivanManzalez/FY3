@@ -1,0 +1,63 @@
+{% extends "main.html"%} <!-- must be first line of file -->
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/stats.css' %}">
+
+{% block content %}
+
+<h2>FY3 Statistics</h2>
+	<a href="">
+	<section>
+		<h3> POINTS Section </h3>
+		<div class="points-table">
+			<div class="player-img"></div>
+			<div class="player-name"></div>
+			<div class="player-data"></div>
+		</div>
+	</section>
+	</a>
+
+	<a href="">
+	<section>
+		<h3> ASSISTS Section </h3>
+		<div class="assists-table">
+			<div class="player-img"></div>
+			<div class="player-name"></div>
+			<div class="player-data"></div>
+		</div>
+	</section>
+	</a>
+
+	<a href="">
+	<section>
+		<h3> REBOUNDS Section </h3>
+		<div class="rebounds-table">
+			<div class="player-img"></div>
+			<div class="player-name"></div>
+			<div class="player-data"></div>
+		</div>
+	</section>
+	</a>
+
+	<a href="">
+	<section>
+		<h3> BLOCKS Section </h3>
+		<div class="blocks-table">
+			<div class="player-img"></div>
+			<div class="player-name"></div>
+			<div class="player-data"></div>
+		</div>
+	</section>
+	</a>
+
+	<a href="">
+	<section>
+		<h3> STEALS Section </h3>
+		<div class="steals-table">
+			<div class="player-img"></div>
+			<div class="player-name"></div>
+			<div class="player-data"></div>
+		</div>
+	</section>
+	</a>
+{% endblock %}

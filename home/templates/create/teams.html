@@ -1,0 +1,28 @@
+{% extends "main.html"%}
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/create_teams.css' %}">
+
+
+{% block content %}
+<h2>Create Teams </h2>
+
+<h3 class='note'> {{ note }}</h3>
+<div class='create-container'>
+	<form class ='add_player_team' action="{% url 'FY3-Create-Team' %}" method="POST">
+		<!-- what is this for again? -->
+		{% csrf_token %}
+		{{ team_form }}
+		<input type="submit" name="Add Player to Team">
+	</form>
+	<div class='preview' id='team-player-img'>
+		<!-- use js to change the images based on dropdown selection -->
+		<img id='team-logo' src="{% static 'imgs/FY3-logo.png' %}">
+		<img id='player' src="{% static 'imgs/FY3-logo.png' %}">
+	</div>
+
+
+</div>
+
+{% endblock %}
+

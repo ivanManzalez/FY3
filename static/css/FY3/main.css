@@ -1,0 +1,203 @@
+/*********************
+    GLOBAL STYLES 
+*********************/
+
+html{
+	background-color: black;
+	/* 
+	::::::::: COLORS :::::::::
+	FY3 Grey --------- #171717
+	white ------------ #000
+	lighter grey ----- #19191A
+	really light grey- #A9A9A9
+	light light grey - #5A5A5A
+	whitish ---------- #D3D3D3
+	purple ----------- #00F
+	green ------------ #F00
+	*/
+}
+a{
+	text-decoration: none;
+	color:yellow;
+}
+
+/*********************
+    home STYLES 
+**********************
+
+::::::::: HEADER/NAV :::::::::*/
+
+/*
+The header section contains the FY3 main logo
+and the main nav bar
+*/
+
+header{
+	background-color: black; 
+	border:thick solid orange 5px;
+}
+header:hover{
+	background-color: orange;
+}
+
+.head{
+	background-color: #171717; 
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	border-radius: 5px;
+}
+.head:hover{
+	background-color: darkgrey;
+}
+
+nav{
+	background-color: #5A5A5A; 
+	border-radius: 5px;
+	display: flex;
+	justify-content: space-around;
+}
+nav a{
+	width:25%;
+
+}
+.nav-itm{
+	padding: 10px;
+	border-radius: 5px;
+	text-align: center;
+	font-size: 2em;
+}
+.nav-itm:hover{
+	background-color: #00F;
+}
+
+h1{
+	display: none;
+}
+h2{
+	color:#00F;
+}
+h3 {
+	color: #19191A;
+}
+
+/*
+::::::::: PREVIEWS :::::::::
+*/
+
+/* SECTION */
+section{
+	border: thin solid #F00; /*GREEN*/
+	height:50%;
+	border-radius: 5px;
+	background-color: grey;
+	margin:6px;
+}
+section:hover{
+	border: 1.5px solid #0F0; 
+	/*transition: border 0.3s*/
+}
+
+/* PREVIEW */
+.preview{
+	border: thin dashed blue;
+	display: flex;
+	justify-content: space-around;
+	height:77%;
+}
+.preview:hover {
+	border: 1.5px solid blue; 
+	/*transition: border 0.3s*/
+}
+
+/* PREVIEW ARTICLE */
+.preview article{
+	border: thin dotted #292BBF;
+	border-radius: 5px;
+	width: 100%;
+	justify-content: space-around;
+}
+.preview article:hover{
+	color: lightgrey;
+	border: 1.5px solid white; 
+}
+.preview article img{
+	width: 100%;
+}
+
+/* STANDINGS PAGE */
+.divisions-container{
+	border: 1.5px dotted white; 
+	display: flex;
+	justify-content: center;
+}
+.standings-table{
+	width: 200%;
+}
+/*********************
+    FORMS VIEW
+*********************/
+.create-container{
+	background-color: lightgrey;
+	border-radius: 5px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	height: 60vh;
+}
+form{
+	display: flex;
+	flex-direction: column;
+	font-size:3em;
+	border: 1.5px solid white; 
+}
+form label{
+	color: #0BF;
+}
+form select{
+	font-size: 1em;
+}
+.preview img{
+	padding: 5px;
+}
+div #team-player-img{
+	flex-direction:column;
+	justify-content: space-around;
+	/*width: 50%;*/
+	height: 100%;
+}
+#team-logo:hover{
+	border: 1.5px solid lightgreen; 
+}
+#player:hover{
+	border: 1.5px solid lightgreen; 
+}
+
+.note{
+	color: #0A0;
+}
+
+/*********************
+    DESKTOP VIEW
+*********************/
+/* width >= 600px */
+@media (min-width: 600px) {
+body {
+    /*background-color: lightblue;*/
+  }
+h1 {	
+	display: flex;
+	color: #D3D3D3;
+	width: 75vw;
+	justify-content: center;
+	font-size: 3em;
+	/*border: dotted;*/
+	}
+form{
+	width:100%;
+	flex-direction: column;
+	width:50%;
+	/*justify-content: space-around;*/
+	border: 2px solid white; 
+	}
+}

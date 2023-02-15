@@ -1,0 +1,33 @@
+{% extends "main.html"%}
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/schedule.css' %}">
+
+{% block content %}
+<h2>FY3 Schedule</h2>
+
+	<a href="">
+	<section>
+		<h3> TODAY'S EVENTS Section </h3>
+		<div class="evnt-card">
+			<div class="evnt-date"></div>
+			<div class="evnt-location"></div>
+			<div class="evnt-details"></div>
+			
+		</div>
+	</section>
+	</a>
+
+	<a href="">
+	<section>
+		<h3> UPCOMING EVENTS Section </h3>
+		<div class="evnt-card">
+			<div class="evnt-card">
+			<div class="evnt-date"></div>
+			<div class="evnt-location"></div>
+			<div class="evnt-details"></div>
+		</div>
+	</section>
+	</a>
+
+{% endblock %}
