@@ -9,24 +9,50 @@
 	<div class="divisions-container">
 	<section class="standings-table">
 		<h3> EAST DIVISION Section </h3>
-		<div class="table">
-			<div class="team-img"></div>
-			<div class="team-name"></div>
-			<div class="team-w"></div>
-			<div class="team-l"></div>
-			<div class="team-ptsdiff"></div>
-		</div>
+		<table>
+		<tr class="team-row" id="headings">
+			<!-- <td class="team-r-itm" id="team-id"> Team Num </td> -->
+			<td class="team-r-itm" id="team-img">Team Img</td>
+			<td class="team-r-itm" id="team-name">Team Name</td>
+			<td class="team-r-itm" id="team-w">Wins</td>
+			<td class="team-r-itm" id="team-l">Losses</td>
+			<td class="team-r-itm" id="team-ptsdiff">Pt Diff</td>
+		</tr>
+		{% for team in east_teams %}
+		<tr class="team-row">
+			<!-- <td class="team-r-itm" id="team-{{team.id}}"></td> -->
+			<td class="team-r-itm" id="team-img"></td>
+			<td class="team-r-itm" id="team-name">{{team.team_id.team_name}}</td>
+			<td class="team-r-itm" id="team-w">{{team.wins}}</td>
+			<td class="team-r-itm" id="team-l">{{team.losses}}</td>
+			<td class="team-r-itm" id="team-ptsdiff"></td>
+		</tr>
+		{% endfor %}
+		</table>
 	</section>
 
 	<section class="standings-table">
 		<h3> WEST DIVISION Section </h3>
-		<div class="table">
-			<div class="team-img"></div>
-			<div class="team-name"></div>
-			<div class="team-w"></div>
-			<div class="team-l"></div>
-			<div class="team-ptsdiff"></div>
-		</div>
+		<table>
+		<tr class="team-row" id="headings">
+			<!-- <td class="team-r-itm" id="team-id"> Team Num </td> -->
+			<td class="team-r-itm" id="team-img">Team Img</td>
+			<td class="team-r-itm" id="team-name">Team Name</td>
+			<td class="team-r-itm" id="team-w">Wins</td>
+			<td class="team-r-itm" id="team-l">Losses</td>
+			<td class="team-r-itm" id="team-ptsdiff">Pt Diff</td>
+		</tr>
+		{% for team in west_teams %}
+		<tr class="team-row">
+			<!-- <td class="team-r-itm" id="team-{{team.id}}}"></td> -->
+			<td class="team-r-itm" id="team-img"></td>
+			<td class="team-r-itm" id="team-name">{{team.team_id.team_name}}</td>
+			<td class="team-r-itm" id="team-w">{{team.wins}}</td>
+			<td class="team-r-itm" id="team-l">{{team.losses}}</td>
+			<td class="team-r-itm" id="team-ptsdiff"></td>
+		</tr>	
+		{% endfor %}
+	</table>
 	</section>
 	</div>
 {% endblock %}

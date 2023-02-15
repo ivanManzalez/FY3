@@ -22,7 +22,10 @@ class Team(models.Model):
 	## field/col in db
 	# team_id = models.CharField(primary_key=True, max_length = 10)
 	# Team ID will be auto generated, no need to define 
+	DIVISIONS = [('E','East'),
+				 ('W','West')]
 	team_name = models.CharField(max_length = 40)
+	division_ind = models.CharField(max_length = 1, default = 'E',choices=DIVISIONS)
 	
 	def __str__(self):
 		return self.team_name
@@ -43,6 +46,19 @@ class SeasonTeamPlayer(models.Model):
 
 	# def __str__(self):
  # 		return self.season_id +" "+self.team_id+" "+self.player_id
+
+
+class TeamStat(models.Model):
+	team_id = models.ForeignKey(Team, on_delete=models.CASCADE) #verbose_name = Team,
+	wins = models.IntegerField(default=0)
+	losses = models.IntegerField(default=0)
+	ties = models.IntegerField(default=0)
+	
+	# def __str__(self):
+	# 	team_name = Team.get(id=self.team_id)
+	# 	return team_name
+	 	
+
 
 # class Games(models.Model):
 # 	## field/col in db

@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .forms import CreateTeamForm
-from .models import Team
+from .models import Team, TeamStat
 
 ################################################
 """ 
@@ -30,7 +30,11 @@ def schedule(request):
 	return render(request, 'schedule/schedule.html')
 
 def standings(request):
-	return render(request, 'standings/standings.html')
+	east_teams = TeamStat.objects.select_related('team_id').filter(team_id__division_ind__contains='E').order_by('-wins', 'losses', 'ties')
+	west_teams = TeamStat.objects.select_related('team_id').filter(team_id__division_ind__contains='W').order_by('-wins', 'losses', 'ties')
+	print(east_teams[0].team_id.team_name)
+	context = { "east_teams": east_teams, "west_teams":west_teams}
+	return render(request, 'standings/standings.html', context)
 
 def stats(request):
 	return render(request, 'stats/stats.html')

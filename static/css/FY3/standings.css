@@ -1,0 +1,6 @@
+.team-row{
+  display: flex;
+  flex-direction: row;
+  color: blue;
+  justify-content: space-around;
+}

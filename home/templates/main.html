@@ -7,6 +7,7 @@
 	<title> FY3 </title>
 </head>
 <body>
+	<div class = 'warning'> Under development </div>
 	<header>
 		<div class="head">
 			<img src="{% static 'imgs/FY3-logo.png' %}">	
@@ -15,29 +16,29 @@
 		<nav>
 			<!-- home tab -->
 			<a href="{% url 'FY3-Home'%}"><div class="nav-itm" id="home">
-				home
+				Home
 			</div></a>
 			
 			<!-- stats tab -->
 			<a href="{% url 'FY3-Statistics'%}"><div class="nav-itm" id="stats">
-				stats
+				Stats
 			</div></a>
 			
 			<!-- schedule tab -->
 			<a href="{% url 'FY3-Schedule'%}"><div class="nav-itm" id="schedule">
-				events
+				Events
 			</div></a>
 			
 			<!-- standings tab -->
 			<a href="{% url 'FY3-Standings'%}"><div class="nav-itm" id="standings">
-				standings
+				Standings
 			</div></a>
 			
 			<!-- create teams tab -->
 			<!-- must change to only accept admin authentication -->
 			{% if user.is_authenticated %}
     		<a href="{% url 'FY3-Create-Team'%}"><div class="nav-itm" id="create-teams">
-				create team
+				Create Team
 			</div></a>
 			{% endif %}
 		</nav>

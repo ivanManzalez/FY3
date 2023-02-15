@@ -1,9 +1,14 @@
 /*********************
     GLOBAL STYLES 
 *********************/
+@import 'home.css';
+@import 'create_teams.css';
+@import './standings.css'
 
 html{
-	background-color: black;
+	background-color: white;
+	padding: 0 auto;
+	margin:0 auto;
 	/* 
 	::::::::: COLORS :::::::::
 	FY3 Grey --------- #171717
@@ -18,63 +23,72 @@ html{
 }
 a{
 	text-decoration: none;
-	color:yellow;
 }
 
 /*********************
     home STYLES 
 **********************
 
-::::::::: HEADER/NAV :::::::::*/
+::::::::: HEADER/NAV :::::::::
 
-/*
-The header section contains the FY3 main logo
+The header section contains the FY3 main logo & title
 and the main nav bar
 */
-
+.warning{
+	background-color: purple;
+}
 header{
-	background-color: black; 
-	border:thick solid orange 5px;
+	/*width:100%;*/
+	border: 2px solid red;
 }
 header:hover{
-	background-color: orange;
 }
 
 .head{
 	background-color: #171717; 
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
-	border-radius: 5px;
+
 }
 .head:hover{
-	background-color: darkgrey;
+	/*background-color: darkgrey;*/
 }
 
 nav{
 	background-color: #5A5A5A; 
-	border-radius: 5px;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
 	display: flex;
-	justify-content: space-around;
+	justify-content: space-between;
 }
 nav a{
-	width:25%;
+	/* TODO: Add pipe between nav options*/
+	/*border: thin dotted black;*/
+	padding-top: 3px;
+	padding-bottom: 3px;
+	width:100%;
 
 }
 .nav-itm{
-	padding: 10px;
 	border-radius: 5px;
 	text-align: center;
-	font-size: 2em;
+	font-size: 1.7em;
 }
 .nav-itm:hover{
 	background-color: #00F;
+	width: 100%;
+	height: 100%;
 }
 
 h1{
 	display: none;
 }
 h2{
+	border: thin dotted yellow;
 	color:#00F;
 }
 h3 {
@@ -82,105 +96,23 @@ h3 {
 }
 
 /*
-::::::::: PREVIEWS :::::::::
+
+HOME STYLES - css/FY3/home.css
+FORMS STYLES - css/FY3/create_teams.css 
 */
 
-/* SECTION */
-section{
-	border: thin solid #F00; /*GREEN*/
-	height:50%;
-	border-radius: 5px;
-	background-color: grey;
-	margin:6px;
-}
-section:hover{
-	border: 1.5px solid #0F0; 
-	/*transition: border 0.3s*/
-}
-
-/* PREVIEW */
-.preview{
-	border: thin dashed blue;
-	display: flex;
-	justify-content: space-around;
-	height:77%;
-}
-.preview:hover {
-	border: 1.5px solid blue; 
-	/*transition: border 0.3s*/
-}
-
-/* PREVIEW ARTICLE */
-.preview article{
-	border: thin dotted #292BBF;
-	border-radius: 5px;
-	width: 100%;
-	justify-content: space-around;
-}
-.preview article:hover{
-	color: lightgrey;
-	border: 1.5px solid white; 
-}
-.preview article img{
-	width: 100%;
-}
-
-/* STANDINGS PAGE */
-.divisions-container{
-	border: 1.5px dotted white; 
-	display: flex;
-	justify-content: center;
-}
-.standings-table{
-	width: 200%;
-}
 /*********************
-    FORMS VIEW
+---- DESKTOP VIEW ----
+    width >= 600px
 *********************/
-.create-container{
-	background-color: lightgrey;
-	border-radius: 5px;
-	display: flex;
-	flex-direction: row;
-	justify-content: space-around;
-	height: 60vh;
-}
-form{
-	display: flex;
-	flex-direction: column;
-	font-size:3em;
-	border: 1.5px solid white; 
-}
-form label{
-	color: #0BF;
-}
-form select{
-	font-size: 1em;
-}
-.preview img{
-	padding: 5px;
-}
-div #team-player-img{
-	flex-direction:column;
-	justify-content: space-around;
-	/*width: 50%;*/
-	height: 100%;
-}
-#team-logo:hover{
-	border: 1.5px solid lightgreen; 
-}
-#player:hover{
-	border: 1.5px solid lightgreen; 
-}
 
-.note{
-	color: #0A0;
-}
+/*
+---- home STYLES ----
 
-/*********************
-    DESKTOP VIEW
-*********************/
-/* width >= 600px */
+::::::::: HEADER/NAV :::::::::
+The header section contains the FY3 main logo & title
+and the main nav bar
+*/
 @media (min-width: 600px) {
 body {
     /*background-color: lightblue;*/
@@ -191,7 +123,7 @@ h1 {
 	width: 75vw;
 	justify-content: center;
 	font-size: 3em;
-	/*border: dotted;*/
+	border: dotted;
 	}
 form{
 	width:100%;
