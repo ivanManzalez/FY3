@@ -1,0 +1,13 @@
+.stats{
+  border:1.5px solid black;
+}
+.stats table{
+  border:1.5px solid black;
+}
+td{
+  border:1.5px solid black;
+  text-align: center;
+}
+#player-img{
+  width: 50%;
+}

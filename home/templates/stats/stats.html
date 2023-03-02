@@ -6,58 +6,34 @@
 {% block content %}
 
 <h2>FY3 Statistics</h2>
-	<a href="">
-	<section>
-		<h3> POINTS Section </h3>
-		<div class="points-table">
-			<div class="player-img"></div>
-			<div class="player-name"></div>
-			<div class="player-data"></div>
-		</div>
+	<a href=""></a>
+	<section class='stats'>
+		<h3> {{current_season}} </h3>
+		<table>
+		<tr class="stats-table">
+			<td class="player-img"> </td>
+			<td class="player-name">NAME</td>
+			<td class="player-data">PTS</td>
+			<td class="player-data">AST</td>
+			<td class="player-data">REB</td>
+			<td class="player-data">STL</td>
+			<td class="player-data">BLK</td>
+		</tr>
+		{% for stat in stats%}
+		<tr class="points-table">
+			<td>
+				<img id="player-img" src="{% static 'imgs/FY3-logo.png' %}">
+			</td>
+			<td class="player-name">{{stat.id}}</td>
+			<td class="player-data">{{stat.avg_pts}}</td>
+			<td class="player-data">{{stat.avg_ast}}</td>
+			<td class="player-data">{{stat.avg_reb}}</td>
+			<td class="player-data">{{stat.avg_stl}}</td>
+			<td class="player-data">{{stat.avg_blk}}</td>
+		</tr>
+		{%endfor%}
+		</table>
 	</section>
-	</a>
 
-	<a href="">
-	<section>
-		<h3> ASSISTS Section </h3>
-		<div class="assists-table">
-			<div class="player-img"></div>
-			<div class="player-name"></div>
-			<div class="player-data"></div>
-		</div>
-	</section>
-	</a>
-
-	<a href="">
-	<section>
-		<h3> REBOUNDS Section </h3>
-		<div class="rebounds-table">
-			<div class="player-img"></div>
-			<div class="player-name"></div>
-			<div class="player-data"></div>
-		</div>
-	</section>
-	</a>
-
-	<a href="">
-	<section>
-		<h3> BLOCKS Section </h3>
-		<div class="blocks-table">
-			<div class="player-img"></div>
-			<div class="player-name"></div>
-			<div class="player-data"></div>
-		</div>
-	</section>
-	</a>
-
-	<a href="">
-	<section>
-		<h3> STEALS Section </h3>
-		<div class="steals-table">
-			<div class="player-img"></div>
-			<div class="player-name"></div>
-			<div class="player-data"></div>
-		</div>
-	</section>
-	</a>
+	
 {% endblock %}

@@ -1,0 +1,251 @@
+=====================================================
+=====================================================
+FY3
+ > Schedule
+ > Highlights
+ > Statistics
+
+
+#####################################################
+## Virtual Machine ##################################
+#####################################################
+
+activate virtual env:
+	source project_env_name/bin/activate 
+	(should see env name in paratheses)
+
+deactivate virtual env:
+	deactivate
+
+#####################################################
+## Django Set up ####################################
+#####################################################
+
+-- Install django --
+pip install django 
+
+-- Check Django --
+python3 -m django --version
+
+
+#####################################################
+## Create New Project ###############################
+#####################################################
+
+django-admin (will show list of subcommands)
+
+-- Start Project --
+django-admin startproject project_name
+
+-- Default Structure of New Django Project --
+project_name
+>__init__.py
+	empty file (tells python this is a package)
+>settings.py
+	settings and configurations file
+>urls.py
+	set up mapping from certain URLs to where we send the user
+>wsgi.py
+	how python web app and web server communicate (default - no changes to be made)
+>asgi.py
+	what is this for?
+manage.py (no changes made to this file)
+
+
+#####################################################
+## Run Server to Start Web App ######################
+#####################################################
+
+-- Start Server --
+python manage.py runserver
+(local host URL is provided - leave running while using web app)
+
+-- Stop Server --
+CTRL + C
+
+-- What are migrations? --
+Migrations are Django's way of propagating changes you make to your models (adding a field, deleting a model, etc.) into your database schema
+
+MIGRATE COMMANDS:
+migrate -- which is responsible for applying and unapplying migrations.
+makemigrations -- which is responsible for creating new migrations based on the changes you have made to your models.
+sqlmigrate -- which displays the SQL statements for a migration.
+showmigrations -- which lists a project’s migrations and their status.
+
+#####################################################
+## Applications and Routes     ######################
+#####################################################
+
+-- Create Sub Applications in Web App --
+python3 manage.py startapp app_name
+
+-- Files created due to startapp command --
+app_name
+> __init__.py
+> admin.py
+> apps.py
+> migrations
+	> __init__.py 
+> models.py
+> tests.py
+> views.py
+
+-- Routes --
+need to map URL pattern to url function in
+urls.py module in 'home' application 
+
+This is done to control where the user goes in 
+application based on ending of URL
+
+
+
+#####################################################
+## Templates     ######################
+#####################################################
+
+-- Create directory to store Template HTML files --
+by default Django looks for 'templates' subdir in each installed app
+
+-- Inherit format from specified file
+{% extends "dir/in/app/templates/dir/file.html"%}
+
+-- Block title
+{% block title %}{% endblock %}
+
+-- Block content
+{% block content %}{% endblock %}
+
+-- For loop
+{% for var in iterable %}
+{% empty %} # if list is empty 
+{% endfor %}
+
+-- IF example
+{% if athlete_list %}
+    Number of athletes: {{ athlete_list|length }}
+{% elif athlete_in_locker_room_list %}
+    Athletes should be out of the locker room soon!
+{% else %}
+    No athletes.
+{% endif %}
+
+
+Structure: 
+AppName -> templates -> AppName
+
+-- Add Application to list of installed Apps --
+let Django know to look for templates directory
+
+add subapp configuration (class name) to app's settings.py module
+
+subapp's configuration is located in apps.py module
+
+now point subapp.views function to templates directory
+
+-- CSS --
+Django looks for css links in 'static' folder in subapp
+Store css files there
+{load static}
+
+
+#####################################################
+## Admin   ##########################################
+#####################################################
+
+-- Create new admin user:
+(Need to create DB before running command to store info)
+python3 manage.py createsuperuser
+
+user1: ivanmanciag
+pass1: password123
+
+-- Detects & prepares Django to make updates to DB 
+(doesnt run those changes)
+python3 manage.py makemigrations
+
+-- Apply (Run) Migrations
+python3 manage.py migrate
+
+#####################################################
+## Static  ##########################################
+#####################################################
+
+Add 'static' file at project level to store 
+css, js, images, videos, etc.
+
+Must tell Django to look into this folder for these 
+files
+	app > settings.py > In static files 'section'
+	STATICFILES_DIRS = [
+    BASE_DIR/'static',    
+]
+
+Need to load static files to html templates
+	{% load static %}
+
+When referencing any file in the static dir:
+	src/href/etc = "{% static 'subdir/filename.ext' %}"
+
+#####################################################
+## DBs & Migrations   ###############################
+#####################################################
+
+
+Create real DB for Application
+Django has built in ORM (translator)
+	- Can use different DBs by changing in settings
+
+Represent DBs as classes (Models)
+User model already created
+	- Can add custom fields
+
+Syntax:
+
+class model_Name(models.Model):
+	## field/col in db
+	attr01 = models.CharField(max_length = N)
+	attr02 = models.AutoField()
+	attr03 = models.BigAutoField()
+	attr04 = models.BigIntegerField()
+	attr05 = models.BinaryField()
+	attr06 = models.BooleanField()
+	attr07 = models.DateField()
+	attr08 = models.DateTimeField()
+	attr09 = models.DecimalField()
+	attr10 = models.DurationField()
+	attr11 = models.EmailField()
+	attr12 = models.FileField()
+	attr13 = models.FilePathField()
+	attr14 = models.FloatField()
+	attr15 = models.GenericIPAddressField()
+	attr16 = models.ImageFied()
+	attr17 = models.IntegerField()
+	attr18 = models.JSONField()
+	#etc.
+
+# Can access data from DB
+
+from app_name.models import model_name
+from django.contrib.auth.models import User
+
+#queries
+User.objects.all() #returns queryset for all users 
+User.objects.first() #returns first object
+User.objects.last()
+#filter based on fieldname defined in models
+User.objects.filter(fieldname="value")
+#create object
+model_1 = model_name(field1='val1', field2='val3', etc.)
+#save newly created obj
+model_1.save()
+
+#####################################################
+## Aggregate v Annotate   ###########################
+#####################################################
+
+aggregate() = summary of stats of entire querysets
+annotate() = summary of individual stats of querysets for each item in the set
+
+
+=====================================================
+=====================================================

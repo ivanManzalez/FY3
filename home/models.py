@@ -1,84 +1,129 @@
 from django.db import models
 
+
+#################################################################################
+# Player names, physical characteristics, and registration status
+# TODO: eligible_voter? Role?
+
 class Player(models.Model):
-	## field/col in db
-	# player_id = models.IntegerField(primary_key=True)
 	# Player ID will be auto generated, no need to define 
 	player_firstname = models.CharField(max_length = 40)
 	player_lastname = models.CharField(max_length = 40)
-	player_height_in = models.IntegerField(default=5)
-	player_height_ft = models.IntegerField(default=6)
-	player_paid = models.BooleanField(default= False)
-	part_of_team = models.BooleanField(default = False)
-	
+	player_height_in = models.PositiveIntegerField(default=5)
+	player_height_ft = models.PositiveIntegerField(default=6)
+	is_registered = models.BooleanField(default= False)
+
 	def __str__(self):
 		return self.player_firstname +" "+self.player_lastname
-	
-	def set_part_of_team_true(self):
-		self.part_of_team = True
 
+	@property
+	def get_total_pts(self):
+		return GameStat.objects.filter(player=self.id).annotate(total_pts = sum('points'))
+
+#################################################################################
+# Team Name and division indicator
+# TODO: Team Cpt? 
 
 class Team(models.Model):
-	## field/col in db
-	# team_id = models.CharField(primary_key=True, max_length = 10)
+	curr_season = 3 #S2023
 	# Team ID will be auto generated, no need to define 
-	DIVISIONS = [('E','East'),
-				 ('W','West')]
+	DIVISIONS = [('E','East'),('W','West')]
 	team_name = models.CharField(max_length = 40)
 	division_ind = models.CharField(max_length = 1, default = 'E',choices=DIVISIONS)
-	
+
+	#TODO: Make season dynamic
+	@property
+	def get_team_wins(self):
+		return Game.objects.filter(season = 3, win_team= self.id).count()
+
+	@property
+	def get_team_losses(self):
+		return Game.objects.filter(season = 3, lose_team= self.id).count()
+
+	@property
+	def get_team_game_diff(self):
+		return self.get_team_wins - self.get_team_losses
+
+	@property
+	def get_team_tot_game(self):
+		return self.get_team_wins + self.get_team_losses
+
 	def __str__(self):
 		return self.team_name
 
+#################################################################################
+# Season Name 
+# TODO: Season Awards?
 
 class Season(models.Model):
-# 	## field/col in db
-# 	# season_id = models.AutoField(primary_key=True, default = 1)
+	# Season ID will be auto generated, no need to define 
  	season_name = models.CharField(max_length = 6, default="")
  	
  	def __str__(self):
  		return self.season_name
 
-class SeasonTeamPlayer(models.Model):
- 	season_id = models.ForeignKey(Season, on_delete=models.CASCADE)
- 	team_id = models.ForeignKey(Team, on_delete=models.CASCADE)
- 	player_id = models.ForeignKey(Player, on_delete=models.CASCADE)
-
-	# def __str__(self):
- # 		return self.season_id +" "+self.team_id+" "+self.player_id
 
 
-class TeamStat(models.Model):
-	team_id = models.ForeignKey(Team, on_delete=models.CASCADE) #verbose_name = Team,
-	wins = models.IntegerField(default=0)
-	losses = models.IntegerField(default=0)
-	ties = models.IntegerField(default=0)
+#################################################################################
+# Season Team and Player combinations 
+# TODO: 
+class STP(models.Model):
+ 	season= models.ForeignKey(Season, on_delete=models.CASCADE)
+ 	team = models.ForeignKey(Team, on_delete=models.CASCADE)
+ 	player = models.ForeignKey(Player, on_delete=models.CASCADE)
+ 	
+ 	def __str__(self):
+ 		return str(self.season) +" | "+str(self.team)+" | "+str(self.player)
+
+# #################################################################################
+# # Needed?
+# # TODO: 
+# class TeamStat(models.Model):
+# 	curr_season = Season.objects.last().id
+# 	season = models.ForeignKey(Season, default= curr_season, on_delete=models.CASCADE)
+# 	team = models.ForeignKey(Team, on_delete=models.CASCADE) #verbose_name = Team,
+# 	wins = models.PositiveIntegerField(default=0)
+# 	losses = models.PositiveIntegerField(default=0)
+
+# 	def __str__(self):
+# 		return str(self.season) + " " + str(self.team)
+	 
+# 	@property
+# 	def game_diff(self):
+# 		return self.wins - self.losses
+
 	
-	# def __str__(self):
-	# 	team_name = Team.get(id=self.team_id)
-	# 	return team_name
-	 	
+
+#################################################################################
+class Game(models.Model):
+	game_date = models.DateField(help_text="YYYY-MM-DD")
+	season = models.ForeignKey(Season, on_delete = models.PROTECT)
+	win_team = models.ForeignKey(Team, related_name = 'winning_team', on_delete = models.PROTECT)
+	lose_team = models.ForeignKey(Team, related_name = 'losing_team', on_delete = models.PROTECT)
+
+	# @property
+	# def game_name(self):
+	# 	return str(self.season) +" | "+ str(self.game_date) +" | "+ str(self.win_team) +" v "+ str(self.lose_team)
+
+	def __str__(self):
+		return str(self.season) +" | "+ str(self.game_date) +" | "+ str(self.win_team) +" v "+ str(self.lose_team)
+	
+#################################################################################
+class GameStat(models.Model):
+	## field/col in db
+	game = models.ForeignKey(Game, on_delete = models.PROTECT)
+	player = models.ForeignKey(Player, on_delete = models.PROTECT)
+	points = models.PositiveIntegerField(default=0)
+	rebounds = models.PositiveIntegerField(default=0)
+	assists = models.PositiveIntegerField(default=0)
+	steals = models.PositiveIntegerField(default=0)
+	blocks = models.PositiveIntegerField(default=0)
+
+	def __str__(self):
+		return str(self.game) + " - " + str(self.player)
 
 
-# class Games(models.Model):
-# 	## field/col in db
-# 	game_id = models.BigAutoField(primary_key=True)
-# 	games_name = models.CharField(max_length = 120)
-# 	game_date = models.DateField(help_text="YYYY-MM-DD EST")
-# 	season_id = models.ForeignKey(Seasons, on_delete = models.PROTECT)
-# 	win_team_id = models.ForeignKey(Teams, on_delete = models.PROTECT)
-# 	lose_team_id = models.ForeignKey(Teams, on_delete = models.PROTECT)
-
-# class GameStats(models.Model):
-# 	## field/col in db
-# 	game_id = models.IntegerField(primary_key=True)
-# 	player_id = models.ForeignKey(Players, on_delete = models.PROTECT)
-# 	points = models.IntegerField(default=0)
-# 	rebounds = models.IntegerField(default=0)
-# 	assists = models.IntegerField(default=0)
-# 	steals = models.IntegerField(default=0)
-# 	blocks = models.IntegerField(default=0)
-
+#################################################################################
 
 
 

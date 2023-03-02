@@ -12,8 +12,9 @@
 form{
 	display: flex;
 	flex-direction: column;
-	font-size:3em;
-	border: 1.5px solid white; 
+	font-size:2.1em;
+	width:60%;
+	border: 1px solid red; 
 }
 form label{
 	color: #0BF;
@@ -31,7 +32,7 @@ div #team-player-img{
 	height: 100%;
 }
 #team-logo:hover{
-	border: 1.5px solid lightgreen; 
+	border: 1.5px solid lightblue; 
 }
 #player:hover{
 	border: 1.5px solid lightgreen; 

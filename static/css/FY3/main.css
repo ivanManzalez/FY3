@@ -3,7 +3,8 @@
 *********************/
 @import 'home.css';
 @import 'create_teams.css';
-@import './standings.css'
+@import 'standings.css';
+@import 'stats.css';
 
 html{
 	background-color: white;

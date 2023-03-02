@@ -47,41 +47,6 @@ section:hover{
 }
 
 /* STANDINGS PAGE */
-.divisions-container{
-	border: 1.5px dotted black; 
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-}
-.standings-table{
-	width: 99%;
-}
 
-.team-row{
-  /*display: flex;*/
-  /*grid-template-columns: 2/7fr 1/7fr 1/7fr 1/7fr;*/
-  /*flex-direction: row;*/
-  color: black;
-  justify-content: space-between;
-  border: 1.5px dotted blue; 
 
-}
-table{
-	width: 100%;
-}
-.team-r-itm{
-	padding-top: 20px;
-	padding-bottom: 20px;
-	justify-content: space-around;
-	text-align: center;
-	border: thin solid white;
-}
-.team-r-itm:hover{
-	border: 1.5px dotted green; 
-}
-#headings{
-	border-radius: 5px;
-	background-color: black;
-	color: #A9A9A9;
-	border: thin solid #A9A9A9;
-}
+/* STATS PAGE */
