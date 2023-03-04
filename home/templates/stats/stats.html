@@ -18,6 +18,7 @@
 			<td class="player-data">REB</td>
 			<td class="player-data">STL</td>
 			<td class="player-data">BLK</td>
+			<td class="player-data">GP</td>
 		</tr>
 		{% for stat in stats%}
 		<tr class="points-table">
@@ -30,6 +31,7 @@
 			<td class="player-data">{{stat.avg_reb}}</td>
 			<td class="player-data">{{stat.avg_stl}}</td>
 			<td class="player-data">{{stat.avg_blk}}</td>
+			<td class="player-data">{{stat.total_games_played}}</td>
 		</tr>
 		{%endfor%}
 		</table>
