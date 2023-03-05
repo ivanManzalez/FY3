@@ -19,10 +19,14 @@ from . import views
 urlpatterns = [
     #from view.py, return home() 
     path('', views.home, name='FY3-Home'),
-    path('schedule', views.schedule, name='FY3-Schedule'),
-    path('standings', views.standings, name='FY3-Standings'),
-    path('stats', views.stats, name='FY3-Statistics'),
-    path('create-teams', views.create_teams, name='FY3-Create-Team'),
+    path('schedule/', views.schedule, name='FY3-Schedule'),
+    path('standings/', views.standings, name='FY3-Standings'),
+    path('stats/', views.stats, name='FY3-Statistics'),
+    path('commissioner/', views.commissioner, name='FY3-Commissioner'),
+    path('commissioner/player-stats/', views.create_player_stats, name='FY3-Create-Player-Stats'),
+    path('commissioner/create_teams/', views.create_teams, name='FY3-Create-Team'),
+    path('dev/load_players/', views.load_players, name='FY3-Load_Players'),
+    
 
 
  

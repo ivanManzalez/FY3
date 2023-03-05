@@ -1,0 +1,47 @@
+{% extends "main.html"%}
+{% load static %}
+
+
+
+{% block content %}
+
+<!-- ADD PLAYER STATS -->
+<h2>Create Player Stats </h2>
+
+<h3 class='note'> {{ note }}</h3>
+
+
+<div class='create-container'>
+  
+  <form class ='add_player_stats' id='player_stats_form' players_data_url="{% url 'FY3-Load_Players' %}" method="POST">
+    {% csrf_token %}<!-- what is this for again? -->
+    {{ player_stats_form }}
+    <input type="submit" name="Add Player Stats">
+  </form>
+
+  <div class='preview' id='team-player-img'>
+    <!-- use js to change the images based on dropdown selection -->
+    <img id='team-logo' src="{% static 'imgs/FY3-logo.png' %}">
+    <img id='player' src="{% static 'imgs/FY3-logo.png' %}">
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+  $("#id_game").change(function() {
+    const url = $('#player_stats_form').attr("players_data_url");
+    const gameId = $(this).val();
+    console.log('url:',url, '-- GameID:', gameId);
+    $.ajax({
+      type: 'GET',
+      url: url,
+      data: {'game_id': gameId},
+      success: function(data){  // 'data' return of load_players function view
+        console.log('data = ', data);
+        $('#id_player').html(data); // replace the contents of the team input w/ data that came from server
+      }
+    })
+  })
+</script>
+{% endblock %}
+

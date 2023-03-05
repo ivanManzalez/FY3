@@ -1,5 +1,5 @@
 from django import forms
-from .models import Team, Season, Player, STP
+from .models import Team, Season, Player, STP, GameStat
 
 # can change to different seasons for historical purposes(?)
 curr_season = Season.objects.latest('season_name')
@@ -29,5 +29,4 @@ class CreateTeamForm(forms.ModelForm):
 	team_id = forms.ModelChoiceField(queryset= Team.objects, empty_label=None) #can include widgets = 
 	player_id = forms.ModelChoiceField(queryset= available_players, empty_label=None) #can include widgets = 
 
-
-
+############

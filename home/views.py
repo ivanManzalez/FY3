@@ -1,9 +1,11 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.db.models import Count, Sum, Avg
-from .forms import CreateTeamForm
+from .form_CreateTeams import CreateTeamForm
+from .form_PlayerStats import PlayerStatsForm
 from .models import Season, Team, Player, STP, GameStat, Game
 from .utilities import remove_duplicate_teams, bubble_sort_by_wins
+from django.db.models import Q
 
 
 ################################################
@@ -31,8 +33,11 @@ urls.py module in 'home' application
 
 using django.shortcuts.render return template
 file in templates 
-
 """
+################################################
+def commissioner(request):
+	return render(request, 'commissioner/commissioner.html')
+
 ################################################
 def schedule(request):
 	return render(request, 'schedule/schedule.html')
@@ -92,21 +97,57 @@ def create_teams(request):
 			note = "%s has been added to %s for the %s season"%(player,team,season)
 			STP.objects.create(season_id =season.id, team_id= team.id, player_id= player.id)
 			
-			player.set_part_of_team_true()
-			player.save()
+			# player.set_part_of_team_true()
+			# player.save()
 			new_form = CreateTeamForm()
 			context = {'team_form':new_form, 'note':note, 'player': player}
-			print(player)
-			return render(request, 'create/teams.html', context)
+			return render(request, 'commissioner/create_teams.html', context)
 	else:
 		form = CreateTeamForm()
-		context = {'team_form':form
-	}
-		return render(request, 'create/teams.html', context)
+		context = {'team_form':form}
+		return render(request, 'commissioner/create_teams.html', context)
 
 ################################################
+def create_player_stats(request):
+	if (request.method == 'POST'):
 
+		#take all info from post page and pass to CreateTeamForm() obj
+		form = PlayerStatsForm(request.POST)
+		
+		# ensure data is valid
+		if (form.is_valid()):
+			# print(filled_form.cleaned_data)
+			game = form.cleaned_data['game']
+			player = form.cleaned_data['player']
+			pts = form.cleaned_data['points']
+			rebs = form.cleaned_data['rebounds']
+			asts = form.cleaned_data['assists']
+			stls = form.cleaned_data['steals']
+			blks = form.cleaned_data['blocks']
 
+			note =  "%s's stat update: \n %s pts\n %s rebs\n %s asts\n %s stls\n %s blks\n for game on %s"%(player, pts, rebs, asts, stls, blks, game.game_date)
+
+			new_form = PlayerStatsForm()
+			context = {'player_stats_form':new_form, 'note':note}
+			return render(request, 'commissioner/player_stats.html', context)
+	else:
+		form = PlayerStatsForm()
+		context = {'player_stats_form':form}
+		return render(request, 'commissioner/player_stats.html', context)
+################################################
+def load_players(request):
+	#load teams - players
+	game_id = request.GET.get('game_id')
+	game = Game.objects.get(id=game_id)
+	winning_team = game.win_team
+	losing_team = game.lose_team
+	teams = Team.objects.filter(team_name =winning_team) | Team.objects.filter(team_name=losing_team)
+	print('teams',teams)
+	players = STP.objects.filter(season_id=curr_season, team__in= teams)
+	print('Game:', game_id, "\nPlayers: ", players)
+	
+	context = {'players':players}
+	return render(request, 'dev/load_players.html', context)
 
 
 

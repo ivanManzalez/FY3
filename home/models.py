@@ -74,24 +74,6 @@ class STP(models.Model):
  	
  	def __str__(self):
  		return str(self.season) +" | "+str(self.team)+" | "+str(self.player)
-
-# #################################################################################
-# # Needed?
-# # TODO: 
-# class TeamStat(models.Model):
-# 	curr_season = Season.objects.last().id
-# 	season = models.ForeignKey(Season, default= curr_season, on_delete=models.CASCADE)
-# 	team = models.ForeignKey(Team, on_delete=models.CASCADE) #verbose_name = Team,
-# 	wins = models.PositiveIntegerField(default=0)
-# 	losses = models.PositiveIntegerField(default=0)
-
-# 	def __str__(self):
-# 		return str(self.season) + " " + str(self.team)
-	 
-# 	@property
-# 	def game_diff(self):
-# 		return self.wins - self.losses
-
 	
 
 #################################################################################
@@ -100,10 +82,6 @@ class Game(models.Model):
 	season = models.ForeignKey(Season, on_delete = models.PROTECT)
 	win_team = models.ForeignKey(Team, related_name = 'winning_team', on_delete = models.PROTECT)
 	lose_team = models.ForeignKey(Team, related_name = 'losing_team', on_delete = models.PROTECT)
-
-	# @property
-	# def game_name(self):
-	# 	return str(self.season) +" | "+ str(self.game_date) +" | "+ str(self.win_team) +" v "+ str(self.lose_team)
 
 	def __str__(self):
 		return str(self.season) +" | "+ str(self.game_date) +" | "+ str(self.win_team) +" v "+ str(self.lose_team)
