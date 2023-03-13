@@ -100,6 +100,9 @@ class GameStat(models.Model):
 	def __str__(self):
 		return str(self.game) + " - " + str(self.player)
 
+	def player_stats_exists(game_id, player_id):
+		exists = (GameStat.objects.filter(game = game_id, player = player_id).count() == 1)
+		return exists
 
 #################################################################################
 

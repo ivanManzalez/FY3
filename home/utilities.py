@@ -6,6 +6,7 @@ def remove_duplicate_teams(queryset):
         new_list.append(team)
     return new_list
 
+
 # from https://realpython.com/sorting-algorithms-python/
 def bubble_sort_by_wins(array):
     n = len(array)

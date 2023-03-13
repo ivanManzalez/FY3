@@ -12,11 +12,10 @@
 
 
 <div class='create-container'>
-  
-  <form class ='add_player_stats' id='player_stats_form' players_data_url="{% url 'FY3-Load_Players' %}" method="POST">
+  <form class ='add_player_stats' id='player_stats_form' data-players-url="{% url 'FY3-Load_Players' %}" method="POST">
     {% csrf_token %}<!-- what is this for again? -->
     {{ player_stats_form }}
-    <input type="submit" name="Add Player Stats">
+    <input type="submit" value ='Submit'/>
   </form>
 
   <div class='preview' id='team-player-img'>
@@ -26,12 +25,16 @@
   </div>
 </div>
 
+<!-- Import AJAX module -->
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+<!-- REFACTOR TO JS FILE  -->
 <script>
+
   $("#id_game").change(function() {
-    const url = $('#player_stats_form').attr("players_data_url");
+    const url = $('#player_stats_form').attr("data-players-url");
     const gameId = $(this).val();
-    console.log('url:',url, '-- GameID:', gameId);
+    console.log('url:',url, '\n-- GameID:', gameId);
     $.ajax({
       type: 'GET',
       url: url,
@@ -41,6 +44,12 @@
         $('#id_player').html(data); // replace the contents of the team input w/ data that came from server
       }
     })
+  })
+  // get player ID 
+    $("#id_player").change(function() {
+    const url = $('#player_stats_form').attr("action");
+    const playerId = $(this).val();
+    console.log('url:',url, '\n-- PlayerId:', playerId);
   })
 </script>
 {% endblock %}
