@@ -5,11 +5,10 @@
 @import 'commissioner.css';
 @import 'standings.css';
 @import 'stats.css';
+@import 'background.css';
+@import 'navbar.css';
 
 html{
-	background-color: white;
-	padding: 0 auto;
-	margin:0 auto;
 	/* 
 	::::::::: COLORS :::::::::
 	FY3 Grey --------- #171717
@@ -21,11 +20,26 @@ html{
 	purple ----------- #00F
 	green ------------ #F00
 	*/
+	/*Background image cannot be blurred*/
+	/*background-image: url("../../imgs/FY3-logo.png");*/
+	/*background-position: center;*/
+	/*background-repeat: no-repeat;*/
+  /*background-attachment: fixed;*/
+	/*background-size: cover;*/
+	
 }
+
+.blur{
+	-webkit-filter: blur(4px);
+  -moz-filter: blur(4px);
+  -o-filter: blur(4px);
+  -ms-filter: blur(4px);
+  filter: blur(4px);
+}
+
 a{
 	text-decoration: none;
 }
-
 /*********************
     home STYLES 
 **********************
@@ -35,28 +49,10 @@ a{
 The header section contains the FY3 main logo & title
 and the main nav bar
 */
-.warning{
-	background-color: purple;
-}
 header{
-	/*width:100%;*/
+	width:100%;
+	height:100%;
 	border: 2px solid red;
-}
-header:hover{
-}
-
-.head{
-	background-color: #171717; 
-	border-top-left-radius: 5px;
-	border-top-right-radius: 5px;
-
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: center;
-
-}
-.head:hover{
-	/*background-color: darkgrey;*/
 }
 
 nav{
@@ -65,6 +61,9 @@ nav{
 	border-bottom-right-radius: 5px;
 	display: flex;
 	justify-content: space-between;
+}
+nav:hover{
+	border: 2px solid green;
 }
 nav a{
 	/* TODO: Add pipe between nav options*/
@@ -77,13 +76,24 @@ nav a{
 .nav-itm{
 	border-radius: 5px;
 	text-align: center;
-	font-size: 1.7em;
+	font-size: 0.7em;
 }
 .nav-itm:hover{
 	background-color: #00F;
 	width: 100%;
 	height: 100%;
 }
+
+.hero{
+	border: 2px solid blue;
+	display: flex;
+
+
+}
+.hero:hover{
+	border: 2px solid green;
+}
+
 
 h1{
 	display: none;
@@ -114,10 +124,24 @@ FORMS STYLES - css/FY3/create_teams.css
 The header section contains the FY3 main logo & title
 and the main nav bar
 */
+
 @media (min-width: 600px) {
+
+html img{
+}
 body {
-    /*background-color: lightblue;*/
+
   }
+header{
+	height: 100%;
+}
+.hero{
+	height: 80%;
+	/*display: flex;*/
+	justify-content: center;
+}
+
+/**/
 h1 {	
 	display: flex;
 	color: #D3D3D3;

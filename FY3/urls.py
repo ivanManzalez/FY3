@@ -22,4 +22,5 @@ urlpatterns = [
     ## and include urls within home app
     ## do not need to add new path() for each URL in home.urls
 	path('', include('home.urls')),
+    path("auth/", include("django.contrib.auth.urls")),  # new
 ]

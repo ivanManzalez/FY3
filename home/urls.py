@@ -25,9 +25,10 @@ urlpatterns = [
 
     path('commissioner/', views.commissioner, name='FY3-Commissioner'),
     path('commissioner/player-stats/', views.create_player_stats, name='FY3-Create-Player-Stats'),
-    path('commissioner/team-stats/', views.create_player_stats, name='FY3-Create-Team-Stats'),
+    path('commissioner/team-stats/', views.create_team_stats, name='FY3-Create-Team-Stats'),
     path('commissioner/create_teams/', views.create_teams, name='FY3-Create-Team'),
     path('commissioner/load_players/', views.load_players, name='FY3-Load_Players'),
+    path('commissioner/load_teams/', views.load_teams, name='FY3-Load_Teams'),
     
 
 

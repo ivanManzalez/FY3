@@ -34,6 +34,8 @@ INSTALLED_APPS = [
 
     #### Personal Apps
     'home.apps.HomeConfig',
+    # 'authentication.apps.HomeConfig',
+
     #### Default Apps Included
     'django.contrib.admin',
     'django.contrib.auth',
@@ -131,3 +133,9 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# Redirect Log IN/OUT URL
+LOGIN_REDIRECT_URL = "FY3-Home"
+LOGOUT_REDIRECT_URL = "FY3-Home"
+

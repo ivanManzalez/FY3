@@ -78,7 +78,7 @@ class STP(models.Model):
 
 #################################################################################
 class Game(models.Model):
-	game_date = models.DateField(help_text="YYYY-MM-DD")
+	game_date = models.DateField(verbose_name="YYYY-MM-DD")
 	season = models.ForeignKey(Season, on_delete = models.PROTECT)
 	win_team = models.ForeignKey(Team, related_name = 'winning_team', on_delete = models.PROTECT)
 	lose_team = models.ForeignKey(Team, related_name = 'losing_team', on_delete = models.PROTECT)
