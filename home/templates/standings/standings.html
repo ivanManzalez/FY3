@@ -6,11 +6,11 @@
 
 {% block content %}
 <h2>FY3 Standings</h2>
-	<div class="divisions-container">
+	<div class="divisions-container"> <!--stats container?-->
 	<section class="standings-table">
 		<h3> EAST DIVISION Section </h3>
 		<table>
-		<tr class="team-row" id="headings">
+		<tr class="team-row glass" id="headings">
 			<!-- <td class="team-r-itm" id="team-id"> Team Num </td> -->
 			<td class="team-r-itm" id="team-img">Team Img</td>
 			<td class="team-r-itm" id="team-name">Team Name</td>
@@ -19,7 +19,7 @@
 			<td class="team-r-itm" id="team-ptsdiff">Game Diff</td>
 		</tr>
 		{% for e_team in east_teams %}
-		<tr class="team-row">
+		<tr class="team-row glass">
 			<!-- <td class="team-r-itm" id="team-{{team.id}}"></td> -->
 			<td class="team-r-itm"><img id="team-img" src="{% static 'imgs/FY3-logo.png' %}"></td>
 			<td class="team-r-itm" id="team-name">{{e_team.team_name}}</td>
@@ -34,7 +34,7 @@
 	<section class="standings-table">
 		<h3> WEST DIVISION Section </h3>
 		<table>
-		<tr class="team-row" id="headings">
+		<tr class="team-row glass" id="headings">
 			<!-- <td class="team-r-itm" id="team-id"> Team Num </td> -->
 			<td class="team-r-itm" id="team-img">Team Img</td>
 			<td class="team-r-itm" id="team-name">Team Name</td>
@@ -43,7 +43,7 @@
 			<td class="team-r-itm" id="team-ptsdiff">Game Diff</td>
 		</tr>
 		{% for w_team in west_teams %}
-		<tr class="team-row">
+		<tr class="team-row glass">
 			<!-- <td class="team-r-itm" id="team-{{team.id}}}"></td> -->
 			<td class="team-r-itm"><img id="team-img" src="{% static 'imgs/FY3-logo.png' %}"></td>
 			<td class="team-r-itm" id="team-name">{{w_team.team_name}}</td>

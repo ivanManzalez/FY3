@@ -1,13 +1,64 @@
+
+.title{
+  width:100%;
+  font-size: 3rem;
+  text-align: center
+}
+
 .stats{
-  border:1.5px solid black;
+  width:100%;
+  font-size: 1.1rem;
 }
-.stats table{
-  border:1.5px solid black;
+.stats-table{
+  /*display: grid;*/
+  /*grid-template-rows:1fr;*/
+  /*justify-content: center;*/
+  margin-left: 10px;
+  margin-right: 10px;
 }
+.stats-row{
+  display: flex;
+  justify-content: space-around;
+}
+.stats-row div{
+  border:1px solid black;
+  width: 100%;
+}
+
+
 td{
-  border:1.5px solid black;
+  width: 550%;
   text-align: center;
 }
+.player-img{
+  width: 200px;
+}
+.player-img img{
+  width: 100%;
+}
+
+/*********************
+---- DESKTOP VIEW ----
+********************/
+
+
+/*********************
+600px <= width <= 900px
+********************/
+@media (min-width: 600px) {
+ table{
+  /*justify-content: left;*/
+}
 #player-img{
-  width: 50%;
+  width: 200px;
+}
+
+}
+/*********************
+width <= 900px
+********************/
+@media (min-width: 900px) {
+  #player-img{
+     width: 300px;
+   }
 }

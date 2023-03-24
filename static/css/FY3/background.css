@@ -5,18 +5,20 @@
 *********************/
 
 html{
-  position:fixed;
-  height: 100%;
-  width:100%;
-  background: radial-gradient(#171717,#00F);
+  background: radial-gradient(#5D3FD3,#483248);
   background-repeat: no-repeat;
+  background-attachment: fixed;
+  height: 100%;
+  width: 100%;
 }
 
 body{
-  border:thin dashed white;
-  height: 100%;
-  margin: 10px 10px 10px 10px;
-  background: no-repeat;
+margin:auto;
+height:100%;
+width: 100%;
+background-attachment: fixed;
+background-repeat: no-repeat;
+background-position: center top;
 }
 
 /*********************
@@ -29,7 +31,7 @@ body{
 ********************/
 @media (min-width: 600px) {
 body{
-  background-position: center;
+  background-position: center center;
   background-size: 50%;
 }
 /*********************

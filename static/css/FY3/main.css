@@ -1,12 +1,15 @@
 /*********************
     GLOBAL STYLES 
 *********************/
-@import 'home.css';
-@import 'commissioner.css';
-@import 'standings.css';
-@import 'stats.css';
+/*@import 'home.css';*/
+/*@import 'commissioner.css';*/
+/*@import 'standings.css';*/
+/*@import 'stats.css';*/
 @import 'background.css';
 @import 'navbar.css';
+@import 'hero.css';
+/*@import 'stats.css';*/
+@import 'stats2.css';
 
 html{
 	/* 
@@ -20,141 +23,64 @@ html{
 	purple ----------- #00F
 	green ------------ #F00
 	*/
-	/*Background image cannot be blurred*/
-	/*background-image: url("../../imgs/FY3-logo.png");*/
-	/*background-position: center;*/
-	/*background-repeat: no-repeat;*/
-  /*background-attachment: fixed;*/
-	/*background-size: cover;*/
-	
 }
 
-.blur{
-	-webkit-filter: blur(4px);
-  -moz-filter: blur(4px);
-  -o-filter: blur(4px);
-  -ms-filter: blur(4px);
-  filter: blur(4px);
+.blur-content{
+	-webkit-filter: blur(1px);
+  -moz-filter: blur(1px);
+  -o-filter: blur(1px);
+  -ms-filter: blur(1px);
+  filter: blur(1px);
 }
 
+.glass{
+	background: linear-gradient(
+		135deg, 
+		rgba(255, 255, 255,  0.1),
+		rgba(255, 255, 255,  0)
+		);
+	backdrop-filter: blur(10px);
+	-webkit-backdrop-filter:blur(10px);
+	border-radius: 10px;
+	/*border:1px solid black;*/
+	box-shadow: 0 8px 32px 0;
+}
+.cards{
+	display: flex;
+	flex-direction: row;
+	flex-flow: wrap;
+	justify-content: space-around;
+}
+.card{
+	width:200px;
+	aspect-ratio: 9/12;
+}
+.box{
+	width:200px;
+	aspect-ratio: 3/2;
+}
+.dashed{
+	border:0.1px dashed white;
+}
 a{
 	text-decoration: none;
 }
-/*********************
-    home STYLES 
-**********************
-
-::::::::: HEADER/NAV :::::::::
-
-The header section contains the FY3 main logo & title
-and the main nav bar
-*/
-header{
-	width:100%;
-	height:100%;
-	border: 2px solid red;
-}
-
-nav{
-	background-color: #5A5A5A; 
-	border-bottom-left-radius: 5px;
-	border-bottom-right-radius: 5px;
-	display: flex;
-	justify-content: space-between;
-}
-nav:hover{
-	border: 2px solid green;
-}
-nav a{
-	/* TODO: Add pipe between nav options*/
-	/*border: thin dotted black;*/
-	padding-top: 3px;
-	padding-bottom: 3px;
-	width:100%;
-
-}
-.nav-itm{
-	border-radius: 5px;
-	text-align: center;
-	font-size: 0.7em;
-}
-.nav-itm:hover{
-	background-color: #00F;
-	width: 100%;
-	height: 100%;
-}
-
-.hero{
-	border: 2px solid blue;
-	display: flex;
 
 
-}
-.hero:hover{
-	border: 2px solid green;
-}
 
-
-h1{
-	display: none;
-}
-h2{
-	border: thin dotted yellow;
-	color:#00F;
-}
-h3 {
-	color: #19191A;
-}
-
-/*
-
-HOME STYLES - css/FY3/home.css
-FORMS STYLES - css/FY3/create_teams.css 
-*/
 
 /*********************
 ---- DESKTOP VIEW ----
-    width >= 600px
-*********************/
+********************/
 
-/*
----- home STYLES ----
 
-::::::::: HEADER/NAV :::::::::
-The header section contains the FY3 main logo & title
-and the main nav bar
-*/
-
-@media (min-width: 600px) {
-
-html img{
-}
-body {
-
-  }
-header{
-	height: 100%;
-}
-.hero{
-	height: 80%;
-	/*display: flex;*/
-	justify-content: center;
+/*********************
+600px <= width <= 900px
+********************/
+@media (min-width: 600px) {}
+/*********************
+width <= 900px
+********************/
+@media (min-width: 900px) {
 }
 
-/**/
-h1 {	
-	display: flex;
-	color: #D3D3D3;
-	width: 75vw;
-	justify-content: center;
-	font-size: 3em;
-	border: dotted;
-	}
-form{
-	width:100%;
-	flex-direction: column;
-	width:50%;
-	/*justify-content: space-around;*/
-	border: 2px solid white; 
-	}
-}

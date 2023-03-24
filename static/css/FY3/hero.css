@@ -1,0 +1,53 @@
+/*********************
+---- MOBILE VIEW ----
+    width < 600px
+*********************/
+.hero p ,.hero h1{
+  color: #000;/*#D3D3D3;*/
+} 
+
+.hero{
+  margin: auto;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+h1 {  
+  display: flex;
+  flex-direction: column;
+  width: 75%;
+  justify-content: center;
+  font-size: 3em;
+}
+
+p {
+font-size: 1.5em;
+}
+
+/*
+
+TODO:
+Add animation of title 
+sliding from the right,
+followed by p tag content
+
+*/
+
+
+/*********************
+---- DESKTOP VIEW ----
+********************/
+
+
+/*********************
+600px <= width <= 900px
+********************/
+@media (min-width: 600px) {
+
+}
+/*********************
+width <= 900px
+********************/
+@media (min-width: 900px) {
+
+}
