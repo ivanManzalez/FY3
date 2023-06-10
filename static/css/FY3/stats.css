@@ -4,38 +4,27 @@
   font-size: 3rem;
   text-align: center
 }
-
-.stats{
+section{
+  justify-content: center;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+table{
+  border: border-collapse;
+  margin:0;
   width:100%;
-  font-size: 1.1rem;
+
 }
-.stats-table{
-  /*display: grid;*/
-  /*grid-template-rows:1fr;*/
-  /*justify-content: center;*/
-  margin-left: 10px;
-  margin-right: 10px;
+
+tr td{
+  text-align: center
 }
-.stats-row{
-  display: flex;
-  justify-content: space-around;
-}
-.stats-row div{
-  border:1px solid black;
-  width: 100%;
+#player-img{
+  width: 100px;
 }
 
 
-td{
-  width: 550%;
-  text-align: center;
-}
-.player-img{
-  width: 200px;
-}
-.player-img img{
-  width: 100%;
-}
+
 
 /*********************
 ---- DESKTOP VIEW ----
@@ -46,19 +35,26 @@ td{
 600px <= width <= 900px
 ********************/
 @media (min-width: 600px) {
- table{
-  /*justify-content: left;*/
+table{
+ padding-right: 5%;
+ padding-left: 5%;
 }
 #player-img{
   width: 200px;
 }
-
 }
 /*********************
 width <= 900px
 ********************/
 @media (min-width: 900px) {
-  #player-img{
-     width: 300px;
-   }
+table{
+ padding-right: 45px;
+ padding-left: 45px;
+}
+#player-img{
+  width: 75%;
+}
+.player-img{
+  width: 275px;
+}
 }
