@@ -11,9 +11,10 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent # /Users/ivanmancia-gonzalez/Projects/FY3/FY3-Project
 
 
 # Quick-start development settings - unsuitable for production
@@ -63,7 +64,7 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         # Uncomment to override admin template
         # found in: django/contrib/admin/templates/admin
-        'DIRS': [],#[os.path.join(BASE_DIR, "templates/")],
+        'DIRS': [os.path.join(BASE_DIR, 'frontend/build')],#[],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -124,9 +125,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    BASE_DIR/'static',    
+    # BASE_DIR/'static',#for files found in django app
+    BASE_DIR/'frontend/build/static', #for files found in react app
 ]
 
 # Default primary key field type

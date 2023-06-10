@@ -178,8 +178,15 @@ def create_team_stats(request):
 		# ensure data is valid
 		if (filled_form.is_valid()):
 			date = filled_form.cleaned_data['game_date']
+			season = filled_form.cleaned_data['season']
 			winning_team = filled_form.cleaned_data['win_team']
 			losing_team = filled_form.cleaned_data['lose_team']
+
+			Game.objects.create(
+				game_date = date, 
+				season = season, 
+				win_team = winning_team,
+				lose_team = losing_team)
 
 			note = "On %s, %s defeated %s"%(date, winning_team, losing_team)
 			new_form = TeamStatsForm()
@@ -202,5 +209,14 @@ def load_teams(request):
 	
 	context = {'lose_teams':lose_teams}
 	return render(request, 'commissioner/load_teams.html', context)
+
+################################################
+
+
+
+
+
+
+
 
 ################################################

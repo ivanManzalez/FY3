@@ -1,28 +1,29 @@
 {% extends "components/main.html"%}
 
-{% load static %}
+<!-- {% load static %} -->
 
 
 
 {% block content %}
 <div class="cards">
-<div class="glass box">
-<a href="{% url 'FY3-Create-Team'%}"><h2>Create Teams </h2></a>
-</div>
+
+
+
+<a class = 'glass box' href="{% url 'FY3-Create-Team'%}">
+  <h2>Create Teams </h2>
+</a>
+
 
 <!-- ADD PLAYER STATS -->
-<div class="glass box">
-  <a href="{% url 'FY3-Create-Player-Stats'%}">
+<a class = 'glass box' href="{% url 'FY3-Create-Player-Stats'%}">
     <h2>Create Player Stats </h2>
-  </a>
-</div>
+</a>
 
 <!-- ADD TEAM STATS -->
-<div class="glass box">
-  <a href="{% url 'FY3-Create-Team-Stats'%}">
+<a class = 'glass box' href="{% url 'FY3-Create-Team-Stats'%}">
     <h2>Create Team Stats </h2>
-  </a>
-</div>
+</a>
+
 </div>
 {% endblock %}
 

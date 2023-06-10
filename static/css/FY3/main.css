@@ -1,5 +1,5 @@
 /*********************
-    GLOBAL STYLES 
+    STYLES
 *********************/
 /*@import 'home.css';*/
 /*@import 'commissioner.css';*/
@@ -9,78 +9,10 @@
 @import 'navbar.css';
 @import 'hero.css';
 @import 'stats.css';
-
-
-html{
-	/* 
-	::::::::: COLORS :::::::::
-	FY3 Grey --------- #171717
-	white ------------ #000
-	lighter grey ----- #19191A
-	really light grey- #A9A9A9
-	light light grey - #5A5A5A
-	whitish ---------- #D3D3D3
-	purple ----------- #00F
-	green ------------ #F00
-	*/
-}
-
-.blur-content{
-	-webkit-filter: blur(1px);
-  -moz-filter: blur(1px);
-  -o-filter: blur(1px);
-  -ms-filter: blur(1px);
-  filter: blur(1px);
-}
-
-.glass{
-	background: linear-gradient(
-		135deg, 
-		rgba(255, 255, 255,  0.1),
-		rgba(255, 255, 255,  0)
-		);
-	backdrop-filter: blur(10px);
-	-webkit-backdrop-filter:blur(10px);
-	border-radius: 10px;
-	/*border:1px solid black;*/
-	box-shadow: 0 8px 32px 0;
-}
-.cards{
-	display: flex;
-	flex-direction: row;
-	flex-flow: wrap;
-	justify-content: space-around;
-}
-.card{
-	width:200px;
-	aspect-ratio: 9/12;
-}
-.box{
-	width:200px;
-	aspect-ratio: 3/2;
-}
-.dashed{
-	border:0.1px dashed white;
-}
-a{
-	text-decoration: none;
-}
+@import 'features.css';
+@import 'standings.css';
+@import 'commissioner.css';
 
 
 
-
-/*********************
----- DESKTOP VIEW ----
-********************/
-
-
-/*********************
-600px <= width <= 900px
-********************/
-@media (min-width: 600px) {}
-/*********************
-width <= 900px
-********************/
-@media (min-width: 900px) {
-}
 

@@ -15,12 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from . import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    # path('admin/', admin.site.urls),
     ## Need to map app sub application URLs
     ## and include urls within home app
     ## do not need to add new path() for each URL in home.urls
-	path('', include('home.urls')),
-    path("auth/", include("django.contrib.auth.urls")),  # new
+	# path('', include('home.urls')),
+    # path("auth/", include("django.contrib.auth.urls")),  # new
+    path('', views.index, name='index')
 ]

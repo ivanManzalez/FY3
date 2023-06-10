@@ -3,10 +3,12 @@
 ---- MOBILE VIEW ----
     width < 600px
 *********************/
+
+
 nav{
   position: fixed;
   bottom: 0;
-  height: 5%;
+  height: 8%;
   width: 100%;
   z-index:5;
 
@@ -30,13 +32,20 @@ nav a{
   align-items: center;
 
   font-size: 1.0em;
-  color: #483248;
+  font-weight: bold;
+  color: #3a243b; /*#483248;*/
 }
 .nav-itm:hover{
   background-color: #5D3FD3;
   color:black;
 }
 
+.contain{
+  display: flex;
+  justify-content: center;
+  padding-top: 2px;
+  padding-bottom: 10px;
+}
 
 /*********************
 ---- DESKTOP VIEW ----

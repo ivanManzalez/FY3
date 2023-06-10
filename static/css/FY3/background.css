@@ -13,12 +13,14 @@ html{
 }
 
 body{
+border: 0.1px solid #483248;
 margin:auto;
-height:100%;
+padding-bottom: 90px;
 width: 100%;
 background-attachment: fixed;
 background-repeat: no-repeat;
 background-position: center top;
+
 }
 
 /*********************

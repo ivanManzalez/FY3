@@ -8,50 +8,59 @@
 	<title> FY3 </title>
 </head>
 
-<body class ="dashed" style="background-image: url({% static 'imgs/FY3-logo.png'%});"> 
+<body class ="" style="background-image: url({% static 'imgs/FY3-logo.png'%});"> 
 		<nav>
 			<!-- home tab -->
-			<a href="{% url 'FY3-Home'%}"><div class="nav-itm" id="home">
-				Home
-			</div></a>
+			<a class= 'contain' href="{% url 'FY3-Home'%}">
+				<img class='nav-home' src="{% static 'imgs/FY3-logo.png'%}" alt='Home'>
+				<!-- <div class="nav-itm" id="home">Home</div> -->
+
+			</a>
 			
 			<!-- stats tab -->
-			<a href="{% url 'FY3-Statistics'%}"><div class="nav-itm" id="stats">
-				Stats
-			</div></a>
+			<a class= 'contain' href="{% url 'FY3-Statistics'%}">
+				<img class='nav-stats' src="{% static 'imgs/bar-chart.png'%}" alt='Home'>
+				<!-- <div class="nav-itm" id="stats">Stats</div> -->
+			</a>
 			
 			<!-- schedule tab -->
-			<a href="{% url 'FY3-Schedule'%}"><div class="nav-itm" id="schedule">
-				Events
-			</div></a>
+			<a class= 'contain' href="{% url 'FY3-Schedule'%}">
+				<img class='nav-events' src="{% static 'imgs/events.png'%}" alt='events'>
+				<!-- <div class="nav-itm" id="schedule">Events</div> -->
+			</a>
 			
 			<!-- standings tab -->
-			<a href="{% url 'FY3-Standings'%}"><div class="nav-itm" id="standings">
-				Standings
-			</div></a>
+			<a class= 'contain' href="{% url 'FY3-Standings'%}">
+				<img class='nav-standings' src="{% static 'imgs/podium.png'%}" alt='podium'>
+				<!-- <div class="nav-itm" id="standings">Standings</div> -->
+			</a>
 			
 			<!-- create teams tab -->
 			<!-- must change to only accept admin authentication -->
 			{% if user.is_authenticated %}
-    	<a href="{% url 'FY3-Commissioner'%}"><div class="nav-itm" id="create-teams">
-				Commissioner
-			</div></a>
+    	<a class= 'contain' href="{% url 'FY3-Commissioner'%}">
+    		<img class='nav-commissioner' src="{% static 'imgs/commissioner.png'%}" alt='commissioner'>
+    		<!-- <div class="nav-itm" id="create-teams">Commissioner</div> -->
+			</a>
 
-			<a href="{% url 'logout'%}"><div class="nav-itm" id="logout">
-				Logout
-			</div></a>
+			<a class= 'contain' href="{% url 'logout'%}">
+				<img class='nav-logout' src="{% static 'imgs/logout.png'%}" alt='logout'>
+    		<!-- <div class="nav-itm" id="logout">Logout</div> -->
+			</a>
 
 			{% else %}
-			<a href="{% url 'login' %}"><div class="nav-itm" id="login">
-				Log In
-			</div></a>
+			<a class= 'contain' href="{% url 'login' %}">
+				<img class='nav-login' src="{% static 'imgs/login.png'%}" alt='login'>
+				<!-- <div class="nav-itm" id="login">Log In</div> -->
+			</a>
 			{% endif %}
 		</nav>
 		
 	<!-- ######### MAIN BODY CONTENT########## -->
+	<div class='content'>
 	{% block content %}
 	{% endblock %}
-
+	</div>
 	<!-- #################################### -->
 
 </body>

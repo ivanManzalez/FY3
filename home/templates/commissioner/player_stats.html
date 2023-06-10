@@ -1,5 +1,5 @@
 {% extends "components/main.html"%}
-{% load static %}
+<!-- {% load static %} -->
 
 
 
@@ -8,7 +8,7 @@
 <!-- ADD PLAYER STATS -->
 <h2>Create Player Stats </h2>
 
-<h3 class='note'> {{ note }}</h3>
+<h3 class='glass note'> {{ note }}</h3>
 
 
 <div class='create-container'>
@@ -18,7 +18,7 @@
     <input type="submit" value ='Submit'/>
   </form>
 
-  <div class='preview' id='team-player-img'>
+  <div class='profile-imgs' id='team-player-img'>
     <!-- use js to change the images based on dropdown selection -->
     <img id='team-logo' src="{% static 'imgs/FY3-logo.png' %}">
     <img id='player' src="{% static 'imgs/FY3-logo.png' %}">
