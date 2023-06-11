@@ -31,7 +31,9 @@ we want to handle certain routes
 
 ################################################
 def home(request):
-	return render(request, 'home/home.html')
+	return render(request, 'index.html')
+	# return render(request, 'home/home.html')
+
 	# return HttpResponse('<h1> FY3 HOME <h1>')
 
 """ 
@@ -211,10 +213,6 @@ def load_teams(request):
 	return render(request, 'commissioner/load_teams.html', context)
 
 ################################################
-
-
-
-
 
 
 
