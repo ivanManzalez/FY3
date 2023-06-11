@@ -31,8 +31,8 @@ we want to handle certain routes
 
 ################################################
 def home(request):
-	return render(request, 'index.html')
-	# return render(request, 'home/home.html')
+	# return render(request, 'index.html')
+	return render(request, 'home/home.html')
 
 	# return HttpResponse('<h1> FY3 HOME <h1>')
 

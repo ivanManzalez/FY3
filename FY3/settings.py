@@ -64,7 +64,7 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         # Uncomment to override admin template
         # found in: django/contrib/admin/templates/admin
-        'DIRS': [os.path.join(BASE_DIR, 'frontend/build')],#[],
+        'DIRS': [os.path.join(BASE_DIR, 'frontend/build/templates')],#[],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
