@@ -18,17 +18,18 @@ from . import views
 
 urlpatterns = [
     #from view.py, return home() 
-    path('', views.home, name='FY3-Home'),
-    path('schedule/', views.schedule, name='FY3-Schedule'),
-    path('standings/', views.standings, name='FY3-Standings'),
-    path('stats/', views.stats, name='FY3-Statistics'),
+    path('', views.landing, name='FY3-Home'),
 
-    path('commissioner/', views.commissioner, name='FY3-Commissioner'),
-    path('commissioner/player-stats/', views.create_player_stats, name='FY3-Create-Player-Stats'),
-    path('commissioner/team-stats/', views.create_team_stats, name='FY3-Create-Team-Stats'),
-    path('commissioner/create_teams/', views.create_teams, name='FY3-Create-Team'),
-    path('commissioner/load_players/', views.load_players, name='FY3-Load_Players'),
-    path('commissioner/load_teams/', views.load_teams, name='FY3-Load_Teams'),
+    # path('schedule/', views.schedule, name='FY3-Schedule'),
+    # path('standings/', views.standings, name='FY3-Standings'),
+    # path('stats/', views.stats, name='FY3-Statistics'),
+
+    # path('commissioner/', views.commissioner, name='FY3-Commissioner'),
+    # path('commissioner/player-stats/', views.create_player_stats, name='FY3-Create-Player-Stats'),
+    # path('commissioner/team-stats/', views.create_team_stats, name='FY3-Create-Team-Stats'),
+    # path('commissioner/create_teams/', views.create_teams, name='FY3-Create-Team'),
+    # path('commissioner/load_players/', views.load_players, name='FY3-Load_Players'),
+    # path('commissioner/load_teams/', views.load_teams, name='FY3-Load_Teams'),
     
 
 

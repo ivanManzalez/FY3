@@ -64,7 +64,7 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         # Uncomment to override admin template
         # found in: django/contrib/admin/templates/admin
-        'DIRS': [os.path.join(BASE_DIR, 'frontend/build/templates')],#[],
+        'DIRS': [os.path.join(BASE_DIR, 'frontend/build')],#[],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -140,4 +140,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Redirect Log IN/OUT URL
 LOGIN_REDIRECT_URL = "FY3-Home"
 LOGOUT_REDIRECT_URL = "FY3-Home"
+
+# Configure the Django server to proxy requests to the React server
+# When Django server receives requests for the React app, 
+# it will forward those requests to the React development server.
+# By enabling the USE_PROXY setting and specifying the PROXY_URL 
+# as the address of your React development server, 
+# Django will proxy requests to the React server for any URLs that match the proxy configuration.
+# USE_PROXY = True
+# PROXY_URL = 'http://localhost:3000'
 

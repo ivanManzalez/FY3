@@ -18,47 +18,10 @@ curr_season = Season.objects.latest('season_name')
 # Logging configuration
 logging.basicConfig(format='[%(asctime)s] - %(message)s', level=logging.INFO)
 
-################################################
-
-""" 
-When user wants to go to home page,
-this function will determine what 
-is returned
-
-where the logic goes for how 
-we want to handle certain routes
-"""
 
 ################################################
-def home(request):
+
+def landing(request):
   return render(request, 'index.html')
-  
-################################################
-@login_required(redirect_field_name='next', login_url="/admin/login/")
-def commissioner(request):
-  return render(request, 'commissioner/commissioner.html')
-
-################################################
-def schedule(request):
-  return render(request, 'schedule/schedule.html')
-
-################################################
-def standings(request):
-  context = {}
-  return render(request, 'standings/standings.html', context)
-
-################################################
-def stats(request):
-  context = {}
-  return render(request, 'stats/stats.html', context)
-
-################################################
-
-
-
-
-
-
-
 
 ################################################
