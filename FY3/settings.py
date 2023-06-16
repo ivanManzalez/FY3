@@ -64,7 +64,7 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         # Uncomment to override admin template
         # found in: django/contrib/admin/templates/admin
-        'DIRS': [os.path.join(BASE_DIR, 'frontend/build')],#[],
+        'DIRS': [os.path.join(BASE_DIR, 'frontend/templates')],#[],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -127,8 +127,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    # BASE_DIR/'static',#for files found in django app
-    BASE_DIR/'frontend/build/static', #for files found in react app
+    BASE_DIR/'frontend/static',#for files found in django app
+    # BASE_DIR/'frontend/build/static', #for files found in react app
 ]
 
 # Default primary key field type
