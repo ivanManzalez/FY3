@@ -248,6 +248,15 @@ model_1.save()
 aggregate() = summary of stats of entire querysets
 annotate() = summary of individual stats of querysets for each item in the set
 
+#####################################################
+## Why should Nav be outside of Routes?  ############
+#####################################################
+In React Router v6, the structure and usage of the routing components have changed compared to v5. In v6, the Routes component is used as the top-level component to define the routing configuration, and it expects its child Route components to be direct children.
 
+In your previous code, you had the Navbar component nested within the Routes component, which caused the error. The Routes component expects its direct children to be Route components, so any other components, such as the Navbar component, should be placed outside the Routes component.
+
+By moving the Navbar component outside the Routes component, you ensure that the routing configuration is properly defined within the Routes component, and the Navbar component remains separate and outside the routing structure.
+
+Here's the updated code structure:
 =====================================================
 =====================================================
