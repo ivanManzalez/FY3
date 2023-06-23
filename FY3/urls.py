@@ -22,6 +22,8 @@ urlpatterns = [
     ## and include urls within home app
     ## do not need to add new path() for each URL in home.urls
 	path('', include('frontend.urls')),
-    path("auth/", include("django.contrib.auth.urls")),  # new
+    path('api', include('api.urls')),
+
+    path("auth/", include("django.contrib.auth.urls")),  # needed?
     # path('', home.urls, name='index')
 ]

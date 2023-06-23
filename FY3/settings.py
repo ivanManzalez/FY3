@@ -35,6 +35,8 @@ INSTALLED_APPS = [
 
     #### Personal Apps
     'home.apps.HomeConfig',
+    'api.apps.ApiConfig', ## from api.apps.py
+    'rest_framework',
     # 'authentication.apps.HomeConfig',
 
     #### Default Apps Included
