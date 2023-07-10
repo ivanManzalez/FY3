@@ -7,6 +7,7 @@ urlpatterns = [
   path("schedule/", index),
   path("standings/", index),
   path("stats/", index),
+  path("playerprofile/<int:playerID>", index),
  ]
 
 

@@ -258,5 +258,20 @@ In your previous code, you had the Navbar component nested within the Routes com
 By moving the Navbar component outside the Routes component, you ensure that the routing configuration is properly defined within the Routes component, and the Navbar component remains separate and outside the routing structure.
 
 Here's the updated code structure:
+#####################################################
+## Importing modules                     ############
+#####################################################
+
+#####################################################
+##  Users/Roles                          ############
+#####################################################
+
+Role Types:
+	- Commissioner
+	- Player
+	- GM
+	- Spectator
+
+
 =====================================================
 =====================================================

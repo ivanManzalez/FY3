@@ -9,6 +9,8 @@ import Commissioner from "./presentor/Commissioner";
 import Schedule from "./presentor/Schedule";
 import Standings from "./presentor/Standings";
 import Stats from "./presentor/Stats";
+import Api from "./presentor/Api";
+import PlayerProfile from "./presentor/PlayerProfile"
 
 // NAV
 import Navbar from "./navigator/Bar";
@@ -33,9 +35,7 @@ export default class App extends Component{
       <Routes>
         <Route exact path="/" element={<Home name="larry"/>} />
         <Route path="/commissioner" element={<Commissioner/>} />
-        <Route path="/schedule" element={<Schedule/>} />
-        <Route path="/standings" element={<Standings/>} />
-        <Route path="/stats" element={<Stats/>} />
+        <Route path="/playerprofile/:playerID" element={<PlayerProfile/>} />
       </Routes>
     </Router>
     );
@@ -44,3 +44,11 @@ export default class App extends Component{
 
 const appDiv = document.getElementById("app");
 render(<App name="larry" />, appDiv);
+
+//
+  {/*
+  <Route path="/standings" element={<Standings/>} />
+  <Route path="/api/players" element={<Api/>}/>
+  <Route path="/schedule" element={<Schedule/>} />
+  <Route path="/stats" element={<Stats/>} />*/}
+        

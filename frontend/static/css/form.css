@@ -1,0 +1,10 @@
+.form {
+  /*width:75%;*/
+  display: flex;
+  flex-direction: column;
+  border: thin black dotted;
+}
+
+#message{
+  display: none;
+}
