@@ -21,7 +21,7 @@ from rest_framework.response import Response #send custom response from view
 ## CreateAPIView - for POST calls?
 ## ListAPIView - for GET calls?
 
-class PlayersView(generics.CreateAPIView): ## CreateAPIView
+class PlayersView(generics.ListAPIView): ## CreateAPIView
   queryset = Player.objects.all()
   serializer_class = PlayerSerializer
   
@@ -68,22 +68,32 @@ class CreatePlayerView(APIView): ## CreateAPIView
     player.save()
     return Response(PlayerSerializer(player).data, status=status.HTTP_200_OK)
 
-# class TeamsView(generics.ListAPIView): ## CreateAPIView
-#   queryset = Team.objects.all()
-#   serializer_class = TeamSerializer
+class PlayerProfileView(APIView):
+    """
+    Retrieve, update or delete a snippet instance.
+    """
+    def get_object(self, player_id):
+      try:
+        print("try: ", player_id)
+        return Player.objects.get(id=player_id)
+      except Player.DoesNotExist:
+        print("player does not exist")
+        return Response({'Bad Request':'Player does not exist'}, status=status.HTTP_404_NOT_FOUND)
 
-# class SeasonsView(generics.ListAPIView): ## CreateAPIView
-#   queryset = Season.objects.all()
-#   serializer_class = SeasonSerializer
+    def get(self, request, player_id, format=None):
+        player = self.get_object(player_id)
+        serializer = PlayerSerializer(player)
+        return Response(serializer.data)
 
-# class GamesView(generics.ListAPIView): ## CreateAPIView
-#   queryset = Game.objects.all()
-#   serializer_class = GameSerializer
+    def put(self, request, player_id, format=None):
+        player = self.get_object(player_id)
+        serializer = PlayerSerializer(player, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-# class GameStatView(generics.ListAPIView): ## CreateAPIView
-#   queryset = GameStats.objects.all()
-#   serializer_class = GameStatSerializer
-
-# class TeamStatView(generics.ListAPIView): ## CreateAPIView
-#   queryset = TeamStats.objects.all()
-#   serializer_class = TeamStatSerializer
+    def delete(self, request, player_id, format=None):
+        player = self.get_object(player_id)
+        player.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)

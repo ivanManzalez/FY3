@@ -14,7 +14,8 @@ class PlayerSerializer(serializers.ModelSerializer):
       'player_last', 
       'player_height_in',
       'player_height_ft',
-      'origin')
+      'origin',
+      'age')
 
 # in order to map JSON values to python format
 class CreatePlayerSerializer(serializers.ModelSerializer):

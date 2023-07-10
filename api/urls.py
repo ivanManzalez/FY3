@@ -4,6 +4,7 @@ from . import views
 urlpatterns = [
     path('players/', views.PlayersView.as_view()),
     path('create-players/', views.CreatePlayerView.as_view()),
+    path('player-profile/<int:player_id>', views.PlayerProfileView.as_view()),
     # path('teams', views.TeamsView.as_view()),
     # path('games', views.GamesView.as_view()),
     # path('seasons', views.SeasonsView.as_view()),
