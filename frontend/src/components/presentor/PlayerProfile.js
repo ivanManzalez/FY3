@@ -3,9 +3,8 @@ import React,  { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom'; 
 
 const PlayerProfile = () => {
+  // set variables
   const { playerID } = useParams();
-  console.log("Player ID:")
-  console.log(playerID)
   const [player, setPlayer] = useState({
     player_first: "",
     player_last: "",
@@ -13,13 +12,14 @@ const PlayerProfile = () => {
     player_height_in: "",
     age: ""
   });
-  console.log("Player ID:")
-  console.log(playerID)
+
+  // used when want to add functionality to a newly rendered/updated component
   useEffect(() => {
     // Fetch player data based on playerID
     fetchPlayerData(playerID)
     // Update the player state with fetched data
       .then(data => setPlayer(data))
+    // Handle any error returned from fetchPlayerData
       .catch(error => console.log(error));
   }, [playerID]);
 
@@ -28,8 +28,10 @@ const PlayerProfile = () => {
     try {
       // Perform API call to fetch player data
       const response = await fetch(`/api/player-profile/${playerID}`);
+      // Convert response to JSON obj
       const data = await response.json();
       return data;
+      // Handle any error returned from fetch (api call)
     } catch (error) {
       console.log(error)
       throw new Error('Failed to fetch player data');

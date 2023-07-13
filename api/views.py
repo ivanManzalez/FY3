@@ -30,6 +30,7 @@ class PlayersView(generics.ListAPIView): ## CreateAPIView
 class CreatePlayerView(APIView): ## CreateAPIView
   # 
   serializer_class = CreatePlayerSerializer
+
   # define GET POST UPDATE DELETE methods
   def post(self, request, format=None):
     # sessions needed? lets try
@@ -42,16 +43,16 @@ class CreatePlayerView(APIView): ## CreateAPIView
     serializer = self.serializer_class(data=request.data)
     
     if (not serializer.is_valid()): 
-      return Response({'Bad Request':'Invalid request'}, status=status.HTTP_406_NOT_ACCEPTABLE)
+      return Response({'message':'Invalid request'}, status=status.HTTP_406_NOT_ACCEPTABLE) # message = Bad Request
     
     player_first = serializer.data.get('player_first')
     player_last = serializer.data.get('player_last')
     
       
-    queryset = Player.objects.filter(player_first=player_first, player_last=player_last)
+    queryset = Player.objects.filter(player_first=player_first, player_last=player_last) 
     # print(queryset.__str__())
     if (queryset.exists()):
-      return Response({'Conflict':'Player already exists'}, status=status.HTTP_409_CONFLICT)
+      return Response({'message':'Player already exists'}, status=status.HTTP_409_CONFLICT) # message = Conflict
     
     player_height_in = serializer.data.get('player_height_in')
     player_height_ft = serializer.data.get('player_height_ft')
@@ -66,7 +67,13 @@ class CreatePlayerView(APIView): ## CreateAPIView
                     origin = origin,
                     age = age)
     player.save()
-    return Response(PlayerSerializer(player).data, status=status.HTTP_200_OK)
+    
+    response_data = {
+        'message': 'New Player Added',
+        'player': PlayerSerializer(player).data
+    }
+
+    return Response(response_data, status=status.HTTP_200_OK)
 
 class PlayerProfileView(APIView):
     """

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import CreatePlayerForm from "./CreatePlayerForm";
 
 export default class Commssioner extends Component{
   constructor(props){
@@ -11,6 +12,8 @@ export default class Commssioner extends Component{
       player_weight_lbs: "",
       origin: "",
       age: "",
+      message:"",
+      classname:"",
     }
     // bind method to the class
     // I'd suggest you use es6 arrow function, that way you don't have to bind "this" (?)
@@ -22,7 +25,22 @@ export default class Commssioner extends Component{
     this.handlePlayerWtLbChange = this.handlePlayerWtLbChange.bind(this);
     this.handleOriginChange = this.handleOriginChange.bind(this);
     this.handleAgeChange = this.handleAgeChange.bind(this);
+    this.clearFields = this.clearFields.bind(this);
+
   };
+  
+  clearFields(){
+    this.setState({
+        player_first: "",
+        player_last: "",
+        player_height_in: "",
+        player_height_ft: "",
+        player_weight_lbs: "",
+        origin: "",
+        age: "",
+        classname:"",
+      });
+  }
 
   handlePlayerFirstChange(e){
     this.setState({
@@ -66,9 +84,13 @@ export default class Commssioner extends Component{
   }
 
 
+
+
   handleCreatePlayerButton(event){
     event.preventDefault();
+    console.log('this.state = ')
     console.log(this.state)
+    
     const requestOptions = {
       method: "POST",
       headers: {"Content-Type":"application/json"},
@@ -84,46 +106,36 @@ export default class Commssioner extends Component{
       // fetch request to /api/create-players/
       // once a response is received THEN convert it to JSON
       // THEN print
-      fetch('http://127.0.0.1:8000/api/create-players/', requestOptions).then((response)=>
-        response.json()
-        ).then((data) => console.log(data));
+      fetch('/api/create-players/', requestOptions // fetch -> then(response) -> then(response.data)
+        ).then((response)=>{
+          if(response.status === 200){
+            this.clearFields();
+            this.setState({classname:'good'});
+          }
+          else{
+            this.setState({classname:'bad'});
+          }
+          return response.json();
+        }).then((data) => {
+          console.log('data')
+        if (data.message) {
+          // Display the message to the user
+          let message = this.setState({
+            message: data.message
+          // Clear the form fields
+          })
+        }
+        // Handle other response data
+        // data.data
+    })
     };
 
   render(){
-    console.log("render commisioner form")
+    console.log("render commisioner")
+    // object destructuring syntax to extract the message property from the this.state object
     return (
       <div id='commissioner'>
-        
-        <h1> this is the Commssioner page </h1>
-        <h3> Create Player </h3>
-        <div id="message" class=""> </div>
-
-        <form class='form centre'>
-        
-        <label for="player_first">Player First</label>
-        <input type="text" id="player_first" name="first name" placeholder="Enter Firstname" onChange={this.handlePlayerFirstChange}/>
-
-        <label for="player_last">Player Last</label>
-        <input type="text" id="player_last" name="player_last name" placeholder="Enter Lastname" onChange={this.handlePlayerLastChange}/>
-        
-        <label for="player_height_ft"> Height (feet) </label>
-        <input type="text" id="player_height_ft" name="height_ft" placeholder="Enter height in feet" onChange={this.handlePlayerHtFtChange}/>
-        
-        <label for="player_height_in"> Height (inches) </label>
-        <input type="text" id="player_height_in" name="height_in" placeholder="Enter height in inches" onChange={this.handlePlayerHtInChange}/>
-        
-        <label for="player_weight_lbs"> Weight </label>
-        <input type="text" id="player_weight_lbs" name="player_weight_lbs" placeholder="Enter weight in lbs" onChange={this.handlePlayerWtLbChange}/>
-        
-        <label for="age"> Age </label>
-        <input type="text" id="age" name="age" placeholder="Enter age" onChange={this.handleAgeChange}/>
-        
-        <label for="origin"> Origin </label>
-        <input type="text" id="origin" name="origin" placeholder="Enter region of origin" onChange={this.handleOriginChange}/>
-        
-        <button type='submit' placeholder="Create Player" onClick={this.handleCreatePlayerButton}> Create Player</button>
-          
-        </form>
+        < CreatePlayerForm />
       </div>
       );
   }
