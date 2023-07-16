@@ -14,4 +14,5 @@ logging.basicConfig(format='[%(asctime)s] - %(message)s', level=logging.INFO)
 def landing(request):
   return render(request, 'index.html')
 
+
 ################################################
