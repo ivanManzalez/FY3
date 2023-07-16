@@ -20,8 +20,10 @@ urlpatterns = [
     ## Need to map app sub application URLs
     ## and include urls within home app
     ## do not need to add new path() for each URL in home.urls
-    path('', include('home.urls')),
+	path('', include('frontend.urls')),
+    path('api/', include('api.urls')),
     path('admin/', admin.site.urls),
-    path("auth/", include("django.contrib.auth.urls")),  # new
-    # path('', views.index, name='index')
+    # path("auth/", include("django.contrib.auth.urls")),  # needed?
+    # path('', home.urls, name='index')
+
 ]
