@@ -8,7 +8,8 @@ const CreatePlayerForm = () => {
   // set form field init values
   const [first, setFirst] = useState("");
   const [last, setLast] = useState("");
-  const [height, setHeight] = useState("");
+  const [heightFt, setHeightFt] = useState("");
+  const [heightIn, setHeightIn] = useState("");
   const [weight, setWeight] = useState("");
   const [origin, setOrigin] = useState("");
   const [age, setAge] = useState("");
@@ -19,7 +20,8 @@ const CreatePlayerForm = () => {
   const clearFields = () =>{
     setFirst("");
     setLast("");
-    setHeight("");
+    setHeightFt("");
+    setHeightIn("");
     setWeight("");
     setOrigin("");
     setAge("");
@@ -68,7 +70,8 @@ const CreatePlayerForm = () => {
       body: JSON.stringify({
           player_first : first,
           player_last: last,
-          player_height: height,
+          player_height_ft: heightFt,
+          player_height_in: heightIn,
           player_weight: weight,
           origin: origin,
           age: age,
@@ -84,8 +87,11 @@ const CreatePlayerForm = () => {
   const handlePlayerLastChange = (e) => {
     setLast(e.target.value);
   };
-  const handlePlayerHeightChange = (e) => {
-    setHeight(e.target.value);
+  const handlePlayerHeightFtChange = (e) => {
+    setHeightFt(e.target.value);
+  };
+  const handlePlayerHeightInChange = (e) => {
+    setHeightIn(e.target.value);
   };
   const handlePlayerWeightChange = (e) => {
     setWeight(e.target.value);
@@ -107,19 +113,10 @@ return (
     
     <TextField id={"player_first"} field={"Player First Name"} handler={handlePlayerFirstChange} value={first} />
     <TextField id={"player_last"} field={"Player Last Name"} handler={handlePlayerLastChange} value={last} />
-    <NumberField  field={"Player Height"} handler={handlePlayerHeightChange} value={height} />
-    <Box id={"player_height"} sx={{ width: 300 }}>
-      <Slider
-        aria-label="Small steps"
-        defaultValue={0.00000005}
-        getAriaValueText={valuetext}
-        step={0.00000001}
-        marks
-        min={-0.00000005}
-        max={0.0000001}
-        valueLabelDisplay="auto"
-      />
-    </Box>
+    <div>
+      <NumberField id={"player_height_ft"} field={"Player Height (Ft)"} handler={handlePlayerHeightFtChange} value={heightFt} />
+      <NumberField id={"player_height_in"} field={"Player Height (In)"} handler={handlePlayerHeightInChange} value={heightIn} />
+    </div>
     <NumberField id={"player_weight"} field={"Player Weight"} handler={handlePlayerWeightChange} value={weight} />
     <TextField id={"player_origin"} field={"Player Origin"} handler={handlePlayerOriginChange} value={origin} />
     <TextField id={"player_age"} field={"Player Age"} handler={handlePlayerAgeChange} value={age} />
@@ -150,10 +147,6 @@ const NumberField = (props) => {
     )
 }
 
-////////////////////////
-function valuetext(value) {
-  return `${value}°C`;
-}
 
 
 export default CreatePlayerForm;
