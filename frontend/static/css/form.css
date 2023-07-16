@@ -1,8 +1,10 @@
-.form {
+#create-player-form {
   /*width:75%;*/
   display: flex;
   flex-direction: column;
+  justify-content: center;
   border: thin black dotted;
+  width: 50%;
 }
 
 #message{
