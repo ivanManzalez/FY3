@@ -112,11 +112,9 @@ return (
     <form id="create-player-form" class='form centre'>
     
     <TextField id={"player_first"} field={"Player First Name"} handler={handlePlayerFirstChange} value={first} />
-    <TextField id={"player_last"} field={"Player Last Name"} handler={handlePlayerLastChange} value={last} />
-    <div>
-      <NumberField id={"player_height_ft"} field={"Player Height (Ft)"} handler={handlePlayerHeightFtChange} value={heightFt} />
-      <NumberField id={"player_height_in"} field={"Player Height (In)"} handler={handlePlayerHeightInChange} value={heightIn} />
-    </div>
+    <TextField id={"player_last"} field={"Player Last Name"} handler={handlePlayerLastChange} value={last} /> 
+    <NumberField id={"player_height_ft"} field={"Player Height (Ft)"} handler={handlePlayerHeightFtChange} value={heightFt} />
+    <NumberField id={"player_height_in"} field={"Player Height (In)"} handler={handlePlayerHeightInChange} value={heightIn} />
     <NumberField id={"player_weight"} field={"Player Weight"} handler={handlePlayerWeightChange} value={weight} />
     <TextField id={"player_origin"} field={"Player Origin"} handler={handlePlayerOriginChange} value={origin} />
     <TextField id={"player_age"} field={"Player Age"} handler={handlePlayerAgeChange} value={age} />
@@ -130,9 +128,10 @@ return (
 ////////////////////////
 const TextField = (props) => {
   return(
-    <div class = "">
-      <label>{props.field}</label>
-      <input type="text" id={props.id} placeholder={"Enter " + props.field} value={props.value} onChange={props.handler}/>
+    <div class = "entryarea">
+      {/*<label>{props.field}</label>*/}
+      <input class = "inputter" type="text" id={props.id} value={props.value} onChange={props.handler} required/>
+      <div class="labelline">{"Enter " + props.field}</div>
     </div>
     )
 }
@@ -140,9 +139,10 @@ const TextField = (props) => {
 ////////////////////////
 const NumberField = (props) => {
   return(
-    <div class = "">
-      <label>{props.field}</label>
-      <input type="number" id={props.id} placeholder={"Enter " + props.field} value={props.value} onChange={props.handler}/>
+    <div class = "entryarea">
+      {/*<label>{props.field}</label>*/}
+      <input class = "inputter" type="number" id={props.id} value={props.value} onChange={props.handler} required/>
+      <div class="labelline">{"Enter " + props.field}</div>
     </div>
     )
 }
