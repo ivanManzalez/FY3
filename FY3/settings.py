@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'api.apps.ApiConfig', ## from api.apps.py
     'rest_framework',
     'players.apps.PlayersConfig',
+    'teams.apps.TeamsConfig',
     # 'authentication.apps.HomeConfig',
 
     #### Default Apps Included
