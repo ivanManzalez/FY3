@@ -34,13 +34,10 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
 
     #### Personal Apps
-    'home.apps.HomeConfig',
-    'api.apps.ApiConfig', ## from api.apps.py
     'rest_framework',
     'players.apps.PlayersConfig',
     'teams.apps.TeamsConfig',
     'games.apps.GamesConfig',
-    # 'authentication.apps.HomeConfig',
 
     #### Default Apps Included
     'django.contrib.admin',
@@ -90,8 +87,12 @@ WSGI_APPLICATION = 'FY3.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'fy3_db',
+        'USER': 'lmtroper',
+        # 'PASSWORD': 'password',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
