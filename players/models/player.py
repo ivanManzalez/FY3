@@ -7,7 +7,7 @@ class Player(models.Model):
 	date_of_birth = models.DateField(verbose_name="YYYY-MM-DD", null=True)
 	height_ft = models.PositiveIntegerField(default=5, validators=[MinValueValidator(0), MaxValueValidator(8)])
 	height_in = models.PositiveIntegerField(default=6, validators=[MinValueValidator(0), MaxValueValidator(12)])
-	weight_lbs = models.IntegerField(default=150, validators=[MinValueValidator(0)])
+	weight = models.IntegerField(default=150, validators=[MinValueValidator(0)], help_text="Weight in lbs")
 	origin = models.CharField(max_length = 255, null=True)
 	email = models.EmailField(max_length = 254, null=True)
 	phone_number = models.CharField(max_length=20, blank=True, null=True)

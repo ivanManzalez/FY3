@@ -7,12 +7,18 @@ class PlayerSerializer(serializers.ModelSerializer):
     model = Player
     fields = (
       'id',
-      'player_first', 
-      'player_last', 
-      'player_height_in',
-      'player_height_ft',
+      'first_name', 
+      'last_name', 
+      'date_of_birth',
+      'height_ft',
+      'height_in',
+      'weight',
       'origin',
-      'age'
+      'email',
+      'phone_number',
+      'position',
+      'is_registered',
+      'origin',
     )
 
 # in order to map JSON values to python format
@@ -22,10 +28,17 @@ class CreatePlayerSerializer(serializers.ModelSerializer):
     # fields that will be sent in paylod
     # serialize request in python format
     fields = (
-      'player_first', 
-      'player_last', 
-      'player_height_in',
-      'player_height_ft',
+      'id',
+      'first_name', 
+      'last_name', 
+      'date_of_birth',
+      'height_ft',
+      'height_in',
+      'weight',
       'origin',
-      'age'
+      'email',
+      'phone_number',
+      'position',
+      'is_registered',
+      'origin',
     )
