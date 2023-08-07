@@ -34,29 +34,27 @@ class CreatePlayerView(APIView): ## CreateAPIView
     if (not serializer.is_valid()): 
       return Response({'message':'Invalid request'}, status=status.HTTP_406_NOT_ACCEPTABLE) # message = Bad Request
     
-    player_first = serializer.data.get('player_first')
-    player_last = serializer.data.get('player_last')
+    first_name = serializer.data.get('first_name')
+    last_name = serializer.data.get('last_name')
     
       
-    queryset = Player.objects.filter(player_first=player_first, player_last=player_last) 
+    queryset = Player.objects.filter(first_name=first_name, last_name=last_name) 
     # print(queryset.__str__())
     if (queryset.exists()):
       return Response({'message':'Player already exists'}, status=status.HTTP_409_CONFLICT) # message = Conflict
     
-    player_height_in = serializer.data.get('player_height_in')
-    player_height_ft = serializer.data.get('player_height_ft')
-    origin = serializer.data.get('origin')
-    age = serializer.data.get('age')
+    height_in = serializer.data.get('height_in')
+    height_ft = serializer.data.get('height_ft')
+    origin = serializer.data.get('origin')    
     
-    
-    player = Player(player_first = player_first,
-                    player_last = player_last,
-                    player_height_in = player_height_in,
-                    player_height_ft = player_height_ft,
+    player = Player(first_name = first_name,
+                    last_name = last_name,
+                    height_in = height_in,
+                    height_ft = height_ft,
                     origin = origin,
-                    age = age)
+                  )
     player.save()
-    
+    import pdb;pdb.set_trace()
     response_data = {
         'message': 'New Player Added',
         'player': PlayerSerializer(player).data
