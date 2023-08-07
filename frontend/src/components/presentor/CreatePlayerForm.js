@@ -36,7 +36,7 @@ const CreatePlayerForm = () => {
       // THEN convert it to JSON
       // THEN print
       // fetch().then().then()
-      fetch('/api/create-players/', requestOptions 
+      fetch('/players/create-players/', requestOptions 
         ).then((response)=>{
         
         if(response.status === 200){
@@ -68,13 +68,12 @@ const CreatePlayerForm = () => {
       method: "POST",
       headers: {"Content-Type":"application/json"},
       body: JSON.stringify({
-          player_first : first,
-          player_last: last,
-          player_height_ft: heightFt,
-          player_height_in: heightIn,
-          player_weight: weight,
+          first_name : first,
+          last_name: last,
+          height_ft: heightFt,
+          height_in: heightIn,
+          weight: weight,
           origin: origin,
-          age: age,
         })
       };
     

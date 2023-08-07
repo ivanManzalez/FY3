@@ -54,7 +54,7 @@ class CreatePlayerView(APIView): ## CreateAPIView
                     origin = origin,
                   )
     player.save()
-    import pdb;pdb.set_trace()
+
     response_data = {
         'message': 'New Player Added',
         'player': PlayerSerializer(player).data
