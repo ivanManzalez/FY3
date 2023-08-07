@@ -38,7 +38,6 @@ const CreatePlayerForm = () => {
       // fetch().then().then()
       fetch('/players/create-players/', requestOptions 
         ).then((response)=>{
-        
         if(response.status === 200){
             clearFields();
             setClassname("good");
@@ -80,6 +79,7 @@ const CreatePlayerForm = () => {
     createPlayerAPI(requestOptions);
       
     };
+
   const handlePlayerFirstChange = (e) => {
     setFirst(e.target.value);
   };

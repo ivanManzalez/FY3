@@ -18,6 +18,20 @@ git branch -d localBranchName
 // delete branch remotely
 git push origin --delete remoteBranchName
 
+// switch unstaged changes to a new branch
+https://css-tricks.com/git-switching-unstaged-changes-to-a-new-branch/
+
+git status
+git stash --include-untracked
+git checkout master
+git pull
+git branch content/sharis
+git checkout content/sharis
+git stash pop
+
+or 
+
+git switch -c new-branch
 
 #####################################################
 ## Virtual Machine ##################################
