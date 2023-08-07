@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'players.apps.PlayersConfig',
     'teams.apps.TeamsConfig',
+    'games.apps.GamesConfig',
     # 'authentication.apps.HomeConfig',
 
     #### Default Apps Included
