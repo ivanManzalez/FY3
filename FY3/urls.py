@@ -21,11 +21,13 @@ urlpatterns = [
     ## and include urls within home app
     ## do not need to add new path() for each URL in home.urls
 	path('', include('frontend.urls')),
+<<<<<<< HEAD
     path('api/', include('api.urls')), #delete?
+=======
+>>>>>>> dev
     path('admin/', admin.site.urls),
     path('players/', include('players.urls')),
     path('teams/', include('teams.urls')),
     # path("auth/", include("django.contrib.auth.urls")),  # needed?
-    # path('', home.urls, name='index')
 
 ]

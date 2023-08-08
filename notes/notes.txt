@@ -286,8 +286,22 @@ By moving the Navbar component outside the Routes component, you ensure that the
 
 Here's the updated code structure:
 #####################################################
-## Importing modules                     ############
+## POSTGRESQL DB                        ############
 #####################################################
+
+-- run postgres db server? --
+psql -h localhost -U iamancia -d fy3_db
+
+-- wipe db --
+DO $$ 
+DECLARE 
+   r RECORD; 
+BEGIN 
+   FOR r IN (SELECT tablename FROM pg_tables WHERE schemaname = 'public') 
+   LOOP 
+      EXECUTE 'DROP TABLE IF EXISTS ' || quote_ident(r.tablename) || ' CASCADE'; 
+   END LOOP; 
+END $$;
 
 #####################################################
 ##  Users/Roles                          ############

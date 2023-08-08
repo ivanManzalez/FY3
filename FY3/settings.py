@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -34,13 +35,10 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
 
     #### Personal Apps
-    'home.apps.HomeConfig',
-    'api.apps.ApiConfig', ## from api.apps.py
     'rest_framework',
     'players.apps.PlayersConfig',
     'teams.apps.TeamsConfig',
     'games.apps.GamesConfig',
-    # 'authentication.apps.HomeConfig',
 
     #### Default Apps Included
     'django.contrib.admin',
@@ -49,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_extensions',
 
 ]
 
@@ -90,8 +89,11 @@ WSGI_APPLICATION = 'FY3.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'HOST': config('DB_HOST'),
+        'PORT': config('DB_PORT'),
     }
 }
 
