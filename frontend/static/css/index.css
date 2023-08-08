@@ -1,5 +1,6 @@
 @import './navigator.css';
 @import './form.css';
+@import './commissioner.css'
 /*********************************/
 
 :root {
@@ -19,12 +20,12 @@ html,body{
 }
 
 #main{
-  position:fixed;
+  /*position:fixed;*/
   width: 100%;
   height: 100%;
   left: 0;
   top:0;
-  background-color: blue;
+  background-color: grey;
 }
 
 #app{
@@ -41,9 +42,9 @@ html,body{
   /*text-align: center;*/
 }
 
-.good{
-  background-color: var(--good);
-}
 .bad{
-  background-color: var(--bad);
+  background-color: #8B0000;
+}
+.good{
+  background-color: #66ff00;
 }

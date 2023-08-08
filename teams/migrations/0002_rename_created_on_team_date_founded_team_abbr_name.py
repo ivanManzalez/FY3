@@ -18,6 +18,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='team',
             name='abbr_name',
-            field=models.CharField(default='change', max_length=5),
+            field=models.CharField(default=None, max_length=5),
         ),
     ]
