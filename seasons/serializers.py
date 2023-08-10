@@ -13,7 +13,7 @@ class SeasonSerializer(serializers.ModelSerializer):
       'champions',
       'MVP' 
       'FourthMOTY'
-      'DPOY' ,
+      'DPOY',
       'ROTY',
       'MDP' ,
       'AMVP' ,
