@@ -23,6 +23,8 @@ urlpatterns = [
 	path('', include('frontend.urls')),
     path('admin/', admin.site.urls),
     path('players/', include('players.urls')),
+    path('teams/', include('teams.urls')),
+    path('seasons/', include('seasons.urls')),
     # path("auth/", include("django.contrib.auth.urls")),  # needed?
 
 ]
