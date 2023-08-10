@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models.player import Season
+from .models.season import Season
 
 # in order to map DB values to JSON values
 class SeasonSerializer(serializers.ModelSerializer):
@@ -14,7 +14,7 @@ class SeasonSerializer(serializers.ModelSerializer):
       'MVP' 
       'FourthMOTY'
       'DPOY' ,
-      'ROT'Y,
+      'ROTY',
       'MDP' ,
       'AMVP' ,
       'All_Off_First_01' ,
