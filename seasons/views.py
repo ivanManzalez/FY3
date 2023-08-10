@@ -7,7 +7,7 @@ from rest_framework.response import Response #send custom response from view
 
 from .serializers import SeasonSerializer, CreateSeasonSerializer
 
-from .models.player import Season
+from .models.season import Season
 
 class SeasonsView(generics.ListAPIView): ## CreateAPIView
   queryset = Season.objects.all()
@@ -44,7 +44,7 @@ class CreateSeasonView(APIView): ## CreateAPIView
       return Response({'message':'Season already exists'}, status=status.HTTP_409_CONFLICT) # message = Conflict
       
     
-    season = Player(season_year = season_year,
+    season = Season(season_year = season_year,
                     start_date = start_date)
     season.save()
 

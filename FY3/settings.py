@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'players.apps.PlayersConfig',
     'teams.apps.TeamsConfig',
     'games.apps.GamesConfig',
+    'seasons.apps.SeasonsConfig',
 
     #### Default Apps Included
     'django.contrib.admin',
