@@ -106,8 +106,8 @@ return (
   <div >
     <h3> Create Player </h3>
     <h5> Add player details then click submit </h5>
-    <div id="message" class={classname}>{message && <p>{message}</p>}</div>
-    <form id="create-player-form" class='form centre'>
+    <div id="message" className={classname}>{message && <p>{message}</p>}</div>
+    <form id="create-player-form" className='form centre'>
     
     <TextField id={"player_first"} field={"Player First Name"} handler={handlePlayerFirstChange} value={first} />
     <TextField id={"player_last"} field={"Player Last Name"} handler={handlePlayerLastChange} value={last} /> 
@@ -126,10 +126,10 @@ return (
 ////////////////////////
 const TextField = (props) => {
   return(
-    <div class = "entryarea">
+    <div className = "entryarea">
       {/*<label>{props.field}</label>*/}
-      <input class = "inputter" type="text" id={props.id} value={props.value} onChange={props.handler} required/>
-      <div class="labelline">{"Enter " + props.field}</div>
+      <input className = "inputter" type="text" id={props.id} value={props.value} onChange={props.handler} required/>
+      <div className="labelline">{"Enter " + props.field}</div>
     </div>
     )
 }
@@ -137,10 +137,10 @@ const TextField = (props) => {
 ////////////////////////
 const NumberField = (props) => {
   return(
-    <div class = "entryarea">
+    <div className = "entryarea">
       {/*<label>{props.field}</label>*/}
-      <input class = "inputter" type="number" id={props.id} value={props.value} onChange={props.handler} required/>
-      <div class="labelline">{"Enter " + props.field}</div>
+      <input className = "inputter" type="number" id={props.id} value={props.value} onChange={props.handler} required/>
+      <div className="labelline">{"Enter " + props.field}</div>
     </div>
     )
 }

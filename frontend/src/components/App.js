@@ -11,6 +11,7 @@ import Standings from "./presentor/Standings";
 import Stats from "./presentor/Stats";
 import Api from "./presentor/Api";
 import PlayerProfile from "./presentor/PlayerProfile"
+import Login from "./presentor/Login"
 
 // NAV
 import Navbar from "./navigator/Bar";
@@ -35,6 +36,7 @@ export default class App extends Component{
       <Routes>
         <Route exact path="/" element={<Home name="Larry"/>} />
         <Route path="/commissioner" element={<Commissioner/>} />
+        <Route path="/login" element={<Login/>} />
         <Route path="/playerprofile/:playerID" element={<PlayerProfile/>} />
       </Routes>
     </Router>

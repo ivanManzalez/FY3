@@ -330,7 +330,7 @@ BEGIN
 END $$;
 
 #####################################################
-##  Users/Roles                          ############
+##  User authentication in Django        ############
 #####################################################
 
 Role Types:
@@ -338,6 +338,28 @@ Role Types:
 	- Player
 	- GM
 	- Spectator
+
+The auth system consists of:
+
+> Users
+> Permissions: Binary (yes/no) flags designating whether a user may perform a certain task.
+> Groups: A generic way of applying labels and permissions to more than one user.
+> Configurable password hashing system
+> Forms and view tools for logging in users, or restricting content
+> Pluggable backend system
+
+doesn’t provide:
+> Password strength checking
+> Throttling of login attempts
+> Authentication against third-parties (OAuth, for example)
+> Object-level permissions
+
+django.contrib.auth & .contenttypes already included in INSTALLED_APPS 
+SessionMiddleware & AuthenticationMiddleware already included in MIDDLEWARE
+
+
+
+
 
 
 =====================================================
