@@ -32,4 +32,7 @@ module.exports = {
       },
     }),
   ],
+  resolve: {
+    extensions: [".js", ".jsx"], // Add ".jsx" to the list of extensions
+  },
 }
