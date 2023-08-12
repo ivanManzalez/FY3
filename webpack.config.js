@@ -2,10 +2,16 @@ const path = require("path");
 const webpack = require("webpack");
 
 module.exports = {
+  devServer: {
+    hot: true,
+  },
   entry : "./frontend/src/index.js",
   output : {
     path: path.resolve(__dirname, "frontend/static/frontend"),
     filename: "[name].js",
+  },
+  resolve: {
+    extensions: [".js", ".jsx"], // Add ".jsx" to the list of extensions
   },
   module: {
     rules: [

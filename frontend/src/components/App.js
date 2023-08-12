@@ -33,7 +33,7 @@ export default class App extends Component{
     <Router>
     <Navbar/>
       <Routes>
-        <Route exact path="/" element={<Home name="larry"/>} />
+        <Route exact path="/" element={<Home name="Larry"/>} />
         <Route path="/commissioner" element={<Commissioner/>} />
         <Route path="/playerprofile/:playerID" element={<PlayerProfile/>} />
       </Routes>
@@ -43,7 +43,7 @@ export default class App extends Component{
 }
 
 const appDiv = document.getElementById("app");
-render(<App name="larry" />, appDiv);
+render(<App />, appDiv);
 
 //
   {/*

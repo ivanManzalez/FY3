@@ -6,4 +6,4 @@ __pycache__/
 db.sqlite3*
 .env
 .DS_Store
-frontend/static/frontend/main.js.LICENSE.txt
+static/frontend/
