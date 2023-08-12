@@ -38,6 +38,9 @@ class SeasonAwardsSerializer(serializers.ModelSerializer):
       'all_def_second_1',
       'all_def_second_2',
       'all_def_second_3',
+      'all_def_third_1',
+      'all_def_third_2',
+      'all_def_third_3',
     )
 
 # in order to map JSON values to python format
