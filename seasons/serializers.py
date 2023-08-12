@@ -11,35 +11,33 @@ class SeasonSerializer(serializers.ModelSerializer):
       'start_date',
       'end_date',
       'champions',
-      'MVP' 
-      'FourthMOTY'
-      'DPOY' ,
-      'ROT',
-      'MDP' ,
-      'AMVP' ,
-      'All_Off_First_01' ,
-      'All_Off_First_02' ,
-      'All_Off_First_03' ,
-      
-      'All_Off_Second_01' ,
-      'All_Off_Second_02' ,
-      'All_Off_Second_03' ,
-      
-      'All_Off_Third_01' ,
-      'All_Off_Third_02' ,
-      'All_Off_Third_03' ,
-      
-      'All_Def_First_01' ,
-      'All_Def_First_02' ,
-      'All_Def_First_03' ,
-
-      'All_Def_Second_01' ,
-      'All_Def_Second_02' ,
-      'All_Def_Second_03' ,
-
-      'All_Def_Third_01' ,
-      'All_Def_Third_02' ,
-      'All_Def_Third_03' ,
+    )
+  
+class SeasonAwardsSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = Season
+    fields = (
+      'mvp',
+      'fourth_moty',
+      'dpoy',
+      'roty',
+      'mdp',
+      'amvp',
+      'all_off_first_1',
+      'all_off_first_2',
+      'all_off_first_3',
+      'all_off_second_1',
+      'all_off_second_2',
+      'all_off_second_3',
+      'all_off_third_1',
+      'all_off_third_2',
+      'all_off_third_3',
+      'all_def_first_1',
+      'all_def_first_2',
+      'all_def_first_3',
+      'all_def_second_1',
+      'all_def_second_2',
+      'all_def_second_3',
     )
 
 # in order to map JSON values to python format
