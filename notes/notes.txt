@@ -101,6 +101,32 @@ makemigrations -- which is responsible for creating new migrations based on the 
 sqlmigrate -- which displays the SQL statements for a migration.
 showmigrations -- which lists a project’s migrations and their status.
 
+
+#####################################################
+## Webpack Issue     ######################
+#####################################################
+
+
+sh: webpack: command not found
+
+Command Search in the Terminal: 
+When you type a command in the terminal and hit Enter, the computer looks for that command in specific places on your system. These places are defined by something called the "PATH".
+
+Global vs Local Commands:
+>> Global Commands: Some commands, like webpack, can be installed globally on your system. This means they are available no matter which folder you're in. You install them once, and you can use them from anywhere.
+>> Local Commands: Some commands are specific to a particular project. They are installed inside that project's folder and are only available when you're inside that folder.
+
+Changing Directories: 
+When you move your project files from one folder to another, the "PATH" the system uses to look for commands might change. So, a command that worked before might not work if the 
+PATH isn't set up to find it in the new location.
+
+Solution Options:
+>> Install Globally: You can install webpack globally, so it's available no matter where you are. This is done using 'npm install -g webpack' in the terminal.
+>> Use npx: If you don't want to install globally, you can use npx before the command. It helps run commands that are not globally installed. For example, "npm install webpack webpack-cli --save-dev"
+
+Best Practice: 
+It's a good idea to manage your project's tools and dependencies locally (inside the project's folder) rather than relying on global installations. This way, your project remains self-contained and doesn't rely on specific global setups.
+
 #####################################################
 ## Applications and Routes     ######################
 #####################################################

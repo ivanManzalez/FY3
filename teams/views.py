@@ -46,8 +46,7 @@ class CreateTeamView(APIView): ## CreateAPIView
     
     team = Team(team_name = team_name,
                 abbr_name = abbr_name,
-                division_ind = division_ind,
-                )
+                division_ind = division_ind)
     team.save()
     
     message = 'New Team, '+team_name+', added'

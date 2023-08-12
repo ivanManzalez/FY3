@@ -102,7 +102,7 @@ const CreatePlayerForm = () => {
     setAge(e.target.value);
   };
 
-console.log(classname);
+console.log('render player form');
 return (
   <div >
     <h3> Create Player </h3>

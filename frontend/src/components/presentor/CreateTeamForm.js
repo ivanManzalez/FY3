@@ -79,7 +79,7 @@ const CreateTeamForm = () => {
     setDivisionInd(e.target.value);
   };
 
-console.log(classname);
+console.log('render team form');
 
 return (
   <div >

@@ -38,8 +38,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'players.apps.PlayersConfig',
     'teams.apps.TeamsConfig',
-    'games.apps.GamesConfig',
     'seasons.apps.SeasonsConfig',
+    'games.apps.GamesConfig',
 
     #### Default Apps Included
     'django.contrib.admin',

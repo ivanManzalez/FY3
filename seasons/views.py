@@ -50,12 +50,12 @@ class CreateSeasonView(APIView): ## CreateAPIView
 
     response_data = {
         'message': 'New Season Added',
-        'player': SeasonSerializer(season).data
+        'season': SeasonSerializer(season).data
     }
 
     return Response(response_data, status=status.HTTP_200_OK)
 
-class seasonProfileView(APIView):
+class SeasonProfileView(APIView):
     """
     Retrieve, update or delete a snippet instance.
     """
