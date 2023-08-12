@@ -19,7 +19,3 @@ class Player(models.Model):
 
 	def __str__(self):
 		return self.first_name + " " + self.last_name
-
-	# @property
-	# def get_total_pts(self):
-	# 	return GameStat.objects.filter(player=self.id).annotate(total_pts = sum('points'))
