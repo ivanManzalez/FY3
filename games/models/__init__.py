@@ -1,2 +1,2 @@
 from .game import Game
-from .season import Season
+from .game_stats import GameStats
