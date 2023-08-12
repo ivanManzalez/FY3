@@ -2,7 +2,6 @@ import React, {useState} from "react";
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 
-
 const CreatePlayerForm = () => {
 
   // set form field init values
@@ -145,7 +144,5 @@ const NumberField = (props) => {
     </div>
     )
 }
-
-
 
 export default CreatePlayerForm;

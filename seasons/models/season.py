@@ -7,12 +7,12 @@ from players.models.player import Player
 
 
 class Season(models.Model):
-  current_date = timezone.now()
-  season_year = models.PositiveIntegerField(default=current_date.year, validators=[MaxValueValidator(current_date.year)])
+  current_date = timezone.now
+  season_year = models.PositiveIntegerField(default=current_date().year, validators=[MaxValueValidator(current_date().year)])
   start_date = models.DateTimeField(default=current_date)
-  end_date = models.DateTimeField(default=None)
-  
-  champions = models.ForeignKey(Team, default = None, on_delete=models.CASCADE)
+  end_date = models.DateTimeField(default=None, null=True, validators=[MinValueValidator(current_date)])
+
+  champions = models.ForeignKey(Team, default = None, null=True, on_delete=models.CASCADE)
   
   # create awards table? 
 
