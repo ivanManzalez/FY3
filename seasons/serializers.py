@@ -13,7 +13,7 @@ class SeasonSerializer(serializers.ModelSerializer):
       'champions',
     )
   
-class SeasonAwardsSerializer(serializers.ModelSerializer):
+class SeasonAwardSerializer(serializers.ModelSerializer):
   class Meta:
     model = Season
     fields = (

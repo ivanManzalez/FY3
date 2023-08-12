@@ -1,6 +1,6 @@
 from django.db import models
 from teams.models.team import Team
-from .season import Season
+from seasons.models.season import Season
 
 class Game(models.Model):
   played_on = models.DateField(verbose_name="YYYY-MM-DD")

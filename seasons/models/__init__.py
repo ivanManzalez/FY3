@@ -1,2 +1,2 @@
 from .season import Season
-from .season_awards import SeasonAwards
+from .season_award import SeasonAward

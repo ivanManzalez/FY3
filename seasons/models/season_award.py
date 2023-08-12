@@ -2,7 +2,7 @@ from django.db import models
 from .season import Season
 from players.models import Player
 
-class SeasonAwards(models.Model):
+class SeasonAward(models.Model):
   season = models.ForeignKey(Season, default = None, on_delete=models.CASCADE)
 
   mvp = models.ForeignKey(Player, default = None, on_delete=models.CASCADE, related_name="mvp_award", help_text="Most Valuable Player")
