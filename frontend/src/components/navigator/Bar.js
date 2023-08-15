@@ -16,6 +16,7 @@ export default class Bar extends Component{
         <li><Link to="/stats">Stats</Link></li>
         <li><Link to="/schedule">Schedule</Link></li>
         <li><Link to="/login">Login</Link></li>
+        <li><Link to="/signup">Signup</Link></li>
         <li><a href="http://127.0.0.1:8000/players/player">API</a></li>
       </ul>
     </nav>

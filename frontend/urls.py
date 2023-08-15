@@ -12,7 +12,7 @@ urlpatterns = [
   path("stats/", index),
   path("playerprofile/<int:player_id>", index),
   # authentication
-  path("signin/", index),
+  path("login/", index),
   path("signup/", index),
   
  ]

@@ -1,35 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Route, Navigate } from 'react-router-dom';
+import {useAuth} from '../../contexts/AuthContext';
 
-const PrivateRoute = ({component: Component, requiredPermission, isAuthenticated}) => {
-  const [userPermissions, setUserPermissions] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  // TODO: API call to fetch user permissions
-  useEffect(() => {
-    // Replace with your API call logic
-    // For demonstration, let's assume this API returns permissions in an array
-    fetch('users/userperms')  // Adjust the API endpoint
-      .then(response => response.json())
-      .then(data => {
-        setUserPermissions(data.permissions);
-        setLoading(false);
-      })
-      .catch(error => console.error('Error fetching permissions:', error));
-  }, []);
-
-  // set users permissions
-  const hasRequiredPermission = userPermissions.includes(requiredPermission);
-
-  if (loading) {
-    return <div>Loading...</div>;
-  } else if (!isAuthenticated) {
-    return <Navigate to="/login" />;
-  } else if (!hasRequiredPermission) {
-    return <div>You're authentic ... but you don't got permissions</div>;
-  } else {
-    return <Component />;
-  }
+const PrivateRoute = ({component: Component, ...rest}) => {
+  const { currentUser } = useAuth();
 };
 export default PrivateRoute;
 
