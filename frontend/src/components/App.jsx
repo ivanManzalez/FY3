@@ -1,6 +1,11 @@
-import React, { Component } from "react";
+import React, { Component, useState, useEffect } from "react";
 import { render } from "react-dom";
 import {BrowserRouter as Router, Routes, Route, Link, Redirect} from "react-router-dom";
+
+// Authentication
+import FirebaseAuth from "./FirebaseAuth";
+import firebase from 'firebase/app';
+import 'firebase/auth';
 
 // VIEWS or PAGES
 // how to clean this up?
@@ -15,34 +20,21 @@ import Login from "./presentor/Login"
 
 // NAV
 import Navbar from "./navigator/Bar";
+import PrivateRoute from "./navigator/PrivateRoute";
 
-export default class App extends Component{
-  constructor(props){
-    super(props);
-    this.state ={
-      // whenever a state is changed, 
-      // react rerenders that component
-      // Current Season
-      // League Leaders (?)
-      // Next Event (?)
-    }
-  }
-// pass properties (props) in usr-defined tags
-// Add path name to frontend.urls file
-  render() {
+const App = () => {
   return (
     <Router>
     <Navbar/>
       <Routes>
+        <Route path="/login" element={<FirebaseAuth />} isAuthenticated={isAuthenticated} />
         <Route exact path="/" element={<Home name="Larry"/>} />
-        <Route path="/commissioner" element={<Commissioner/>} />
-        <Route path="/login" element={<Login/>} />
         <Route path="/playerprofile/:playerID" element={<PlayerProfile/>} />
+        <Route path="/commissioner" element={<PrivateRoute component={<Commissioner />} requiredPermission="is_commissioner" />} />
       </Routes>
     </Router>
     );
-}
-}
+  }
 
 const appDiv = document.getElementById("app");
 render(<App />, appDiv);

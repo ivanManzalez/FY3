@@ -1,6 +1,7 @@
 @import './navigator.css';
 @import './form.css';
-@import './commissioner.css'
+@import './commissioner.css';
+@import './login.css';
 /*********************************/
 
 :root {
