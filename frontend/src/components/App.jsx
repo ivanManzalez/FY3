@@ -3,9 +3,6 @@ import { render } from "react-dom";
 import {BrowserRouter as Router, Routes, Route, Link, Redirect} from "react-router-dom";
 
 // Authentication
-import FirebaseAuth from "./FirebaseAuth";
-import firebase from 'firebase/app';
-import 'firebase/auth';
 
 // VIEWS or PAGES
 // how to clean this up?
@@ -15,8 +12,9 @@ import Schedule from "./presentor/Schedule";
 import Standings from "./presentor/Standings";
 import Stats from "./presentor/Stats";
 import Api from "./presentor/Api";
-import PlayerProfile from "./presentor/PlayerProfile"
-import Login from "./presentor/Login"
+import PlayerProfile from "./presentor/PlayerProfile";
+import SignIn from "./auth/SignIn";
+import SignUp from "./auth/SignUp";
 
 // NAV
 import Navbar from "./navigator/Bar";
@@ -27,10 +25,11 @@ const App = () => {
     <Router>
     <Navbar/>
       <Routes>
-        <Route path="/login" element={<FirebaseAuth />} isAuthenticated={isAuthenticated} />
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/signup" element={<SignUp />} />
         <Route exact path="/" element={<Home name="Larry"/>} />
-        <Route path="/playerprofile/:playerID" element={<PlayerProfile/>} />
-        <Route path="/commissioner" element={<PrivateRoute component={<Commissioner />} requiredPermission="is_commissioner" />} />
+        {/*<Route path="/playerprofile/:playerID" element={<PlayerProfile/>} />*/}
+        {/*<Route path="/commissioner" element={<PrivateRoute component={<Commissioner />} requiredPermission="is_commissioner" />} />*/}
       </Routes>
     </Router>
     );

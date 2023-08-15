@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component, useState, useEffect } from "react";
 
 const SignIn = () => {
   // set form field init values
@@ -20,7 +20,7 @@ const SignIn = () => {
 
   return (
     <div id="sign-in-container">
-      <h3> Create User </h3>
+      <h3> Sign In </h3>
 
       <form id="sign-in-form" className='form'>
         <TextField id={"username"} field={"Username"} handler={handleUsernameChange} value={username} />

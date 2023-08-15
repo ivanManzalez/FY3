@@ -12,8 +12,8 @@ urlpatterns = [
   path("stats/", index),
   path("playerprofile/<int:player_id>", index),
   # authentication
-  path("login/", index),
-  path("logout/", index),
+  path("signin/", index),
+  path("signup/", index),
   
  ]
 
