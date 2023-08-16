@@ -1,6 +1,7 @@
 // Import the functions you need from the SDKs you need
 import firebase from "firebase/app"
-import "firebase/auth"
+import "firebase/auth";
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -17,12 +18,14 @@ const firebaseConfig = {
   appId: process.env.REACT_APP_FIREBASE_APPID,
   measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENTID
 };
-// Initialize Firebase
+// Initialize Firebase - All firebase connections
 const app = firebase.initializeApp(firebaseConfig);
+// Google Provider
+export const googleProvider = new firebase.auth.GoogleAuthProvider();
+// Authentication instance - All Authentication code
+export const auth = app.auth();
 
-// Authentication instance
-export const auth = app.auth() ;
 // Firebase Instance
-export default app;
+// export default app;
 
 //////////////////////////////////////////////////////////// 
