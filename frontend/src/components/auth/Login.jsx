@@ -1,36 +1,37 @@
 import React, { Component, useState, useEffect } from "react";
 import {useAuth} from '../../contexts/AuthContext';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate, useLocation} from 'react-router-dom';
 
 const Login = () => {
-  const [loginRedirect, setLoginRedirect] = useState("/");
   // set form field init values
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // pull sign up functino directly from AuthContext.js
+  // pull login function directly from AuthContext.js
   const {login, currentUser} = useAuth();
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   // Event handlers
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
+    // TODO: how to check that email is properly formatted?
   };
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
-    // does password only contain valid characters?
+    // TODO: how to check that password contains only valid characters?
   };
   const handleLoginButton = async (e) => {
     e.preventDefault();
     setLoading(true);
-
+    // TODO: How to handle response payload to display specific user errs?
     try{
       setMessage('');
       await login(email, password); //Login
-      navigate(loginRedirect) // redirect
-      console.log('message');
-      console.log(message);
+      const redirectPath = location.state?.from || '/';
+      console.log("redirect set to -> "+redirectPath)
+      navigate(redirectPath);
     }catch{
       setMessage('Failed to sign in'); 
     }

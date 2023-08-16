@@ -1,14 +1,29 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
+import { Link, useNavigate} from 'react-router-dom';
+import {useAuth} from '../../contexts/AuthContext';
 
-export default class Home extends Component{
-  constructor(props){
-    super(props);
+
+const Home = (props) => {
+  const [error, setError] = useState('');
+  const {currentUser, logout} = useAuth();
+  const [logoutRedirect, setLogoutRedirect] = useState("login/");
+  const navigate = useNavigate();
+
+  const handleLogout = async () =>{
+    setError('');
+    try{
+      await logout();
+      navigate(logoutRedirect) // redirect
+    }catch{
+      setError('Failed to logout');
+    }
   }
-
-  render(){
-    return(
-    <h1>This is {this.props.name}'s Home page</h1>
+  return(
+    <div>
+      <h1>This is {props.name}'s Home page</h1>
+      <Link to="/login" ><button onClick={handleLogout}>Logout</button></Link>
+    </div>
     );
-  }
-}
-{/*<h1>this is {this.props.name}'s home page1</h1>*/}
+};
+
+export default Home;
