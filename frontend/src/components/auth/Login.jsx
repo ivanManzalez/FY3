@@ -1,13 +1,14 @@
 import React, { Component, useState, useEffect } from "react";
 import {useAuth} from '../../contexts/AuthContext';
 import {useNavigate, useLocation} from 'react-router-dom';
+import GoogleLogin from './GoogleLogin';
 
 const Login = () => {
   // set form field init values
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   // pull login function directly from AuthContext.js
-  const {login, currentUser} = useAuth();
+  const {login} = useAuth();
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -48,6 +49,7 @@ const Login = () => {
         <TextField id={"email"} field={"Email"} handler={handleEmailChange} value={email} />
         <TextField id={"password"} field={"Password"} handler={handlePasswordChange} value={password} />
         <button type='submit' placeholder="Login" disabled={loading} onClick={handleLoginButton}> Login </button>
+        <GoogleLogin />
       </form>
     </div>
   );

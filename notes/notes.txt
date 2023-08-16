@@ -31,7 +31,11 @@ git stash pop
 
 or 
 
-git switch -c new-branch
+git switch -c <new-branch>
+
+Remove untracked changes:
+git clean -f
+
 
 #####################################################
 ## Virtual Machine ##################################
