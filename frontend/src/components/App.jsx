@@ -3,7 +3,7 @@ import {BrowserRouter as Router, Routes, Route, Link, Redirect} from "react-rout
 
 import Home from "./presentor/Home";
 import Commissioner from "./presentor/Commissioner";
-import Navbar from "./navigator/Navbar";
+import Navbar from "./navigator/Sidebar";
 import Layout from "./navigator/Layout";
 
 const App = () => {

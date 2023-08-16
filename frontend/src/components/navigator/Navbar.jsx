@@ -1,73 +1,76 @@
-import React from "react";
+import React, {useState} from "react";
 import { Link } from "react-router-dom";
-import { Drawer, CssBaseline, List, ListItem, ListItemText } from "@mui/material";
+import { AppBar, Toolbar, Grid, Avatar, Menu, MenuItem } from "@mui/material";
 import { styled } from "@mui/system";
+import SettingsIcon from "./SettingsIcon";
 
-const Sidebar = styled(Drawer)(({ theme }) => ({
-  width: "300px",
-  flexShrink: 0,
-  "& .MuiDrawer-paper": {
-    width: "250px",
-    backgroundColor:"#333",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-between",
-    height: "100%", 
-  },
+const StyledAppBar = styled(AppBar)(({ theme }) => ({
+  backgroundColor: '#090619',
 }));
 
-const StyledLink = styled(Link)({
-  color: 'white',
-  textDecoration: 'none',
+const SearchBar = styled("input")({
+  border: "solid 1px rgba(255,255,255,0.4)",
+  color: "rgba(255,255,255,0.6)",
+  background: "none",
+  borderRadius: "18px",
+  padding: "10px",
+  transition: "background-color 0.3s ease-in-out", 
+  outline: "none",
+  width:'200px',
+
+  '&:focus': {
+      border: "solid 1px rgb(255,255,255,0.6)",
+    },
+  
   '&:hover': {
-    color: 'white',
-    textDecoration: 'none',
+    border: "solid 1px rgb(255,255,255,0.6)",
   },
+  '::placeholder': {
+      color: 'rgba(255, 255, 255, 0.4)', 
+    },
 });
 
 const Navbar = () => {
-  const list = (
-    <List>
-      <ListItem button >
-        <ListItemText primary={<StyledLink to="/">Home</StyledLink>} />
-      </ListItem>
-      <ListItem button>
-        <ListItemText primary={<StyledLink to="/commissioner">Commissioner</StyledLink>} />
-      </ListItem>
-      <ListItem button>
-        <ListItemText primary={<StyledLink to="/standings">Standings</StyledLink>} />
-      </ListItem>
-      <ListItem button>
-        <ListItemText primary={<StyledLink to="/stats">Stats</StyledLink>} />
-      </ListItem>
-      <ListItem button>
-        <ListItemText primary={<StyledLink to="/schedule">Schedule</StyledLink>} />
-      </ListItem>
-    </List>
-  );
+  const [menuAnchor, setMenuAnchor] = useState(null);
 
-  const settingsAndProfile = (
-    <List>
-      {/* Settings link */}
-      <ListItem button>
-        <ListItemText primary={<StyledLink to="/settings">Settings</StyledLink>} />
-      </ListItem>
-      {/* User profile link */}
-      <ListItem button>
-        <ListItemText primary={<StyledLink to="/profile">User Profile</StyledLink>} />
-      </ListItem>
-    </List>
-  );
+  const handleMenuOpen = (event) => {
+    setMenuAnchor(event.currentTarget);
+  };
 
-
+  const handleMenuClose = () => {
+    setMenuAnchor(null);
+  };
   return (
-    <React.Fragment>
-      <CssBaseline />
-      <Sidebar variant="permanent">
-        {list}
-        <div>{settingsAndProfile}</div>
-      </Sidebar>
-    </React.Fragment>
+    <StyledAppBar position="fixed">
+      <Toolbar>
+        <Grid container alignItems="center" justifyContent="flex-end">
+        <SearchBar placeholder="Search here..." style={{marginRight:'30px'}}/>
+        <Link to="/settings">
+          <SettingsIcon 
+            width={"24px"}
+            height={"24px"} 
+            fill={"none"} 
+            color={"rgba(255,255,255,0.7)"} 
+            style={{ cursor: "pointer" }}
+          />
+        </Link>
+        <Avatar
+            alt="User Profile"
+            src="/path-to-profile-image.png"
+            onClick={handleMenuOpen}
+            style={{ cursor: "pointer", marginLeft:'15px'}}
+          />
+          <Menu
+            anchorEl={menuAnchor}
+            open={Boolean(menuAnchor)}
+            onClose={handleMenuClose}
+          >
+            <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+            <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
+          </Menu>
+        </Grid>
+      </Toolbar>
+    </StyledAppBar>
   );
 };
 
