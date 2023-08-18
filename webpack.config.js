@@ -35,4 +35,7 @@ module.exports = {
   plugins: [
     new Dotenv(),
   ],
+  resolve: {
+    extensions: [".js", ".jsx"], // Add ".jsx" to the list of extensions
+  },
 }

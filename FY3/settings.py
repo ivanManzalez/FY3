@@ -136,8 +136,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    BASE_DIR/'frontend/static',#for files found in django app
-    # BASE_DIR/'frontend/build/static', #for files found in react app
+    BASE_DIR/'frontend/static'
 ]
 
 # Default primary key field type

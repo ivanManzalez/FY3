@@ -51,4 +51,3 @@ render(<App />, appDiv);
   <Route path="/api/players" element={<Api/>}/>
   <Route path="/schedule" element={<Schedule/>} />
   <Route path="/stats" element={<Stats/>} />*/}
-        
