@@ -1,22 +1,53 @@
-import React from "react";
+// Functionality
+import React, { Component, useState, useEffect } from "react";
+import { render } from "react-dom";
 import {BrowserRouter as Router, Routes, Route, Link, Redirect} from "react-router-dom";
-
+import {AuthProvider} from "../contexts/AuthContext";
+// Views/Pages
+// how to clean this up?
 import Home from "./presentor/Home";
 import Commissioner from "./presentor/Commissioner";
-import Navbar from "./navigator/Sidebar";
-import Layout from "./navigator/Layout";
+
+// Authentication
+import Login from "./auth/Login";
+import SignUp from "./auth/SignUp";
+
+// Navigation
+import Navbar from "./navigator/Bar";
+import PrivateRoute from "./navigator/PrivateRoute";
 
 const App = () => {
+
   return (
     <Router>
-      <Layout>
-      {/* <Navbar/> */}
+    <Navbar />
+    <AuthProvider>
       <Routes>
-        <Route exact path="/" element={<Home name="larry"/>} />
-        <Route path="/commissioner" element={<Commissioner/>} />
+    {/*
+    Private Routes
+    - Add any private <Route/> within outter Route component
+    */}
+        <Route exact path='/' element={<PrivateRoute />}>
+          <Route index element={<Home name="Larry"/>}/>
+          <Route path="/commissioner" element={<Commissioner />}/>
+        </Route>
+    
+    {/*Public Routes*/}       
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
+
       </Routes>
-      </Layout>
+    </AuthProvider>
     </Router>
-  );
-};
-export default App;
+    );
+  }
+
+const appDiv = document.getElementById("app");
+render(<App />, appDiv);
+
+//
+  {/*
+  <Route path="/standings" element={<Standings/>} />
+  <Route path="/api/players" element={<Api/>}/>
+  <Route path="/schedule" element={<Schedule/>} />
+  <Route path="/stats" element={<Stats/>} />*/}

@@ -76,8 +76,8 @@ return (
   <div >
     <h3> Create Season </h3>
     <h5> Add season details then click submit </h5>
-    <div id="message" class={classname}>{message && <p>{message}</p>}</div>
-    <form id="create-season-form" class='form centre'>
+    <div id="message" className={classname}>{message && <p>{message}</p>}</div>
+    <form id="create-season-form" className='form centre'>
     
     <TextField id={"season_year"} field={"Season Year"} handler={handleSeasonYearChange} value={seasonYear} />
     <DateField id={"start_date"} field={"Season Start Date"} handler={handleSeasonStartDateChange} value={startDate} />

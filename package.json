@@ -31,6 +31,7 @@
     "@mui/styles": "^5.14.4",
     "@mui/system": "^5.14.4",
     "react-router-dom": "^5.0.1",
-    "react-toastify": "^8.0.0"
+    "react-toastify": "^8.0.0",
+    "firebase": "^8.10.1",
   }
 }
