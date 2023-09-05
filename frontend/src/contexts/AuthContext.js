@@ -1,13 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-<<<<<<< HEAD
 import { auth, googleProvider } from '../firebaseConfig';
 import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-=======
-// import firebase from 'firebase/app';
-import { auth } from '../firebaseConfig';
-import { onAuthStateChanged } from 'firebase/auth';
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
->>>>>>> dev
+
 
 // Create a context - to be used inside of Provider
 const AuthContext = createContext();
@@ -32,13 +26,10 @@ const AuthProvider = ({ children }) => {
   const login = (email, password) =>{
     return auth.signInWithEmailAndPassword(email, password);
   };
-<<<<<<< HEAD
   // use auth to login w/ Google
   const googleLogin = async () => {
     return auth.signInWithPopup(googleProvider);
   };
-=======
->>>>>>> dev
   // use auth to logout
   const logout = () =>{
     return auth.signOut();
@@ -57,10 +48,7 @@ const AuthProvider = ({ children }) => {
   const value = {
     currentUser,
     login,
-<<<<<<< HEAD
     googleLogin,
-=======
->>>>>>> dev
     logout,
     signup
   }
