@@ -7,20 +7,20 @@ import {AuthProvider} from "../contexts/AuthContext";
 // how to clean this up?
 import Home from "./presentor/Home";
 import Commissioner from "./presentor/Commissioner";
+import Layout from "./navigator/Layout";
 
 // Authentication
 import Login from "./auth/Login";
 import SignUp from "./auth/SignUp";
 
 // Navigation
-import Navbar from "./navigator/Bar";
 import PrivateRoute from "./navigator/PrivateRoute";
 
 const App = () => {
 
   return (
     <Router>
-    <Navbar />
+    <Layout>
     <AuthProvider>
       <Routes>
     {/*
@@ -38,17 +38,9 @@ const App = () => {
 
       </Routes>
     </AuthProvider>
+    </ Layout>
     </Router>
     );
   }
 
-const appDiv = document.getElementById("app");
-render(<App />, appDiv);
-
-//
-  {/*
-  <Route path="/standings" element={<Standings/>} />
-  <Route path="/api/players" element={<Api/>}/>
-  <Route path="/schedule" element={<Schedule/>} />
-  <Route path="/stats" element={<Stats/>} />*/}
-        
+export default App;
