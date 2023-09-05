@@ -1,6 +1,7 @@
 import React, { Component, useState, useEffect } from "react";
 import {useAuth} from '../../contexts/AuthContext';
 import {useNavigate, useLocation} from 'react-router-dom';
+import GoogleLogin from './GoogleLogin';
 
 const Login = () => {
   // set form field init values
@@ -48,6 +49,7 @@ const Login = () => {
         <TextField id={"email"} field={"Email"} handler={handleEmailChange} value={email} />
         <TextField id={"password"} field={"Password"} handler={handlePasswordChange} value={password} />
         <button type='submit' placeholder="Login" disabled={loading} onClick={handleLoginButton}> Login </button>
+        <GoogleLogin />
       </form>
     </div>
   );
