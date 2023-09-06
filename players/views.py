@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.http import Http404
 from rest_framework import generics, status
 from django.views.decorators.csrf import csrf_exempt
 
@@ -30,18 +31,19 @@ class CreatePlayerView(APIView): ## CreateAPIView
       self.request.session.create()
 
     serializer = self.serializer_class(data=request.data)
-    
+    message = 'Invalid request'
     if (not serializer.is_valid()): 
-      return Response({'message':'Invalid request'}, status=status.HTTP_406_NOT_ACCEPTABLE) # message = Bad Request
+      return Response({'message':message, 'status':status.HTTP_406_NOT_ACCEPTABLE}, status=status.HTTP_406_NOT_ACCEPTABLE)
     
     first_name = serializer.data.get('first_name')
     last_name = serializer.data.get('last_name')
     
       
     queryset = Player.objects.filter(first_name=first_name, last_name=last_name) 
+    message = first_name+ " "+ last_name +' already exists'
     # print(queryset.__str__())
     if (queryset.exists()):
-      return Response({'message':'Player already exists'}, status=status.HTTP_409_CONFLICT) # message = Conflict
+      return Response({'message': message, 'status': status.HTTP_409_CONFLICT}, status=status.HTTP_409_CONFLICT) # message = Conflict
     
     height_in = serializer.data.get('height_in')
     height_ft = serializer.data.get('height_ft')
@@ -56,8 +58,9 @@ class CreatePlayerView(APIView): ## CreateAPIView
     player.save()
 
     response_data = {
-        'message': 'New Player Added',
-        'player': PlayerSerializer(player).data
+      'message': 'New Player Added',
+      'player': PlayerSerializer(player).data,
+      'status': status.HTTP_200_OK,
     }
 
     return Response(response_data, status=status.HTTP_200_OK)
@@ -66,28 +69,33 @@ class PlayerProfileView(APIView):
     """
     Retrieve, update or delete a snippet instance.
     """
-    def get_object(self, player_id):
+    def get_object(self, first_name, last_name):
+      # first_name = first_name.title()
+      # last_name = last_name.title()
+      fullname = first_name +" "+ last_name
       try:
-        print("try: ", player_id)
-        return Player.objects.get(id=player_id)
+        print("try: ", fullname)
+        return Player.objects.get(first_name = first_name, last_name = last_name)
       except Player.DoesNotExist:
-        print("player does not exist")
-        return Response({'Bad Request':'Player does not exist'}, status=status.HTTP_404_NOT_FOUND)
+        print(fullname+" does not exist")
+        message = fullname + " does not exist"
+        # return Response({'Bad Request': message}, status=status.HTTP_404_NOT_FOUND)
+        raise Http404(message)
 
-    def get(self, request, player_id, format=None):
-        player = self.get_object(player_id)
+    def get(self, request, first_name, last_name, format=None):
+        player = self.get_object(first_name, last_name)
         serializer = PlayerSerializer(player)
         return Response(serializer.data)
 
-    def put(self, request, player_id, format=None):
-        player = self.get_object(player_id)
+    def put(self, request, first_name, last_name, format=None):
+        player = self.get_object(first_name, last_name)
         serializer = PlayerSerializer(player, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, player_id, format=None):
-        player = self.get_object(player_id)
+    def delete(self, request, first_name, last_name, format=None):
+        player = self.get_object(first_name, last_name)
         player.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)

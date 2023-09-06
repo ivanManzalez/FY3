@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
+import {createPlayerAPI} from '../../components/api/player/player';
 
 const CreatePlayerForm = () => {
 
@@ -27,38 +28,9 @@ const CreatePlayerForm = () => {
     setMessage("");
     setClassname("");
   };
-
-  // create player API
-  const createPlayerAPI = (requestOptions) => {
-      // POST request to /api/create-players/
-      // IF a response is received 
-      // THEN convert it to JSON
-      // THEN print
-      // fetch().then().then()
-      fetch('/players/create-players/', requestOptions 
-        ).then((response)=>{
-        if(response.status === 200){
-            clearFields();
-            setClassname("good");
-          }
-        else{
-            setClassname("bad");
-          }
-          return response.json();
-        }).then((data) => {
-          console.log('data')
-        if (data.message) {
-          // Display the message to the user
-          setMessage(data.message);
-          // Clear the form fields
-          }
-        })//.catch()
-        // Handle other response data
-        // data.data
-    }
   
   // event handler
-  const handleCreatePlayerButton = (event) => {
+  const handleCreatePlayerButton = async (event) => {
     event.preventDefault();
     
     // define API request options
@@ -75,9 +47,10 @@ const CreatePlayerForm = () => {
         })
       };
     
-    createPlayerAPI(requestOptions);
-      
-    };
+  createPlayerAPI(requestOptions);
+  
+    
+  };
 
   const handlePlayerFirstChange = (e) => {
     setFirst(e.target.value);
@@ -146,3 +119,16 @@ const NumberField = (props) => {
 }
 
 export default CreatePlayerForm;
+
+// if(resp.status == 200){
+//   clearFields();
+//   setClassname("good");
+// }
+// else{
+//   setClassname("bad");
+// }
+// if (resp.message) {
+//   // Display the message to the user
+//   setMessage(data.message);
+//   // Clear the form fields
+// }
