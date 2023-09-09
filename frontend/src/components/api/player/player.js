@@ -9,13 +9,10 @@ const CREATEPLAYER = 'create-player/';
 // GET all existing players 
 const retrieveAllPlayers = () => {
   return fetch(TESTBASE+API)
-  
   .then((response)=>{
-    console.log(response.status);
     return response.json();
-  
-  }).then((data) => {
-    console.log(data)
+  .catch((error) => {
+    return error;
   })
 };
 
@@ -25,16 +22,11 @@ const retrievePlayerByFullName = async (name) => {
   
   return fetch(TESTBASE + API + RETRIEVE_PLAYER + fullname)
     .then((response) => {
-      // if (!response.ok) {
-      //   throw new Error('Network response was not ok');
-      // }
       return response.json();
-    })
-    .then((data) => {
-      console.log(data);
     })
     .catch((error) => {
       console.error('An error occurred:', error);
+      return error;
     });
 };
 
@@ -45,7 +37,6 @@ const createPlayer = async (requestOptions) => {
     return response.json();
     })
   .catch((error) => {
-    // console.log('Got error --- ' + error.message);
     return error; //new Error();
   });
 };
@@ -56,29 +47,12 @@ const updatePlayer = (name, requestOptions) => {
   const fullname = name.first + "+" + name.last; 
   return fetch(TESTBASE + API + RETRIEVE_PLAYER + fullname, requestOptions )
   .then((response)=>{
-    console.log(response.ok)
-    if (!response.ok) {
-      console.log(fullname+" details NOT updated")
-      throw new Error('Network response was not ok');
-    }
-    else{
-      console.log(fullname+" details updated")
-    }
     return response.json();
-    }).then((data) => {
-      console.log(data)
-    if (data.message) {
-      // Display the message to the user
-      // setMessage(data.message);
-      // Clear the form fields
-      }
     })
     .catch((error) => {
-      console.error('An error occurred:', error);
-    });
-    // Handle other response data
-    // data.data
-  };
+      return error;
+  });
+};
 
 // DELETE player by full name
 const deletePlayerByFullName = (name, requestOptions) => {  
@@ -86,12 +60,13 @@ const deletePlayerByFullName = (name, requestOptions) => {
   return fetch(TESTBASE + API + RETRIEVE_PLAYER + fullname, requestOptions )
   .then((response) => {
     return response.json()
-    console.log('player deleted');
-    console.log(response.ok);
     })
   .catch((error) => {
     console.error('An error occurred:', error);
+    return error;
   });
 };
 
 export {deletePlayerByFullName, updatePlayer, createPlayer, retrieveAllPlayers,retrievePlayerByFullName};
+
+// 

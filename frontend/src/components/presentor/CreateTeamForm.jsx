@@ -1,21 +1,23 @@
 import React, {useState} from "react";
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
+import {createTeam} from '../../components/api/team/team';
 
 const CreateTeamForm = () => {
 
   // set form field init values
-  const [name, setName] = useState("");
-  const [abbrName, setAbbrName] = useState("");
-  const [divisionInd, setDivisionInd] = useState("");
+  const initialFormState = {
+    team_name: '',
+    abbr_name: '',
+    division_ind: '',
+  };
   const [message, setMessage] = useState("");
   const [classname, setClassname] = useState("");
+  const [formState, setFormState] = useState(initialFormState);
 
   // clear all form fields
   const clearFields = () =>{
-    setName("");
-    setAbbrName("");
-    setDivisionInd("");
+    setFormState(initialFormState);
     setMessage("");
     setClassname("");
   };
