@@ -8,7 +8,7 @@ const CREATEPLAYER = 'create-player/';
 
 // GET all existing players 
 const retrieveAllPlayers = () => {
-  fetch(TESTBASE+API)
+  return fetch(TESTBASE+API)
   
   .then((response)=>{
     console.log(response.status);
@@ -23,7 +23,7 @@ const retrieveAllPlayers = () => {
 const retrievePlayerByFullName = async (name) => {
   const fullname = name.first + "+" + name.last;
   
-  fetch(TESTBASE + API + RETRIEVE_PLAYER + fullname)
+  return fetch(TESTBASE + API + RETRIEVE_PLAYER + fullname)
     .then((response) => {
       // if (!response.ok) {
       //   throw new Error('Network response was not ok');
@@ -40,35 +40,21 @@ const retrievePlayerByFullName = async (name) => {
 
 // POST new player w/ all player details
 const createPlayer = async (requestOptions) => { 
-  fetch(TESTBASE + API + CREATEPLAYER, requestOptions )
+  return fetch(TESTBASE + API + CREATEPLAYER, requestOptions )
   .then((response)=>{
     return response.json();
     })
-  .then((data) => {
-    console.log('create new player data -- ');
-    console.log(data.message);
-    console.log(data.status);
-    return data;
-  })
   .catch((error) => {
-    console.error('An error occurred:', error);
+    // console.log('Got error --- ' + error.message);
+    return error; //new Error();
   });
 };
 
-const createPlayerAPI = async (requestOptions) => {
-  try{
-    const resp = await createPlayer(requestOptions);
-    console.log("resp --");
-    console.log(resp);
-  }catch (error) {
-    console.error('An error occurred:', error);
-  }
-}; 
 
 // PUT player w/ new player details
 const updatePlayer = (name, requestOptions) => {   
   const fullname = name.first + "+" + name.last; 
-  fetch(TESTBASE + API + RETRIEVE_PLAYER + fullname, requestOptions )
+  return fetch(TESTBASE + API + RETRIEVE_PLAYER + fullname, requestOptions )
   .then((response)=>{
     console.log(response.ok)
     if (!response.ok) {
@@ -97,7 +83,7 @@ const updatePlayer = (name, requestOptions) => {
 // DELETE player by full name
 const deletePlayerByFullName = (name, requestOptions) => {  
   const fullname = name.first + "+" + name.last; 
-  fetch(TESTBASE + API + RETRIEVE_PLAYER + fullname, requestOptions )
+  return fetch(TESTBASE + API + RETRIEVE_PLAYER + fullname, requestOptions )
   .then((response) => {
     return response.json()
     console.log('player deleted');
@@ -108,4 +94,4 @@ const deletePlayerByFullName = (name, requestOptions) => {
   });
 };
 
-export {deletePlayerByFullName, updatePlayer, createPlayerAPI, retrieveAllPlayers,retrievePlayerByFullName};
+export {deletePlayerByFullName, updatePlayer, createPlayer, retrieveAllPlayers,retrievePlayerByFullName};

@@ -22,17 +22,14 @@ class Player(models.Model):
 	def __str__(self):
 		return self.first_name + " " + self.last_name
 
-	def remove_spaces(string):
-		return string.strip().replace(" ", "_") 
-
 	def clean_names(self):
 		space_in_first = (" " in self.first_name)
 		space_in_last = (" " in self.last_name)
 
 		if space_in_last:
-			self.last_name = remove_spaces(self.last_name)
+			self.last_name = self.last_name.strip().replace(" ", "_")
 		if space_in_first:
-			self.first_name = remove_spaces(self.first_name)
+			self.first_name = self.first_name.strip().replace(" ", "_")
 
 	def save(self, *args, **kwargs):
 		self.clean_names()

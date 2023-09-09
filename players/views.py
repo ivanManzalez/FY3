@@ -20,11 +20,11 @@ class PlayersView(generics.ListAPIView): ## CreateAPIView
 class CreatePlayerView(APIView): ## CreateAPIView
   # 
   serializer_class = CreatePlayerSerializer
+  resp_status = ''
 
   # define GET POST UPDATE DELETE methods
   def post(self, request, format=None):
     # sessions needed? lets try
-
     #get access to session ID
     if not self.request.session.exists(self.request.session.session_key):
       #create session
@@ -32,38 +32,52 @@ class CreatePlayerView(APIView): ## CreateAPIView
 
     serializer = self.serializer_class(data=request.data)
     message = 'Invalid request'
-    if (not serializer.is_valid()): 
-      return Response({'message':message, 'status':status.HTTP_406_NOT_ACCEPTABLE}, status=status.HTTP_406_NOT_ACCEPTABLE)
     
+    if (not serializer.is_valid()): 
+      resp_status = status.HTTP_406_NOT_ACCEPTABLE
+      return Response({'message':message, 'status':resp_status}, status=resp_status)
+    
+    print("\n(serializer.data) = \n", serializer.data)
+
     first_name = serializer.data.get('first_name')
     last_name = serializer.data.get('last_name')
     
       
     queryset = Player.objects.filter(first_name=first_name, last_name=last_name) 
     message = first_name+ " "+ last_name +' already exists'
-    # print(queryset.__str__())
+
     if (queryset.exists()):
-      return Response({'message': message, 'status': status.HTTP_409_CONFLICT}, status=status.HTTP_409_CONFLICT) # message = Conflict
+      resp_status = status.HTTP_409_CONFLICT
+      return Response({'message': message, 'status': resp_status}, status=resp_status) # message = Conflict
     
     height_in = serializer.data.get('height_in')
     height_ft = serializer.data.get('height_ft')
-    origin = serializer.data.get('origin')    
+    origin = serializer.data.get('origin')
+  
     
-    player = Player(first_name = first_name,
+    try:
+      player = Player(first_name = first_name,
                     last_name = last_name,
                     height_in = height_in,
                     height_ft = height_ft,
-                    origin = origin,
+                    origin = origin
                   )
-    player.save()
+      player.save()
+      message = first_name+" "+last_name+' Added'
+      player = PlayerSerializer(player).data
+      resp_status = status.HTTP_200_OK
+    
+    except Exception as exp:
+      message = exp
+      player = None
+      resp_status = status.HTTP_500_INTERNAL_SERVER_ERROR
 
     response_data = {
-      'message': 'New Player Added',
-      'player': PlayerSerializer(player).data,
-      'status': status.HTTP_200_OK,
+      'message': message,
+      'player': player,
+      'status': resp_status
     }
-
-    return Response(response_data, status=status.HTTP_200_OK)
+    return Response(response_data)
 
 class PlayerProfileView(APIView):
     """
