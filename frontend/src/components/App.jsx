@@ -35,6 +35,7 @@ const App = () => {
     {/*Public Routes*/}       
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/schedule" element={<Schedule />} />
 
       </Routes>
     </AuthProvider>
