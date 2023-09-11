@@ -5,6 +5,8 @@ class Player(models.Model):
 	first_name = models.CharField(max_length = 255)
 	last_name = models.CharField(max_length = 255)
 	date_of_birth = models.DateField(verbose_name="YYYY-MM-DD", null=True)
+	# fav_player = models.CharField(max_length = 255)
+	# experience = models.CharField(max_length = 255)
 	
 	# Move to STP Model? ########### 
 	height_ft = models.PositiveIntegerField(default=5, validators=[MinValueValidator(0), MaxValueValidator(8)])

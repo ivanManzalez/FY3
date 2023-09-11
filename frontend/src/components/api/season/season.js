@@ -57,4 +57,7 @@ const deleteSeasonByYear = (year, requestOptions) => {
     return error;
   });
 
+
+export {createSeason, retrieveAllSeasons, retrieveSeasonByYear, updateSeason, deleteSeasonByYear};
+
   // 

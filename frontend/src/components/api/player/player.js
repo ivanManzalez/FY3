@@ -11,6 +11,7 @@ const retrieveAllPlayers = () => {
   return fetch(TESTBASE+API)
   .then((response)=>{
     return response.json();
+  })
   .catch((error) => {
     return error;
   })
@@ -67,6 +68,6 @@ const deletePlayerByFullName = (name, requestOptions) => {
   });
 };
 
-export {deletePlayerByFullName, updatePlayer, createPlayer, retrieveAllPlayers,retrievePlayerByFullName};
+export {retrieveAllPlayers, retrievePlayerByFullName, createPlayer, updatePlayer,deletePlayerByFullName};
 
 // 

@@ -68,13 +68,13 @@ return (
     <div id="message" className={classname}>{message && <p>{message}</p>}</div>
     <form id="create-player-form" className='form centre'>
     
-    <TextField name = "first_name" id={"player_first"} field={"Player First Name"} handler={handleInputChange} value={formState.first_name} />
-    <TextField name = "last_name" id={"player_last"} field={"Player Last Name"} handler={handleInputChange} value={formState.last_name} /> 
-    <NumberField name = "height_ft" id={"player_height_ft"} field={"Player Height (Ft)"} handler={handleInputChange} value={formState.height_ft} placeholder={5}/>
-    <NumberField name = "height_in" id={"player_height_in"} field={"Player Height (In)"} handler={handleInputChange} value={formState.height_in} placeholder={5}/>
-    <NumberField name = "weight" id={"player_weight"} field={"Player Weight"} handler={handleInputChange} value={formState.weight} placeholder={150}/>
-    <TextField name = "origin" id={"player_origin"} field={"Player Origin"} handler={handleInputChange} value={formState.origin} />
-    <TextField name = "age" id={"player_age"} field={"Player Age"} handler={handleInputChange} value={formState.age} placeholder={25}/>
+    <TextField name = {"first_name"} id={"player_first"} field={"Player First Name"} handler={handleInputChange} value={formState.first_name} />
+    <TextField name = {"last_name"} id={"player_last"} field={"Player Last Name"} handler={handleInputChange} value={formState.last_name} /> 
+    <NumberField name = {"height_ft"} id={"player_height_ft"} field={"Player Height (Ft)"} handler={handleInputChange} value={formState.height_ft} placeholder={5}/>
+    <NumberField name = {"height_in"} id={"player_height_in"} field={"Player Height (In)"} handler={handleInputChange} value={formState.height_in} placeholder={5}/>
+    <NumberField name = {"weight"} id={"player_weight"} field={"Player Weight"} handler={handleInputChange} value={formState.weight} placeholder={150}/>
+    <TextField name = {"origin"} id={"player_origin"} field={"Player Origin"} handler={handleInputChange} value={formState.origin} />
+    <TextField name = {"age"} id={"player_age"} field={"Player Age"} handler={handleInputChange} value={formState.age} placeholder={25}/>
     
     <button type='submit' placeholder="Create Player" onClick={handleCreatePlayerButton}> Create Player</button>
     </form>

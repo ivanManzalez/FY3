@@ -36,25 +36,22 @@ class CreatePlayerView(APIView): ## CreateAPIView
     if (not serializer.is_valid()): 
       resp_status = status.HTTP_406_NOT_ACCEPTABLE
       return Response({'message':message, 'status':resp_status}, status=resp_status)
-    
-    print("\n(serializer.data) = \n", serializer.data)
 
     first_name = serializer.data.get('first_name')
     last_name = serializer.data.get('last_name')
     
       
     queryset = Player.objects.filter(first_name=first_name, last_name=last_name) 
-    message = first_name+ " "+ last_name +' already exists'
 
     if (queryset.exists()):
       resp_status = status.HTTP_409_CONFLICT
+      message = first_name+ " "+ last_name +' already exists'
       return Response({'message': message, 'status': resp_status}, status=resp_status) # message = Conflict
     
     height_in = serializer.data.get('height_in')
     height_ft = serializer.data.get('height_ft')
     origin = serializer.data.get('origin')
-  
-    
+        
     try:
       player = Player(first_name = first_name,
                     last_name = last_name,

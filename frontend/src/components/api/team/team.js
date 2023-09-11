@@ -11,6 +11,7 @@ const retrieveAllTeams = () => {
   return fetch(TESTBASE+API)
   .then((response)=>{
     return response.json();
+  })
   .catch((error) => {
     return error;
   })
@@ -56,6 +57,9 @@ const deleteTeamByName = (name, requestOptions) => {
   .catch((error) => {
     console.error('An error occurred:', error);
     return error;
-  });
+  })
+};
+
+export {retrieveAllTeams, retrieveTeamByName, createTeam, updateTeam, deleteTeamByName};
 
 // 
