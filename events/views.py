@@ -9,7 +9,7 @@ from .serializers import EventSerializer, CreateEventSerializer
 
 from .models.event import Event
 
-class EventsView(generics.ListAPIView): ## CreateAPIView
+class EventsView(generics.ListAPIView): ## generics.CreateAPIView/ListAPIView
   print('Events View')
   queryset = Event.objects.all()
   serializer_class = EventSerializer
