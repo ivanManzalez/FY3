@@ -5,7 +5,7 @@ import {useAuth} from '../../contexts/AuthContext';
 
 const Home = (props) => {
   const [error, setError] = useState('');
-  const {currentUser, logout} = useAuth();
+  const {logout, currentUser} = useAuth();
   const [logoutRedirect, setLogoutRedirect] = useState("login/");
   const navigate = useNavigate();
 
@@ -18,9 +18,10 @@ const Home = (props) => {
       setError('Failed to logout');
     }
   }
+  console.log(currentUser);
   return(
     <div>
-      <h1>This is {props.name}'s Home page</h1>
+      <h1>This is {currentUser.email}'s Home page</h1>
       <Link to="/login" ><button onClick={handleLogout}>Logout</button></Link>
     </div>
     );

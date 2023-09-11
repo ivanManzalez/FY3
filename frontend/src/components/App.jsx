@@ -7,6 +7,7 @@ import {AuthProvider} from "../contexts/AuthContext";
 // how to clean this up?
 import Home from "./presentor/Home";
 import Commissioner from "./presentor/Commissioner";
+import Schedule from "./presentor/Schedule";
 import Layout from "./navigator/Layout";
 
 // Authentication
