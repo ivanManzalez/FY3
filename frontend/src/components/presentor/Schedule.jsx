@@ -8,12 +8,10 @@ const Schedule = (props) => {
 
   const handleDisplayEventsButton = async () => {
     const allEvents = await getAllEvents();
-    setEvents(allEvents)
-    console.log("allEvents: ");
-    console.log(events);
-    setButtonLabel("Refresh")
-
+    setEvents(allEvents);
+    setButtonLabel("Refresh");
   };
+  
   const handleClearButton = () => {
     setEvents([]);
     setButtonLabel("Display all Events")
@@ -24,7 +22,7 @@ const Schedule = (props) => {
     <h1> this is the Schedule page</h1> 
     <button id='get_all_events' onClick={handleDisplayEventsButton}> {buttonLabel} </button>
     <button id='clear_events' onClick={handleClearButton}> Clear </button>
-    <p className="good">{eventsComponent(events)}</p>
+    <p>{eventsComponent(events)}</p>
     </div>
     );
 };
@@ -45,9 +43,9 @@ const eventsComponent = (events) => {
     eventsArr.map((event) => 
       (
       <div key={event.id}>
-        <h4>{event.name}</h4>
-        <p>Start: {event.date} @ {event.start_time} EST</p>
-        <p>Ends: {event.end_time}</p>
+        <h4 className="good">{event.name}</h4>
+        <p>Start time: {event.date} @ {event.start_time} EST</p>
+        <p>End time: {event.date} @ {event.end_time} EST</p>
         <p>{event.street_number} {event.street_name}, {event.city}</p>
         <br />
       </div>
