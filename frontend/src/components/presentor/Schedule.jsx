@@ -1,4 +1,6 @@
 import React, {useState} from "react";
+import CreateEventForm from "./CreateEventForm";
+import {retrieveAllEvents} from '../../components/api/event/event';
 
 
 const Schedule = (props) => {
@@ -20,6 +22,7 @@ const Schedule = (props) => {
   return(
     <div id='schedule'>
     <h1> this is the Schedule page</h1> 
+    <CreateEventForm />
     <button id='get_all_events' onClick={handleDisplayEventsButton}> {buttonLabel} </button>
     <button id='clear_events' onClick={handleClearButton}> Clear </button>
     <p>{eventsComponent(events)}</p>
@@ -28,13 +31,7 @@ const Schedule = (props) => {
 };
 
 const getAllEvents = () => {
-  const TESTBASE = 'http://127.0.0.1:8000/';
-  const API = 'events/';
-  return fetch(TESTBASE+API)
-  .then((response) => {
-    return response.json();
-  })
-  .catch((error) => console.error(error));
+  return retrieveAllEvents();
 };
 
 const eventsComponent = (events) => {
