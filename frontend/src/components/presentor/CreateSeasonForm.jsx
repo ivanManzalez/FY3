@@ -21,31 +21,31 @@ const CreateSeasonForm = () => {
 
   // create player API
   const createSeasonAPI = (requestOptions) => {
-      // POST request to /api/create-players/
-      // IF a response is received 
-      // THEN convert it to JSON
-      // THEN print
-      // fetch().then().then()
-      fetch('/seasons/create-season/', requestOptions 
-        ).then((response)=>{
-        if(response.status === 200){
-            clearFields();
-            setClassname("good");
-          }
-        else{
-            setClassname("bad");
-          }
-          return response.json();
-        }).then((data) => {
-          console.log('data')
-        if (data.message) {
-          // Display the message to the user
-          setMessage(data.message);
-          // Clear the form fields
-          }
-        })//.catch()
-        // Handle other response data
-        // data.data
+    // POST request to /api/create-players/
+    // IF a response is received 
+    // THEN convert it to JSON
+    // THEN print
+    // fetch().then().then()
+    fetch('/seasons/create-season/', requestOptions 
+      ).then((response)=>{
+      if(response.status === 200){
+          clearFields();
+          setClassname("good");
+        }
+      else{
+          setClassname("bad");
+        }
+        return response.json();
+      }).then((data) => {
+        console.log('data')
+      if (data.message) {
+        // Display the message to the user
+        setMessage(data.message);
+        // Clear the form fields
+        }
+      })//.catch()
+      // Handle other response data
+      // data.data
     }
   // event handler
   const handleCreateSeasonButton = (event) => {

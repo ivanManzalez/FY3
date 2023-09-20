@@ -33,6 +33,9 @@ or
 
 git switch -c <new-branch>
 
+Reset HEAD to last pull:
+git reset --hard
+
 Remove untracked changes:
 git clean -f
 
@@ -398,7 +401,9 @@ doesn’t provide:
 django.contrib.auth & .contenttypes already included in INSTALLED_APPS 
 SessionMiddleware & AuthenticationMiddleware already included in MIDDLEWARE
 
-
+#####################################################
+https://httpstat.us/<status_code>
+https://boredapi.com/api
 
 
 

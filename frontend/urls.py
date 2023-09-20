@@ -12,7 +12,7 @@ urlpatterns = [
   path("schedule/", index),
   path("standings/", index),
   path("stats/", index),
-  path("playerprofile/<int:player_id>", index),
+  path("playerprofile/<str:player_id>", index),
   
   # authentication
   path("login/", index),

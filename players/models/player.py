@@ -5,6 +5,8 @@ class Player(models.Model):
 	first_name = models.CharField(max_length = 255)
 	last_name = models.CharField(max_length = 255)
 	date_of_birth = models.DateField(verbose_name="YYYY-MM-DD", null=True)
+	# fav_player = models.CharField(max_length = 255)
+	# experience = models.CharField(max_length = 255)
 	
 	# Move to STP Model? ########### 
 	height_ft = models.PositiveIntegerField(default=5, validators=[MinValueValidator(0), MaxValueValidator(8)])
@@ -21,3 +23,16 @@ class Player(models.Model):
 
 	def __str__(self):
 		return self.first_name + " " + self.last_name
+
+	def clean_names(self):
+		space_in_first = (" " in self.first_name)
+		space_in_last = (" " in self.last_name)
+
+		if space_in_last:
+			self.last_name = self.last_name.strip().replace(" ", "_")
+		if space_in_first:
+			self.first_name = self.first_name.strip().replace(" ", "_")
+
+	def save(self, *args, **kwargs):
+		self.clean_names()
+		super().save(*args, **kwargs)

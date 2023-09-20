@@ -30,60 +30,72 @@ class CreateTeamView(APIView): ## CreateAPIView
       self.request.session.create()
 
     serializer = self.serializer_class(data=request.data)
+    message = 'Invalid request'
     
     if (not serializer.is_valid()): 
-      return Response({'message':'Invalid request'}, status=status.HTTP_406_NOT_ACCEPTABLE) # message = Bad Request
+      resp_status = status.HTTP_406_NOT_ACCEPTABLE
+      return Response({'message':message, 'status':resp_status}, status=resp_status) # message = Bad Request
     
     team_name = serializer.data.get('team_name')      
     queryset = Team.objects.filter(team_name=team_name) 
 
     if (queryset.exists()):
+      resp_status = status.HTTP_409_CONFLICT
       message = team_name+" already exists"
-      return Response({'message': message}, status=status.HTTP_409_CONFLICT) # message = Conflict
+      return Response({'message':message, 'status':resp_status}, status=resp_status) # message = Conflict
     
     abbr_name = serializer.data.get('abbr_name')
     division_ind = serializer.data.get('division_ind')   
+    try:
+      team = Team(team_name = team_name,
+                  abbr_name = abbr_name,
+                  division_ind = division_ind)
+      team.save()
     
-    team = Team(team_name = team_name,
-                abbr_name = abbr_name,
-                division_ind = division_ind)
-    team.save()
-    
-    message = 'New Team, '+team_name+', added'
+      message = 'New Team, '+team_name+', added'
+      team = TeamSerializer(team).data
+      resp_status = status.HTTP_200_OK
+    except Exception as exp:
+      message = exp
+      team = None
+      resp_status = status.HTTP_500_INTERNAL_SERVER_ERROR
+
     response_data = {
         'message': message ,
-        'team': TeamSerializer(team).data
+        'team': team,
+        'status' : resp_status,
     }
 
-    return Response(response_data, status=status.HTTP_200_OK)
+    return Response(response_data, status=resp_status)
 
 class TeamProfileView(APIView):
     """
     Retrieve, update or delete a snippet instance.
     """
-    def get_object(self, team_id):
+    def get_object(self, team_name):
       try:
-        print("try: ", team_id)
-        return Team.objects.get(id=team_id)
+        print("try: ", team_name)
+        return Team.objects.get(team_name=team_name)
       except Team.DoesNotExist:
         print("Team does not exist")
-        return Response({'Bad Request':'Team does not exist'}, status=status.HTTP_404_NOT_FOUND)
+        message = "Bad Request: "+team_name + " does not exist"
+        return Response({'message': message}, status=status.HTTP_404_NOT_FOUND)
 
-    def get(self, request, team_id, format=None):
-        team = self.get_object(team_id)
+    def get(self, request, team_name, format=None):
+        team = self.get_object(team_name)
         serializer = PlayerSerializer(team)
         return Response(serializer.data)
 
-    def put(self, request, team_id, format=None):
-        team = self.get_object(team_id)
+    def put(self, request, team_name, format=None):
+        team = self.get_object(team_name)
         serializer = PlayerSerializer(team, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, team_id, format=None):
-        team = self.get_object(team_id)
+    def delete(self, request, team_name, format=None):
+        team = self.get_object(team_name)
         team.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
