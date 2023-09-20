@@ -24,6 +24,7 @@ class PlayerSerializer(serializers.ModelSerializer):
 # in order to map JSON values to python format
 class CreatePlayerSerializer(serializers.ModelSerializer):
   class Meta:
+    print('\nCreatePlayerSerializer\n')
     model = Player
     # fields that will be sent in paylod
     # serialize request in python format

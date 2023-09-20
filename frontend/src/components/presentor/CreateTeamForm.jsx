@@ -1,85 +1,65 @@
 import React, {useState} from "react";
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
+import {createTeam} from '../../components/api/team/team';
 
 const CreateTeamForm = () => {
 
   // set form field init values
-  const [name, setName] = useState("");
-  const [abbrName, setAbbrName] = useState("");
-  const [divisionInd, setDivisionInd] = useState("");
+  const initialFormState = {
+    team_name: '',
+    abbr_name: '',
+    division_ind: 'E',
+  };
   const [message, setMessage] = useState("");
   const [classname, setClassname] = useState("");
+  const [formState, setFormState] = useState(initialFormState);
 
   // clear all form fields
   const clearFields = () =>{
-    setName("");
-    setAbbrName("");
-    setDivisionInd("");
+    setFormState(initialFormState);
     setMessage("");
     setClassname("");
   };
-
-  // create player API
-  const createTeamAPI = (requestOptions) => {
-      // POST request to /api/create-players/
-      // IF a response is received 
-      // THEN convert it to JSON
-      // THEN print
-      // fetch().then().then()
-      fetch('/teams/create-teams/', requestOptions 
-        ).then((response)=>{
-        if(response.status === 200){
-            clearFields();
-            setClassname("good");
-          }
-        else{
-            setClassname("bad");
-          }
-          return response.json();
-        }).then((data) => {
-          console.log('data')
-        if (data.message) {
-          // Display the message to the user
-          setMessage(data.message);
-          // Clear the form fields
-          }
-        })//.catch()
-        // Handle other response data
-        // data.data
-    }
   
   // event handler
-  const handleCreateTeamButton = (event) => {
+  const handleCreateTeamButton = async (event) => {
     event.preventDefault();
     
     // define API request options
     const requestOptions = {
       method: "POST",
       headers: {"Content-Type":"application/json"},
-      body: JSON.stringify({
-        team_name: name,
-        abbr_name: abbrName,
-        division_ind: divisionInd,
-        })
+      body: JSON.stringify(formState),
       };
-    
-    createTeamAPI(requestOptions);
-      
-    };
 
-  const handleTeamNameChange = (e) => {
-    setName(e.target.value);
-  };
-  const handleTeamAbbrNameChange = (e) => {
-    setAbbrName(e.target.value);
-  };
-  const handleTeamDivisionChange = (e) => {
-    setDivisionInd(e.target.value);
+    const createTeamResponse = await createTeam(requestOptions);
+    handleMessage(createTeamResponse); 
+};
+
+  // Function to handle input changes
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormState({
+      ...formState,
+      [name]: value,
+    });
   };
 
-console.log(classname);
-
+  const handleMessage = (response) => {
+    console.log(response);
+    if(response.status == 200){
+      console.log('good and clear fields')
+      clearFields();
+      setClassname('good');
+    }else{
+      console.log('bad and NOT clear fields')
+      setClassname('bad');
+    }
+    setMessage(response.message);
+  };
+console.log('formState');
+console.log(formState);
 return (
   <div >
     <h3> Create Team </h3>
@@ -87,9 +67,9 @@ return (
     <div id="message" className={classname}>{message && <p>{message}</p>}</div>
     <form id="create-team-form" className='form centre'>
     
-    <TextField id={"team_name"} field={"Team Name"} handler={handleTeamNameChange} value={name} />
-    <TextField id={"abbr_name"} field={"Team Short Name"} handler={handleTeamAbbrNameChange} value={abbrName} /> 
-    <TextField id={"diviion_ind"} field={"Team Division"} handler={handleTeamDivisionChange} value={divisionInd} />
+    <TextField name = {"team_name"} id={"team_name"} field={"Team Name"} handler={handleInputChange} value={formState.team_name} />
+    <TextField name = {"abbr_name"} id={"abbr_name"} field={"Team Short Name"} handler={handleInputChange} value={formState.abbr_name} /> 
+    <TextField name = {"division_ind"} id={"division_ind"} field={"Team Division"} handler={handleInputChange} value={formState.division_ind} />
     
     <button type='submit' placeholder="Create Team" onClick={handleCreateTeamButton}> Create Team </button>
     </form>
@@ -102,7 +82,7 @@ const TextField = (props) => {
   return(
     <div className = "entryarea">
       {/*<label>{props.field}</label>*/}
-      <input className = "inputter" type="text" id={props.id} value={props.value} onChange={props.handler} required/>
+      <input className = "inputter" type="text" name = {props.name} id={props.id} value={props.value} onChange={props.handler} required/>
       <div className="labelline">{"Enter " + props.field}</div>
     </div>
     )
@@ -113,7 +93,7 @@ const NumberField = (props) => {
   return(
     <div className = "entryarea">
       {/*<label>{props.field}</label>*/}
-      <input className = "inputter" type="number" id={props.id} value={props.value} onChange={props.handler} required/>
+      <input className = "inputter" type="number" name = {props.name} id={props.id} value={props.value} onChange={props.handler} required/>
       <div className="labelline">{"Enter " + props.field}</div>
     </div>
     )
