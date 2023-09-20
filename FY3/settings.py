@@ -39,7 +39,10 @@ INSTALLED_APPS = [
     'players.apps.PlayersConfig',
     'teams.apps.TeamsConfig',
     'seasons.apps.SeasonsConfig',
+
     'users.apps.UsersConfig',
+    'events.apps.EventsConfig',
+
     'games.apps.GamesConfig',
 
     #### Default Apps Included

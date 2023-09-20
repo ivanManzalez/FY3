@@ -7,6 +7,7 @@ import {AuthProvider} from "../contexts/AuthContext";
 // how to clean this up?
 import Home from "./presentor/Home";
 import Commissioner from "./presentor/Commissioner";
+import Schedule from "./presentor/Schedule";
 import Layout from "./navigator/Layout";
 
 // Authentication
@@ -35,6 +36,7 @@ const App = () => {
     {/*Public Routes*/}       
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/schedule" element={<Schedule />} />
 
       </Routes>
     </AuthProvider>
