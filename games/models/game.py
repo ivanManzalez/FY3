@@ -6,21 +6,21 @@ from events.models.event import Event
 
 class Game(models.Model):
   season = models.ForeignKey(Season, on_delete = models.PROTECT)
-  event = models.ForeignKey(Event, on_delete=models.CASCADE, null=True, blank=True)
+  event = models.ForeignKey(Event, on_delete=models.CASCADE, default = None, null=True, blank=True)
   
-  home_team = models.ForeignKey(Team, related_name = 'home_team', on_delete = models.PROTECT)
-  home_player_01 = models.ForeignKey(Player, related_name = 'home_player_01', on_delete = models.PROTECT)
-  home_player_02 = models.ForeignKey(Player, related_name = 'home_player_02', on_delete = models.PROTECT)
-  home_player_03 = models.ForeignKey(Player, related_name = 'home_player_03', on_delete = models.PROTECT)
-  home_player_04 = models.ForeignKey(Player, related_name = 'home_player_04', on_delete = models.PROTECT)
-  home_player_05 = models.ForeignKey(Player, related_name = 'home_player_05', on_delete = models.PROTECT)
+  home_team = models.ForeignKey(Team, related_name = 'home_team', default = None, on_delete = models.PROTECT)
+  home_player_01 = models.ForeignKey(Player, related_name = 'home_player_01', default = None, on_delete = models.PROTECT)
+  home_player_02 = models.ForeignKey(Player, related_name = 'home_player_02', default = None, on_delete = models.PROTECT)
+  home_player_03 = models.ForeignKey(Player, related_name = 'home_player_03', default = None, on_delete = models.PROTECT)
+  home_player_04 = models.ForeignKey(Player, related_name = 'home_player_04', default = None, on_delete = models.PROTECT)
+  home_player_05 = models.ForeignKey(Player, related_name = 'home_player_05', default = None, on_delete = models.PROTECT)
 
-  away_team = models.ForeignKey(Team, related_name = 'away_team', on_delete = models.PROTECT)
-  away_player_01 = models.ForeignKey(Player, related_name = 'away_player_01', on_delete = models.PROTECT)
-  away_player_02 = models.ForeignKey(Player, related_name = 'away_player_02', on_delete = models.PROTECT)
-  away_player_03 = models.ForeignKey(Player, related_name = 'away_player_03', on_delete = models.PROTECT)
-  away_player_04 = models.ForeignKey(Player, related_name = 'away_player_04', on_delete = models.PROTECT)
-  away_player_05 = models.ForeignKey(Player, related_name = 'away_player_05', on_delete = models.PROTECT)
+  away_team = models.ForeignKey(Team, related_name = 'away_team', default = None, on_delete = models.PROTECT)
+  away_player_01 = models.ForeignKey(Player, related_name = 'away_player_01', default = None, on_delete = models.PROTECT)
+  away_player_02 = models.ForeignKey(Player, related_name = 'away_player_02', default = None, on_delete = models.PROTECT)
+  away_player_03 = models.ForeignKey(Player, related_name = 'away_player_03', default = None, on_delete = models.PROTECT)
+  away_player_04 = models.ForeignKey(Player, related_name = 'away_player_04', default = None, on_delete = models.PROTECT)
+  away_player_05 = models.ForeignKey(Player, related_name = 'away_player_05', default = None, on_delete = models.PROTECT)
 
     
   def __str__(self):
