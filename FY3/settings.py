@@ -35,17 +35,19 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
 
     #### Personal Apps
-    'rest_framework',
     'players.apps.PlayersConfig',
     'teams.apps.TeamsConfig',
     'seasons.apps.SeasonsConfig',
-
-    'users.apps.UsersConfig',
     'events.apps.EventsConfig',
-
     'games.apps.GamesConfig',
 
+    'users.apps.UsersConfig',
+    # Team Stats
+    # Player Stats
+    # STP
+
     #### Default Apps Included
+    'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
