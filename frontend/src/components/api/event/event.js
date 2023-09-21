@@ -6,7 +6,7 @@ const API = 'events/';
 const RETRIEVE_PLAYER = 'event-profile/';
 const CREATEPLAYER = 'create-event/';
 
-// GET all existing players 
+// GET all existing Events
 const retrieveAllEvents = () => {
   return fetch(TESTBASE+API)
   .then((response)=>{
@@ -18,7 +18,7 @@ const retrieveAllEvents = () => {
 };
 
 
-// GET existing player by First and Last name
+// GET existing Event by Name
 const retrieveEventByName = async (name) => {
   const fullname = name.first + "+" + name.last;
   
@@ -32,7 +32,7 @@ const retrieveEventByName = async (name) => {
     });
 };
 
-// POST new player w/ all player details
+// POST new Event w/ all Event details
 const createEvent = async (requestOptions) => { 
   return fetch(TESTBASE + API + CREATEPLAYER, requestOptions )
   .then((response)=>{
@@ -44,7 +44,7 @@ const createEvent = async (requestOptions) => {
 };
 
 
-// PUT player w/ new player details
+// PUT Event w/ new Event details
 const updateEvent = (name, requestOptions) => {   
   const fullname = name.first + "+" + name.last; 
   return fetch(TESTBASE + API + RETRIEVE_PLAYER + fullname, requestOptions )
@@ -56,7 +56,7 @@ const updateEvent = (name, requestOptions) => {
   });
 };
 
-// DELETE player by full name
+// DELETE Event by name
 const deleteEventByName = (name, requestOptions) => {  
   const fullname = name.first + "+" + name.last; 
   return fetch(TESTBASE + API + RETRIEVE_PLAYER + fullname, requestOptions )
