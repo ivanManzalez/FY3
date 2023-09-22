@@ -25,6 +25,7 @@ const CreateGameForm = () => {
   const [message, setMessage] = useState("");
   const [classname, setClassname] = useState("");
   const [event, setEvent] = useState("");
+  const [isGame, setIsGame] = useState(false);
   const [formState, setFormState] = useState(initialFormState);
 
   // clear all form fields
@@ -35,7 +36,7 @@ const CreateGameForm = () => {
   };
   
   // event handler
-  const handleCreateEventButton = async (event) => {
+  const handleCreateGameButton = async (event) => {
     event.preventDefault();
     
     // define API request options
@@ -75,18 +76,12 @@ const CreateGameForm = () => {
 // console.log(formState);
 return (
   <div >
-    <h3> Create Event </h3>
-    <h5> Add event details then click submit </h5>
+    <h3> Create Game </h3>
+    <h5> Add game details then click submit </h5>
     <div id="message" className={classname}>{message && <p>{message}</p>}</div>
     <form id="create-event-form" className='form centre'>
     
     <TextField name = {"name"} id={"name"} field={"Event Name"} handler={handleInputChange} value={formState.name} />
-    <DateField name = {"date"} id={"date"} field={"Event Date"} handler={handleInputChange} value={formState.date} />
-    <TimeField name = {"start_time"} id={"start_time"} field={"Event Start Time"} handler={handleInputChange} value={formState.start_time} />
-    <TimeField name = {"end_time"} id={"end_time"} field={"Event End Time"} handler={handleInputChange} value={formState.end_time} />
-    <NumberField name = {"street_number"} id={"street_number"} field={"Street Number"} handler={handleInputChange} value={formState.street_number} />
-    <TextField name = {"street_name"} id={"street_name"} field={"Street Name"} handler={handleInputChange} value={formState.street_name} /> 
-    <TextField name = {"city"} id={"city"} field={"City"} handler={handleInputChange} value={formState.city} />
     
     <button type='submit' placeholder="Create Event" onClick={handleCreateEventButton}> Create Event </button>
     </form>
