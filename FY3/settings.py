@@ -40,11 +40,11 @@ INSTALLED_APPS = [
     'seasons.apps.SeasonsConfig',
     'events.apps.EventsConfig',
     'games.apps.GamesConfig',
+    'stp.apps.StpConfig',
 
     'users.apps.UsersConfig',
     # Team Stats
     # Player Stats
-    # STP
 
     #### Default Apps Included
     'rest_framework',
