@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import CreateEventForm from "./CreateEventForm";
+import CreateGameForm from "./CreateGameForm";
 import {retrieveAllEvents} from '../../components/api/event/event';
 
 
@@ -21,7 +22,8 @@ const Schedule = (props) => {
 
   return(
     <div id='schedule'>
-    <h1> this is the Schedule page</h1> 
+    <h1> this is the Schedule page</h1>
+    <CreateGameForm /> 
     <CreateEventForm />
     <button id='get_all_events' onClick={handleDisplayEventsButton}> {buttonLabel} </button>
     <button id='clear_events' onClick={handleClearButton}> Clear </button>
