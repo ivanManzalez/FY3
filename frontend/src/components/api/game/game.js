@@ -20,7 +20,7 @@ const retrieveAllGames = () => {
 
 // GET existing Event by Name
 const retrieveGameByTeamNames = async (home_team, away_team) => {
-  const searchQuery = home_team"+"away_team
+  const searchQuery = home_team+"+"+away_team;
   return fetch(TESTBASE + API + RETRIEVE_GAME + searchQuery)
     .then((response) => {
       return response.json();
@@ -32,7 +32,7 @@ const retrieveGameByTeamNames = async (home_team, away_team) => {
 };
 
 // POST new Event w/ all Event details
-const createGames = async (requestOptions) => { 
+const createGame = async (requestOptions) => { 
   return fetch(TESTBASE + API + CREATEGAME, requestOptions )
   .then((response)=>{
     return response.json();
@@ -44,8 +44,8 @@ const createGames = async (requestOptions) => {
 
 
 // PUT Event w/ new Event details
-const updateEvent = (name, requestOptions) => {   
-  const searchQuery = requestOptions.home_team"+"requestOptions.away_team
+const updateGame = (name, requestOptions) => {   
+  const searchQuery = requestOptions.home_team+"+"+requestOptions.away_team
   return fetch(TESTBASE + API + RETRIEVE_GAME + searchQuery, requestOptions )
   .then((response)=>{
     return response.json();
@@ -56,9 +56,9 @@ const updateEvent = (name, requestOptions) => {
 };
 
 // DELETE Event by name
-const deleteEventByName = (name, requestOptions) => {  
-  const searchQuery = requestOptions.home_team"+"requestOptions.away_team
-  return fetch(TESTBASE + API + RETRIEVE_PLAYER + searchQuery, requestOptions )
+const deleteGameByName = (name, requestOptions) => {  
+  const searchQuery = requestOptions.home_team+"+"+requestOptions.away_team
+  return fetch(TESTBASE + API + RETRIEVE_GAME + searchQuery, requestOptions )
   .then((response) => {
     return response.json()
     })
@@ -68,6 +68,6 @@ const deleteEventByName = (name, requestOptions) => {
   });
 };
 
-export {retrieveAllEvents, retrieveEventByName, createEvent, updateEvent,deleteEventByName};
+export {retrieveAllGames, retrieveGameByTeamNames, createGame, updateGame,deleteGameByName};
 
 // 

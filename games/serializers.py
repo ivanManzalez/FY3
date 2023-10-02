@@ -32,7 +32,7 @@ class CreateGameSerializer(serializers.ModelSerializer):
     # serialize request in python format
     fields = (
       'season',
-      'event',
+      # 'event',
       'home_team',
       'home_player_01',
       'home_player_02',
