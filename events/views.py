@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from rest_framework import generics, status
-from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_protect#,csrf_exempt 
+from django.utils.decorators import method_decorator
 
 from rest_framework.views import APIView
 from rest_framework.response import Response #send custom response from view
@@ -14,6 +15,7 @@ class EventsView(generics.ListAPIView): ## generics.CreateAPIView/ListAPIView
   queryset = Event.objects.all()
   serializer_class = EventSerializer
 
+# @method_decorator(csrf_protect, name='dispatch')
 class CreateEventView(APIView): ## CreateAPIView
   print('Create Events View')
   

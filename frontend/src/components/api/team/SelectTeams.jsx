@@ -1,37 +1,50 @@
 import React from "react";
+import {retrieveAllTeams} from './team'
 import TeamsDropdown from "./TeamsDropdown";
 
 
-const SelectTeams = ({teamOptions,setHomeTeam, setAwayTeam}) => {
-  // const [allTeams, setAllTeams] = React.useState(teamOptions);
-  const [homeTeams, setHomeTeams] = React.useState(teamOptions);
-  const [awayTeams, setAwayTeams] = React.useState(teamOptions);
-  // console.log("Select from these teams: ");
-  console.log(teamOptions)
+const SelectTeams = ({setHomeTeam, setAwayTeam, validator}) => {
+  const [allTeams, setAllTeams] = React.useState([]);
+  const [homeTeams, setHomeTeams] = React.useState(allTeams);
+  const [awayTeams, setAwayTeams] = React.useState(allTeams);
+
+  // Populate seasons on initial render
+  React.useEffect(async () => {
+    const teamOptions = await retrieveAllTeams(); // TODO: retrieve ACTIVE teams
+    setAllTeams(teamOptions);
+    setHomeTeams(teamOptions);
+    setAwayTeams(teamOptions);
+
+  }, []);
+
+  // Filter function to get available teams for the opposite dropdown
+  const getAvailableTeams = (selectedTeam) => {
+    const team = allTeams.filter((allTeams) => allTeams !== (selectedTeam));// remove team by id
+    return team;
+  };
 
   const handleHomeTeamChange = (homeTeam) => {
-    // Given homeTeam is selected
-    setHomeTeam(homeTeams[homeTeam]);
-    
+    setHomeTeam(homeTeam);
+    const teams = getAvailableTeams(homeTeam)
+    setAwayTeams(teams)
   };
+
   const handleAwayTeamChange = (awayTeam) => {
-    setAwayTeam(awayTeams[awayTeam]);
+    setAwayTeam(awayTeam);
+    const teams = getAvailableTeams(awayTeam)
+    setHomeTeams(teams)
   };
 
   return(
     <div id = "select_teams" >
-      <HomeTeamSelection homeTeamOptions={teamOptions} setHomeTeam = {handleHomeTeamChange} />
-      <AwayTeamSelection awayTeamOptions={awayTeams} setAwayTeam = {handleAwayTeamChange} />
+      <HomeTeamSelection homeTeamOptions={homeTeams} setHomeTeam = {handleHomeTeamChange}  />
+      <AwayTeamSelection awayTeamOptions={awayTeams} setAwayTeam = {handleAwayTeamChange}  />
     </div>
     )
 
 };
 
 const HomeTeamSelection = ({homeTeamOptions, setHomeTeam}) => {
-
-  console.log("HomeTeamSelection");
-  // given teams 
-  // set them up in MUI select dropdown
   return(
   <div>
     <TeamsDropdown name="Home Team" options = {homeTeamOptions} setState={setHomeTeam} />
@@ -40,8 +53,6 @@ const HomeTeamSelection = ({homeTeamOptions, setHomeTeam}) => {
 }
 
 const AwayTeamSelection = ({awayTeamOptions, setAwayTeam}) => {
-  // given teams 
-  // set them up in MUI select dropdown
   return(
     <div>
     <TeamsDropdown name="Away Team" options = {awayTeamOptions} setState={setAwayTeam} />

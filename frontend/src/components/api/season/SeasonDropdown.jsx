@@ -5,18 +5,19 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-const TeamsDropdown = ({ name, options, setState, validSelection}) => {
+
+const SeasonDropdown = ({ name, options, setState}) => {
 
   const [selection, setSelection] = React.useState("");
-  
+  // const optionsArray = convertToArray(options);
+
   const handleChange = (event) =>{
     setSelection(event.target.value);
     setState(event.target.value);
   };
-
   return (
     <Box sx={{ minWidth: 120 }}>
-      <FormControl fullWidth error={validSelection}>
+      <FormControl fullWidth>
         <InputLabel id="select_label">{name}</InputLabel>
         <Select
           labelId="select_label"
@@ -25,17 +26,15 @@ const TeamsDropdown = ({ name, options, setState, validSelection}) => {
           label={name}
           onChange={handleChange}
           >
-          {options.map((option) => (
+        {options.map((option) => (
             <MenuItem key={option.id} value={option.id}>
-              {option.team_name}
+              {option.season_year}
             </MenuItem>
           ))}
         </Select>
       </FormControl>
-    </Box>
-  );
+    </Box>)
 };
-
 const convertToArray = (nonArray) => {
   let newArr = nonArray;
   if (!Array.isArray(nonArray)) {
@@ -44,20 +43,4 @@ const convertToArray = (nonArray) => {
   return newArr;
 };
 
-const selectTeamOptions = ({options}) => {
-  if (options == null) {
-    return null; // Return null or an appropriate fallback if options is not an array
-  };
-  return (
-    optionsArray.map((option) => (
-      <MenuItem
-        key={option[1].id}
-        value={option[1].team_name}
-      >
-        {option[1].team_name}
-      </MenuItem>
-    ))
-  );
-};
-
-export default TeamsDropdown;
+export default SeasonDropdown;

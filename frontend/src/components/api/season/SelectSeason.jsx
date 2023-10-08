@@ -1,10 +1,6 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
 import {retrieveAllSeasons} from './season';
+import SeasonDropdown from './SeasonDropdown'
 
 
 const SelectSeason = ({getSeason}) => {
@@ -17,30 +13,13 @@ const SelectSeason = ({getSeason}) => {
     setSeasonsList(allSeasons);
   }, []);
 
-  const handleChange = async (event) => {
-    setSeason(event.target.value);
-    getSeason(event.target.value);
+  const handleChange = async (data) => {
+    setSeason(data);
+    getSeason(data);
+
   };
   return (
-    <Box sx={{ minWidth: 120 }}>
-      <FormControl fullWidth>
-        <InputLabel id="all_seasons">Season</InputLabel>
-        <Select
-          labelId="season_select_label"
-          id="season_select"
-          value={season}
-          label="Select a Season"
-          onChange={handleChange}
-        >  
-        {seasonsList.map((season) => (
-          <MenuItem key={season.id} value={season.id}>
-            {season.season_year}
-          </MenuItem>
-        ))}
-
-        </Select>
-      </FormControl>
-    </Box>
+    <SeasonDropdown name="Season" options = {seasonsList} setState={handleChange} />
   );
 };
 

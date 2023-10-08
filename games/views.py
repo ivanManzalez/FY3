@@ -12,6 +12,7 @@ from .models.game import Game
 from seasons.models.season import Season
 from teams.models.team import Team
 from players.models.player import Player
+from stp.models.stp import Stp
 from events.models.event import Event
 
 class GamesView(generics.ListAPIView): ## CreateAPIView
@@ -35,52 +36,64 @@ class CreateGameView(APIView): ## CreateAPIView
     serializer = self.serializer_class(data=request.data)
     message = 'Invalid request'
     
+    # VALID REQUEST (datatype, required fields, etc.)
     if (not serializer.is_valid()): 
       resp_status = status.HTTP_406_NOT_ACCEPTABLE
       return Response({'message':message, 'status':resp_status}, status=resp_status)
 
-    season = serializer.data.get('season')
-    event = serializer.data.get('event')
-    home_team = serializer.data.get('home_team')
-    away_team = serializer.data.get('away_team')
-    
-    queryset = Game.objects.filter(home_team=home_team, away_team=away_team, event=event, season=season)
+    # create new Event object using data from CreateEventForm 
+    # event = createEvent(date data)
+    event_id = serializer.data.get('event')
+    print("Event ID:", event_id)
+    season_id = serializer.data.get('season')
+    home_team_id = serializer.data.get('home_team')
+    away_team_id = serializer.data.get('away_team')
 
+    # CANT SCHEDULE SAME TEAM AGAINST ITSELF
+    if(int(home_team_id) == int(away_team_id)):
+      resp_status = status.HTTP_409_CONFLICT
+      message = "Home team cannot play itself"
+      return Response({'message': message, 'status': resp_status}, status=resp_status) # message = Conflict
+
+    queryset = Game.objects.filter(event__id =event_id, home_team__id=home_team_id, away_team__id=away_team_id, season__id=season_id)
+
+    # SAME GAME CANNOT EXIST FOR SAME EVENT AND SAME SEASON
+    print("Existence: ",queryset, home_team_id, away_team_id, season_id)
     if (queryset.exists()):
       resp_status = status.HTTP_409_CONFLICT
       message = "Game already exists"
       return Response({'message': message, 'status': resp_status}, status=resp_status) # message = Conflict
 
-    home_player_01 = serializer.data.get('home_player_01')
-    home_player_02 = serializer.data.get('home_player_02')
-    home_player_03 = serializer.data.get('home_player_03')
-    home_player_04 = serializer.data.get('home_player_04')
-    home_player_05 = serializer.data.get('home_player_05')
+    # 3 db calls - Season, Teams, STP
+    season = Season.objects.get(pk=season_id)
+    event = Event.objects.get(pk=event_id)
+    
+    home_team = Team.objects.filter(pk=home_team_id)[0]
+    away_team = Team.objects.filter(pk=away_team_id)[0]
+    
+    home_players = Stp.objects.filter(team__id = home_team_id)
+    away_players = Stp.objects.filter(team__id = away_team_id)
 
-    away_player_01 = serializer.data.get('away_player_01')
-    away_player_02 = serializer.data.get('away_player_02')
-    away_player_03 = serializer.data.get('away_player_03')
-    away_player_04 = serializer.data.get('away_player_04')
-    away_player_05 = serializer.data.get('away_player_05')
-
-        
     try:
       game = Game(
-        season= Season.objects.get(pk=season),
-        event = Event.objects.get(pk=event),
-        home_team = Team.objects.get(pk=home_team),
-        away_team = Team.objects.get(pk=away_team),
-        home_player_01 = Player.objects.get(pk=home_player_01),
-        home_player_02 = Player.objects.get(pk=home_player_02),
-        home_player_03 = Player.objects.get(pk=home_player_03),
-        home_player_04 = Player.objects.get(pk=home_player_04),
-        home_player_05 = Player.objects.get(pk=home_player_05),
-        away_player_01 = Player.objects.get(pk=away_player_01),
-        away_player_02 = Player.objects.get(pk=away_player_02),
-        away_player_03 = Player.objects.get(pk=away_player_03),
-        away_player_04 = Player.objects.get(pk=away_player_04),
-        away_player_05 = Player.objects.get(pk=away_player_05),
+        season= season,
+        event = event,
+        home_team = home_team,
+        away_team = away_team,
         )
+      # Assign players to the game based on the lists
+      for i, player in enumerate(home_players):
+        print(i, player.player.id)
+        index = str(i+1).zfill(2)
+        print(f"home_player_{index}")
+        setattr(game, f"home_player_{index}", player.player)
+
+      for i, player in enumerate(away_players):
+        print(i, player.player.id)
+        index = str(i+1).zfill(2)
+        print(f"away_player_{index}")
+        setattr(game, f"away_player_{index}", player.player)
+
       game.save()
       message = "Game created successfully"
       game = CreateGameSerializer(game).data
