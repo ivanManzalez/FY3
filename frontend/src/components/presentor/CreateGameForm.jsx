@@ -1,9 +1,13 @@
-import React, {useState, useRef} from "react";
+import React, {useState, useRef, forwardRef, useImperativeHandle} from "react";
 // import {getTeamsBySeason} from '../../components/api/stp/stp';
 import SelectSeason from '../../components/api/season/SelectSeason';
 import SelectTeams from '../../components/api/team/SelectTeams';
 
-const CreateGameForm = ({submitState, clearFormFields}) => {
+const CreateGameForm = forwardRef(({submitState, clearFormFields}, ref) => {
+  // References
+  const seasonDropdownRef = useRef();
+  const teamRef = useRef();
+
   // DB values
   const [season, setSeason] = useState("");
   const [awayTeam, setAwayTeam] = useState("");
@@ -12,15 +16,15 @@ const CreateGameForm = ({submitState, clearFormFields}) => {
 
   // Initial Form state 
   const initialFormState = {
-    season:season,
-    event:"", // TODO: must modify
-    home_team:homeTeam,
-    away_team:awayTeam,
+    season:"",
+    event:"",
+    home_team:"",
+    away_team:"",
   };
 
   // Handle Season dropdown selection
   const handleSeasonSelection = (data) => {
-    setSeason(data);
+    // setSeason(data);
     setFormState({
       ...formState,
       ['season']: data,
@@ -32,7 +36,7 @@ const CreateGameForm = ({submitState, clearFormFields}) => {
   }
   // Handle Home Team dropdown selection
   const handleHomeTeamSelection = (data) => {
-    setHomeTeam(data);
+    // setHomeTeam(data);
     setFormState({
       ...formState,
       ['home_team']: data,
@@ -70,8 +74,10 @@ const CreateGameForm = ({submitState, clearFormFields}) => {
 
   // clear all form fields
   const clearFields = () =>{
+    console.log("clearFields-Game");
     setFormState(initialFormState);
-    clearFormFields();
+    seasonDropdownRef.current.clearSeasonSelection();
+    teamRef.current.clearTeamsSelection();
   };
 
   const validHomeAndAwayTeams = (homeTeam, awayTeam) => {
@@ -86,16 +92,19 @@ const CreateGameForm = ({submitState, clearFormFields}) => {
     }
     return valid;
   }
+  // Expose the clearFields function via the ref
+  useImperativeHandle(ref, () => ({
+    clearFields,
+  }));
   
 return (
   <div >
-    <form id="create-game-form" className='form centre'>
-      <SelectSeason getSeason = {handleSeasonSelection} />
-      <SelectTeams setAwayTeam={handleAwayTeamSelection} setHomeTeam={handleHomeTeamSelection} validator={validHomeAndAwayTeams}/>
-      {/*<button type='submit' placeholder="Create Game" onClick={handleCreateGameButton}></button>*/}
+    <form id="create-game-form" className='form centre' onSubmit={clearFields}>
+      <SelectSeason ref={seasonDropdownRef} getSeason = {handleSeasonSelection} />
+      <SelectTeams ref={teamRef} setAwayTeam={handleAwayTeamSelection} setHomeTeam={handleHomeTeamSelection} validator={validHomeAndAwayTeams}/>  
     </form>
   </div>
   )
-}; 
+}); 
 
 export default CreateGameForm;

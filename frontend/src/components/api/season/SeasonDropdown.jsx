@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useState, useRef, forwardRef, useImperativeHandle} from "react";
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -6,15 +6,23 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
 
-const SeasonDropdown = ({ name, options, setState}) => {
+const SeasonDropdown = forwardRef(({ name, options, setState},ref) => {
 
-  const [selection, setSelection] = React.useState("");
+  const [selection, setSelection] = useState("");
   // const optionsArray = convertToArray(options);
 
   const handleChange = (event) =>{
     setSelection(event.target.value);
     setState(event.target.value);
   };
+  const clearSeasonSelection = () => {
+    setSelection("");
+  }
+  // Expose the clearFields function via the ref
+  useImperativeHandle(ref, () => ({
+    clearSeasonSelection,
+  }));
+
   return (
     <Box sx={{ minWidth: 120 }}>
       <FormControl fullWidth>
@@ -34,7 +42,8 @@ const SeasonDropdown = ({ name, options, setState}) => {
         </Select>
       </FormControl>
     </Box>)
-};
+});
+
 const convertToArray = (nonArray) => {
   let newArr = nonArray;
   if (!Array.isArray(nonArray)) {

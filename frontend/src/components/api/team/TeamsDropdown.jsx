@@ -1,18 +1,27 @@
-import * as React from 'react';
+import React, { useState, forwardRef, useImperativeHandle} from "react";
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-const TeamsDropdown = ({ name, options, setState, validSelection}) => {
+const TeamsDropdown = forwardRef(({ name, options, setState, validSelection},ref) => {
 
-  const [selection, setSelection] = React.useState("");
+  const [selection, setSelection] = useState("");
   
   const handleChange = (event) =>{
     setSelection(event.target.value);
     setState(event.target.value);
   };
+
+  const clearTeamSelection = () => {
+    console.log("*** clearing...", selection)
+    setSelection("");
+  }
+  // Expose the clearFields function via the ref
+  useImperativeHandle(ref, () => ({
+    clearTeamSelection,
+  }));
 
   return (
     <Box sx={{ minWidth: 120 }}>
@@ -34,7 +43,7 @@ const TeamsDropdown = ({ name, options, setState, validSelection}) => {
       </FormControl>
     </Box>
   );
-};
+});
 
 const convertToArray = (nonArray) => {
   let newArr = nonArray;

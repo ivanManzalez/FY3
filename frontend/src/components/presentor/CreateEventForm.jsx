@@ -1,16 +1,24 @@
-import React, {useState, useRef} from "react";
+import React, {useState, forwardRef, useImperativeHandle } from "react";
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 import {createEvent} from '../../components/api/event/event';
+// 
+import dayjs from 'dayjs';
+import {CalendarPicker, ClockPicker} from "../general/DateTimeSelection";
+import TextField from '@mui/material/TextField';
 
-const CreateEventForm = ({submitState, clearFormFields}) => {
+// 
+const CreateEventForm = forwardRef(({submitState, clearFormFields}, ref) => {
+  const defaultTime = dayjs().hour(0).minute(0); 
+  const today = dayjs();
+  console.log("ref: " + ref);
 
   // set form field init values
   const initialFormState = {
     name: '',
-    date: '',
-    start_time: '',
-    end_time: '',
+    date: today,
+    start_time:defaultTime,
+    end_time: '20:00:00',
     street_number:'',
     street_name:'',
     city:'',
@@ -20,90 +28,70 @@ const CreateEventForm = ({submitState, clearFormFields}) => {
 
   // clear all form fields
   const clearFields = () =>{
+    // event.preventDefault();
+    console.log("clearFields-Event");
     setFormState(initialFormState);
-    clearFormFields();
   };
+  // Expose the clearFields function via the ref
+  useImperativeHandle(ref, () => {
+    console.log('Assigning ref to clearFields function');
+    return {
+      clearFields,
+    };
+  });
 
   // Function to handle input changes
   const handleInputChange = (e) => {
+    console.log(formState)
+    console.log("On change called... ");
+    // console.log(e);
+
     const { name, value } = e.target;
     setFormState({
       ...formState,
       [name]: value,
     });
-    console.log(name)
-    console.log(value)
     submitState({
       ...formState,
       [name]: value,
-  });
+    });
   };
 
-  const handleMessage = (response) => {
-    console.log(response);
-    if(response.status == 200){
-      clearFields();
-      setClassname('good');
-    }else{
-      setClassname('bad');
-    }
-    setMessage(response.message);
+  const handleDateChange = (e) => {
+    const year = e.$y;
+    const month = e.$M+1;
+    const day = e.$D;
+    
+    // const value = year+"-"+month+"-"+day;
+    const value = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+    const name = 'date';
+    const obj = {target:{name, value}}
+    handleInputChange(obj);
   };
+
+  const handleTimeChange = (e) => {
+    const hour = e.$H;
+    const minute = e.$m;
+    const second = e.$s;
+    
+    const value = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}:${second.toString().padStart(2, '0')}`;
+    const name = 'start_time';
+    const obj = {target:{name, value}}
+    handleInputChange(obj);
+  };
+
+  
 
 return (
-  <form id="create-event-form" className='form centre' >
-    <TextField name = {"name"} id={"name"} field={"Event Name"} handler={handleInputChange} value={formState.name} />
-    <DateField name = {"date"} id={"date"} field={"Event Date"} handler={handleInputChange} value={formState.date} />
-    <TimeField name = {"start_time"} id={"start_time"} field={"Event Start Time"} handler={handleInputChange} value={formState.start_time} />
-    <TimeField name = {"end_time"} id={"end_time"} field={"Event End Time"} handler={handleInputChange} value={formState.end_time} />
-    <NumberField name = {"street_number"} id={"street_number"} field={"Street Number"} handler={handleInputChange} value={formState.street_number} />
-    <TextField name = {"street_name"} id={"street_name"} field={"Street Name"} handler={handleInputChange} value={formState.street_name} /> 
-    <TextField name = {"city"} id={"city"} field={"City"} handler={handleInputChange} value={formState.city} />
-    {/*<button type='submit' placeholder="Create Event" onClick={handleCreateEventButton}> Create Event </button>*/}
+  <form id="create-event-form" className='form centre' onSubmit={clearFields}>
+    <TextField id={"name"} name={"name"} label={"Event Name"} variant={"outlined"} onChange={handleInputChange} value={formState.name} />
+    <CalendarPicker id={"date"} name={"date"} label={"Event Date"} variant={"outlined"} onChange={handleDateChange} value={dayjs(formState.date)}/>
+    <ClockPicker id={"start_time"} name = {"start_time"}  label={"Event Start Time"} variant={"outlined"} onChange={handleTimeChange} value={dayjs(formState.start_time)} />
+    <TextField type= {"number"} id={"street_number"} name = {"street_number"} label={"Street #"} variant={"outlined"}  onChange={handleInputChange} value={formState.street_number} />
+    <TextField id={"street_name"} name = {"street_name"} label={"Street"} variant={"outlined"} onChange={handleInputChange} value={formState.street_name} />
+    <TextField id={"city"} name = {"city"} label={"City"} variant={"outlined"} onChange={handleInputChange} value={formState.city} />
   </form>
   )
-}; 
-
-////////////////////////
-const TextField = (props) => {
-  return(
-    <div className = "entryarea">
-      {/*<label>{props.field}</label>*/}
-      <input className = "inputter" type="text" name = {props.name} id={props.id} value={props.value} onChange={props.handler} required/>
-      <div className="labelline">{"Enter " + props.field}</div>
-    </div>
-    )
-}
-
-////////////////////////
-const NumberField = (props) => {
-  return(
-    <div className = "entryarea">
-      {/*<label>{props.field}</label>*/}
-      <input className = "inputter" type="number" name = {props.name} id={props.id} value={props.value} onChange={props.handler} required/>
-      <div className="labelline">{"Enter " + props.field}</div>
-    </div>
-    )
-}
-
-////////////////////////
-const DateField = (props) => {
-  return(
-    <div className = "entryarea">
-    <input className = "inputter" type="date" name = {props.name} id={props.id} value={props.value} onChange={props.handler} required />
-    <div className="labelline">{"Enter " + props.field}</div>
-    </div>
-    )
-}
-
-////////////////////////
-const TimeField = (props) => {
-  return(
-    <div className = "entryarea">
-    <input className = "inputter" type="time" name = {props.name} id={props.id} value={props.value} onChange={props.handler} required />
-    <div className="labelline">{"Enter " + props.field}</div>
-    </div>
-    )
-}
+}); 
 
 export default CreateEventForm;

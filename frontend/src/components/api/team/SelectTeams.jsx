@@ -1,12 +1,26 @@
-import React from "react";
+import React, { forwardRef, useRef, useImperativeHandle} from "react";
 import {retrieveAllTeams} from './team'
 import TeamsDropdown from "./TeamsDropdown";
 
 
-const SelectTeams = ({setHomeTeam, setAwayTeam, validator}) => {
+const SelectTeams = forwardRef(({setHomeTeam, setAwayTeam, validator},ref) => {
+  const homeTeamRef = useRef();
+  const awayTeamRef = useRef();
+
   const [allTeams, setAllTeams] = React.useState([]);
   const [homeTeams, setHomeTeams] = React.useState(allTeams);
   const [awayTeams, setAwayTeams] = React.useState(allTeams);
+
+  //
+  const clearTeamsSelection = () => {
+    homeTeamRef.current.clearTeamSelection();
+    awayTeamRef.current.clearTeamSelection();
+  } 
+
+  // Expose the clearFields function via the ref
+  useImperativeHandle(ref, () => ({
+    clearTeamsSelection,
+  }));
 
   // Populate seasons on initial render
   React.useEffect(async () => {
@@ -37,27 +51,27 @@ const SelectTeams = ({setHomeTeam, setAwayTeam, validator}) => {
 
   return(
     <div id = "select_teams" >
-      <HomeTeamSelection homeTeamOptions={homeTeams} setHomeTeam = {handleHomeTeamChange}  />
-      <AwayTeamSelection awayTeamOptions={awayTeams} setAwayTeam = {handleAwayTeamChange}  />
+      <HomeTeamSelection ref={homeTeamRef} homeTeamOptions={homeTeams} setHomeTeam = {handleHomeTeamChange}  />
+      <AwayTeamSelection ref={awayTeamRef} awayTeamOptions={awayTeams} setAwayTeam = {handleAwayTeamChange}  />
     </div>
     )
 
-};
+});
 
-const HomeTeamSelection = ({homeTeamOptions, setHomeTeam}) => {
+const HomeTeamSelection = forwardRef(({homeTeamOptions, setHomeTeam},ref) => {
   return(
   <div>
-    <TeamsDropdown name="Home Team" options = {homeTeamOptions} setState={setHomeTeam} />
+    <TeamsDropdown ref={ref} name="Home Team" options = {homeTeamOptions} setState={setHomeTeam} />
   </div>
   )
-}
+})
 
-const AwayTeamSelection = ({awayTeamOptions, setAwayTeam}) => {
+const AwayTeamSelection = forwardRef(({awayTeamOptions, setAwayTeam}, ref) => {
   return(
     <div>
-    <TeamsDropdown name="Away Team" options = {awayTeamOptions} setState={setAwayTeam} />
+    <TeamsDropdown ref={ref} name="Away Team" options = {awayTeamOptions} setState={setAwayTeam} />
     </div>
   )
-}
+})
 
 export default SelectTeams;

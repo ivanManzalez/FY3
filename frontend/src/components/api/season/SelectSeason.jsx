@@ -1,14 +1,14 @@
-import * as React from 'react';
+import React, {useState, useEffect, forwardRef} from "react";
 import {retrieveAllSeasons} from './season';
 import SeasonDropdown from './SeasonDropdown'
 
+const SelectSeason = forwardRef(({getSeason},ref) => {
 
-const SelectSeason = ({getSeason}) => {
   const [seasonsList, setSeasonsList] = React.useState([]);
   const [season, setSeason] = React.useState("");
 
   // Populate seasons on initial render
-  React.useEffect(async () => {
+  useEffect(async () => {
     const allSeasons = await retrieveAllSeasons();
     setSeasonsList(allSeasons);
   }, []);
@@ -16,11 +16,11 @@ const SelectSeason = ({getSeason}) => {
   const handleChange = async (data) => {
     setSeason(data);
     getSeason(data);
-
   };
+
   return (
-    <SeasonDropdown name="Season" options = {seasonsList} setState={handleChange} />
+    <SeasonDropdown ref={ref} name="Season" options = {seasonsList} setState={handleChange} />
   );
-};
+});
 
 export default SelectSeason;
