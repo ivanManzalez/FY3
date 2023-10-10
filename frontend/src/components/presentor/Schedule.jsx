@@ -12,7 +12,13 @@ import Switch from '@mui/material/Switch';
 // 
 
 const Schedule = (props) => {
-  
+  // Ref
+  const gameFormRef = useRef();
+  const eventFormRef = useRef();
+
+  useEffect(() => {
+  console.log('gameFormRef.current:', gameFormRef.current);
+  }, [gameFormRef.current]);
   // DISPLAY
   const [message, setMessage] = useState("");
   const [classname, setClassname] = useState("");
@@ -28,25 +34,25 @@ const Schedule = (props) => {
   // API Forms
   const [eventFormState, setEventFormState] = useState("");
   const [gameFormState, setGameFormState] = useState("");
-  const createEventFormRef = useRef(null);
-  const createGameFormRef = useRef(null);
 
   const updateGameForm = (data) =>{
+    console.log("Schedule-Game",data);
     setGameFormState(data)
   };
   const updateEventForm = (data) =>{
-    setEventFormState(data)
+    console.log("Schedule-Event",data);
+    setEventFormState(data);
   };
 
   // EVENTS
   const handleDisplayEventsButton = async () => {
     const allEvents = await getAllEvents();
     setEvents(allEvents);
-    setButtonLabel("Refresh");
+    setAllEventsLabel("Refresh");
   };
   const handleClearButton = () => {
     setEvents([]);
-    setButtonLabel("Display all Events")
+    setAllEventsLabel("Display all Events")
   };
 
   // GAMES
@@ -57,13 +63,13 @@ const Schedule = (props) => {
       setIsGame(false);
     }
   };
-
   // SUBMIT 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log("createEventFormRef:",createEventFormRef)
+    console.log("eventFormState:",eventFormState)
+
     if (isGame){
-      console.log(gameFormState);
+      console.log("gameFormState:",gameFormState)
       if(gameFormState.home_team === gameFormState.away_team){
         const response = {
         status: 406,
@@ -74,7 +80,6 @@ const Schedule = (props) => {
       }
       const eventId = await handleSubmitEvent();
       setEventId(eventId);
-      console.log("handleSubmitGame")
       handleSubmitGame(eventId);
     }
     else{
@@ -84,21 +89,21 @@ const Schedule = (props) => {
 
   const handleSubmitEvent = async () =>{
     
+    eventFormRef.current.clearFields();
     const requestOptions = {
       method: "POST",
       headers: {"Content-Type":"application/json"},
       'X-CSRFToken': csrftoken,
       body: JSON.stringify(eventFormState),
     };
-    // const createEventResponse = await createEvent(requestOptions)
-    // handleMessage(createEventResponse); 
+    const createEventResponse = await createEvent(requestOptions)
+    handleMessage(createEventResponse); 
 
-    clearEventFormFields();
-    // return createEventResponse.event.id;
+    return createEventResponse.event.id;
   }
  
   const handleSubmitGame = async (eventId) =>{
-
+    gameFormRef.current.clearFields();
     gameFormState['event']=eventId;
     const requestOptions = {
       method: "POST",
@@ -106,24 +111,21 @@ const Schedule = (props) => {
       "X-CSRFToken": csrftoken,
       body: JSON.stringify(gameFormState),
     };
-    // const createGameResponse = await createGame(requestOptions)
-    // handleMessage(createGameResponse); 
-    clearGameFormFields();
+    const createGameResponse = await createGame(requestOptions)
+    handleMessage(createGameResponse); 
   }
-  // Function to clear event form fields
+
+  // CLEAR FORMS
   const clearEventFormFields = () => {
-    if (createEventFormRef.current) {
-      createEventFormRef.current.clearFields();
-    }
-  };
-
-  // Function to clear game form fields
+    console.log("Clear events form")
+    // updateEventsForm(initialFormState);
+    };
+  // CLEAR FORMS
   const clearGameFormFields = () => {
-    if (createGameFormRef.current) {
-      createGameFormRef.current.clearFields();
-    }
-  };
-
+    console.log("Clear games form")
+      // updateGameForm(initialFormState);
+    };
+  
   // Handle feedback message
   const handleMessage = (response) => {
     if(response.status >= 200 && response.status < 300){
@@ -146,24 +148,25 @@ const Schedule = (props) => {
       
       {/* From: Event / Game  */}
       <FormGroup component="fieldset">
-        <FormLabel component="legend"> Event Details</FormLabel>
-        <CreateEventForm submitState={updateEventForm} ref={createEventFormRef} clearFormFields={clearEventFormFields}/>
         <FormControlLabel control={<Switch defaultChecked={isGame} onChange={handleGameSwitchChange} />} label="Game?" />
+        <div>
+          <FormLabel component="legend"> Event Details </FormLabel>
+          < CreateEventForm ref={eventFormRef} submitState={updateEventForm} clearFormFields={clearEventFormFields} /> 
+        </div> 
+
         {isGame && 
-          <div>
-            <FormLabel component="legend"> Game Details</FormLabel>
-            <CreateGameForm submitState={updateGameForm} ref={createGameFormRef} clearFormFields={clearGameFormFields}/>
-          </div>
+        <div>
+          <FormLabel component="legend"> Game Details</FormLabel>
+          {<CreateGameForm ref={gameFormRef} submitState={updateGameForm}  clearFormFields={clearGameFormFields}/>} {/*ref={createGameFormRef}*/}
+        </div>
         }
         <button id='submit_event' onClick={handleSubmit}> Submit </button><br></br>
       </FormGroup>
-
       {/*TODO: Refactor for pagination of upcoming events */}
       <button id='get_all_events' onClick={handleDisplayEventsButton}> {allEventsLabel} </button>
       <button id='clear_events' onClick={handleClearButton}> Clear </button>
-      <p>{eventsComponent(events)}</p>
-      
-    </div>
+      <div>{eventsComponent(events)}</div>
+    </div>  
     );
   };
 
@@ -194,12 +197,11 @@ const convertToArray = (nonArray) => {
     newArr = Object.entries(nonArray);
   };
   return newArr;
-
 };
 
-function getCookie(name) {
+const getCookie = (name) => {
   const cookieValue = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
   return cookieValue ? cookieValue.pop() : '';
-};
+  };
 
 export default Schedule;
