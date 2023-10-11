@@ -11,9 +11,13 @@ const Commssioner = () => {
   return (
     <div id='commissioner'>
       {/*< Api />*/}
-      < CreateSeasonForm />
-      < CreatePlayerForm />
-      < CreateTeamForm />
+      <h1>Commssioner</h1>
+      <div className="h_container" >
+        < CreateSeasonForm />
+        < CreateTeamForm />
+        < CreatePlayerForm />
+      </div>
+      
     </div>
   )
 }
