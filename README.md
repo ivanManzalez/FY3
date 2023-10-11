@@ -6,7 +6,7 @@ Welcome to the FY3 Basketball League Web App, your one-stop solution for elevati
 
 **Project Overview** 
 
-Using Django, React, and PostgreSQL The FY3 Web App is designed to streamline and enhance the basketball league experience, making it a breeze for league organizers, players, and fans alike. With a user-friendly interface and a host of powerful features, this application is set to revolutionize how you interact with your basketball league.
+The FY3 Web App is designed to streamline and enhance the basketball league experience, making it a breeze for league organizers, players, and fans alike. With a user-friendly interface and a host of powerful features, this application is set to revolutionize how you interact with your basketball league.
 
 **Key Features**
 
