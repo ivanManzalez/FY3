@@ -20,5 +20,11 @@
     <div id='app'></div>
   </div>
   <script src="{% static 'frontend/main.js'%}"></script>
+  <script>
+    // Include the CSRF token as a JavaScript variable
+    window.csrfToken = "{{ csrf_token }}";
+    console.log("index: ");
+    console.log(csrfToken);
+  </script>
 </body>
 </html>

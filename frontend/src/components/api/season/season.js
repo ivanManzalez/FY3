@@ -19,11 +19,10 @@ const createSeason = async (requestOptions) => {
 
 const retrieveAllSeasons = () => {
   return fetch(TESTBASE+API)
-  .then((response)=>{
-    return response.json();
-  .catch((error) => {
-    return error;
+  .then((response) => {
+    return response.json()
   })
+  .catch((error) => console.error(error))
 };
 
 const retrieveSeasonByYear = async (year) => {
@@ -55,9 +54,9 @@ const deleteSeasonByYear = (year, requestOptions) => {
   .catch((error) => {
     console.error('An error occurred:', error);
     return error;
-  });
+  })
+};
 
 
 export {createSeason, retrieveAllSeasons, retrieveSeasonByYear, updateSeason, deleteSeasonByYear};
-
-  // 
+ 

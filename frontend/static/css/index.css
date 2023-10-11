@@ -2,6 +2,7 @@
 @import './form.css';
 @import './commissioner.css';
 @import './login.css';
+@import './submit.css';
 /*********************************/
 
 :root {
@@ -14,10 +15,10 @@
 }
 
 html,body{
-  height: 100%;
+  height: 100vh;
   margin:0;
   padding:0;
-  background-color: 000;
+  background-color: grey;
 }
 
 #main{
@@ -40,7 +41,6 @@ html,body{
 .centre{
   display: flex;
   justify-content: center;
-  /*text-align: center;*/
 }
 
 .bad{
@@ -48,4 +48,8 @@ html,body{
 }
 .good{
   background-color: #66ff00;
+}
+.events{
+  /*width: 130%;*/
+  background-color: grey;
 }

@@ -35,17 +35,19 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
 
     #### Personal Apps
-    'rest_framework',
     'players.apps.PlayersConfig',
     'teams.apps.TeamsConfig',
     'seasons.apps.SeasonsConfig',
-
-    'users.apps.UsersConfig',
     'events.apps.EventsConfig',
-
     'games.apps.GamesConfig',
+    'stp.apps.StpConfig',
+    'users.apps.UsersConfig',
+    # Team Stats
+    # Player Stats
 
     #### Default Apps Included
+    'rest_framework',
+    'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -64,6 +66,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'FY3.urls'
@@ -161,3 +165,11 @@ LOGOUT_REDIRECT_URL = "FY3-Home"
 # USE_PROXY = True
 # PROXY_URL = 'http://localhost:3000'
 
+CORS_ORIGIN_ALLOW_ALL = True
+# CORS_ALLOW_CREDENTIALS = True
+# CSRF_COOKIE_NAME = "csrftoken"
+# CORS_ORIGIN_WHITELIST = ('http://localhost:3000', 'http://127.0.0.1:3000', 'localhost:3000', '127.0.0.1:3000')
+# CSRF_TRUSTED_ORIGINS = [
+#     'http://localhost:8000',
+#     'http://127.0.0.1:8000',
+# ] 

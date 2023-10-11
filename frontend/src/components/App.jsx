@@ -8,6 +8,8 @@ import {AuthProvider} from "../contexts/AuthContext";
 import Home from "./presentor/Home";
 import Commissioner from "./presentor/Commissioner";
 import Schedule from "./presentor/Schedule";
+import Standings from "./presentor/Standings";
+import Stats from "./presentor/Stats";
 import Layout from "./navigator/Layout";
 
 // Authentication
@@ -37,7 +39,9 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/schedule" element={<Schedule />} />
-
+        <Route path="/standings" element={<Standings />} />
+        <Route path="/stats" element={<Stats />} />
+        
       </Routes>
     </AuthProvider>
     </ Layout>

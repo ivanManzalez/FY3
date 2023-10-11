@@ -8,6 +8,7 @@ class Event(models.Model):
   street_number = models.PositiveIntegerField(default=1295, null=False)
   street_name = models.TextField(default="Williams Pkwy", null=False)
   city = models.TextField(default="Brampton", null=False)
+  # weather?
 
   def __str__(self):
     address = str(self.street_number) + " " + self.street_name 

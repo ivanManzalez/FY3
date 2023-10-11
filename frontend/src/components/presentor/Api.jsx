@@ -1,6 +1,11 @@
 import React from "react";
 
-import {deletePlayerByFullName, updatePlayer, createPlayer, retrieveAllPlayers, retrievePlayerByFullName} from '../../components/api/player/player';
+import {
+  deletePlayerByFullName, 
+  updatePlayer, 
+  createPlayer, 
+  retrieveAllPlayers, 
+  retrievePlayerByFullName } from '../../components/api/player/player';
 
 
 const playerName = {

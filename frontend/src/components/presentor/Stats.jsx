@@ -1,11 +1,11 @@
-import React, { Component } from "react";
+import React from "react";
 
-export default class Stats extends Component{
-  constructor(props){
-    super(props);
-  }
+const Stats = () => {
+  
+  return (
+    <h1> this is the Stats page</h1>
+    );
 
-  render(){
-    return (<h1> this is the Stats page</h1>);
-  }
-}
+};
+
+export default Stats;
