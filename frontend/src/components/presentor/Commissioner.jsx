@@ -7,15 +7,17 @@ import Api from "./Api";
 
 
 const Commssioner = () => {
-  console.log("render commisioner")
+  const beginDraft = false;
   return (
     <div id='commissioner'>
       {/*< Api />*/}
       <h1>Commssioner</h1>
       <div className="h_container" >
+        {beginDraft && < Draft />}
+        < CreatePlayerForm />
         < CreateSeasonForm />
         < CreateTeamForm />
-        < CreatePlayerForm />
+        
       </div>
       
     </div>

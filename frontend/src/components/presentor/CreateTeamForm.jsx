@@ -2,6 +2,13 @@ import React, {useState} from "react";
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 import {createTeam} from '../../components/api/team/team';
+import TextField from '@mui/material/TextField';
+
+// 
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
 const CreateTeamForm = () => {
 
@@ -9,8 +16,9 @@ const CreateTeamForm = () => {
   const initialFormState = {
     team_name: '',
     abbr_name: '',
-    division_ind: 'E',
+    division_ind: "",
   };
+
   const [message, setMessage] = useState("");
   const [classname, setClassname] = useState("");
   const [formState, setFormState] = useState(initialFormState);
@@ -47,56 +55,50 @@ const CreateTeamForm = () => {
   };
 
   const handleMessage = (response) => {
-    console.log(response);
+    console.log(response.status)
+    console.log(classname)
     if(response.status == 200){
-      console.log('good and clear fields')
       clearFields();
       setClassname('good');
     }else{
-      console.log('bad and NOT clear fields')
       setClassname('bad');
     }
     setMessage(response.message);
   };
-console.log('formState');
-console.log(formState);
+
 return (
   <div >
     <h3> Create Team </h3>
-    <h5> Add team details then click submit </h5>
-    <div id="message" className={classname}>{message && <p>{message}</p>}</div>
-    <form id="create-team-form" className='form centre'>
     
-    <TextField name = {"team_name"} id={"team_name"} field={"Team Name"} handler={handleInputChange} value={formState.team_name} />
-    <TextField name = {"abbr_name"} id={"abbr_name"} field={"Team Short Name"} handler={handleInputChange} value={formState.abbr_name} /> 
-    <TextField name = {"division_ind"} id={"division_ind"} field={"Team Division"} handler={handleInputChange} value={formState.division_ind} />
+    <div id="message" className={classname}>{ message && <p>{message}</p> }</div>
+    <form id="create_team_form" className='input_fields'>
+
+      <TextField id={"team_name"} label={"Team Name"} variant={"outlined"} onChange={handleInputChange} value={formState.team_name} name={"team_name"} />
+      <TextField id={"abbr_name"} label={"Team Short Name"} variant={"outlined"} onChange={handleInputChange} value={formState.abbr_name} name={"abbr_name"} />
+      <DivisionIndicator  label={"Team Division"} variant={"outlined"} handler={handleInputChange}  value={formState.division_ind} />
+      <button className="submit" type='submit' placeholder="Create Team" onClick={handleCreateTeamButton}> Create Team </button>
     
-    <button type='submit' placeholder="Create Team" onClick={handleCreateTeamButton}> Create Team </button>
     </form>
   </div>
-  )
-}; 
-
-////////////////////////
-const TextField = (props) => {
+  )}; 
+const DivisionIndicator = ({value, handler}) => {
   return(
-    <div className = "entryarea">
-      {/*<label>{props.field}</label>*/}
-      <input className = "inputter" type="text" name = {props.name} id={props.id} value={props.value} onChange={props.handler} required/>
-      <div className="labelline">{"Enter " + props.field}</div>
-    </div>
-    )
+  <Box sx={{ minWidth: 50 }}>
+    <FormControl fullWidth>
+      <InputLabel id="div_ind">Division</InputLabel>
+      <Select
+        labelId="div_ind"
+        value={value}
+        label="Division"
+        onChange={handler}
+        name={"division_ind"}
+      >
+        <MenuItem value={"W"}>West</MenuItem>
+        <MenuItem value={"E"}>East</MenuItem>
+      </Select>
+    </FormControl>
+  </Box>)
 }
 
-////////////////////////
-const NumberField = (props) => {
-  return(
-    <div className = "entryarea">
-      {/*<label>{props.field}</label>*/}
-      <input className = "inputter" type="number" name = {props.name} id={props.id} value={props.value} onChange={props.handler} required/>
-      <div className="labelline">{"Enter " + props.field}</div>
-    </div>
-    )
-}
 
 export default CreateTeamForm;

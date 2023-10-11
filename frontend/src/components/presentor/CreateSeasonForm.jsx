@@ -4,7 +4,7 @@ import Slider from '@mui/material/Slider';
 import dayjs from 'dayjs';
 import {CalendarPicker} from "../general/DateTimeSelection";
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
+import {createSeason} from "../api/season/season";
 
 const CreateSeasonForm = () => {
   
@@ -28,34 +28,14 @@ const CreateSeasonForm = () => {
 
   // clear all form fields
   const clearFields = () =>{
-    setSeasonYear("");
-    setStartDate("");
+    setSeasonYear(dateToday.year);
+    setStartDate(dateToday.date);
     setMessage("");
     setClassname("");
   };
 
-  // create player API
-  const createSeasonAPI = (requestOptions) => {
-    fetch('/seasons/create-season/', requestOptions 
-      ).then((response)=>{
-      if(response.status === 200){
-          clearFields();
-          setClassname("good");
-        }
-      else{
-          setClassname("bad");
-        }
-        return response.json();
-      }).then((data) => {
-        console.log('data')
-      if (data.message) {
-        setMessage(data.message);
-        // Clear the form fields
-        }
-      }).catch(
-    )}
   // event handler
-  const handleCreateSeasonButton = (event) => {
+  const handleCreateSeasonButton = async (event) => {
     event.preventDefault();
     
     // define API request options
@@ -67,8 +47,20 @@ const CreateSeasonForm = () => {
           start_date: startDate,
         })
       };
-    createSeasonAPI(requestOptions);
+    const seasonResponse = await createSeason(requestOptions);
+    handleMessage(seasonResponse)
     };
+
+  const handleMessage = (response) => {
+    console.log(classname)
+    if(response.status == 200){
+      clearFields();
+      setClassname('good');
+    }else{
+      setClassname('bad');
+    }
+    setMessage(response.message);
+  };
 
   const handleSeasonStartDateChange = (e) => {
     const value = dateToYYYYMMDD(e)
@@ -76,14 +68,11 @@ const CreateSeasonForm = () => {
     setSeasonYear(value.year);
   };
 
-console.log("Start Date:",startDate);
-console.log("Year:",seasonYear);
 return (
   <div >
     <h3> Create Season </h3>
-    <div id="message" className={classname}>{message && <p>{message}</p>}</div>
+    <div id="message" className={classname} >{message && <p>{message}</p>}</div>
     <form id="create_season_form" className='form'>
-      {/*<FormControlLabel label="Select Start Date of new Season" /> */} {/*control= {<Switch defaultChecked={isGame} onChange={handleGameSwitchChange} />}*/}                            
       
       <div className="input_fields">
         <TextField id={"season_year"} label={"Season Year"} variant={"outlined"} inputProps={{ readOnly: true }} value={seasonYear} />
