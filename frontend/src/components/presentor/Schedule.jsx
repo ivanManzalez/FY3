@@ -9,6 +9,7 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
 import Switch from '@mui/material/Switch';
+import { Button } from '@mui/base/Button';
 // 
 
 const Schedule = (props) => {
@@ -140,32 +141,33 @@ const Schedule = (props) => {
 
   return(
     <div id='schedule'>
-      <h1> Schedule page</h1>
-      <h3> Event/Game Form </h3>
-
+      <h1> Schedule </h1>
+      <div className="h_container">
+        <h3> Event Form </h3>
+        <FormControlLabel id="game_switch" control={<Switch defaultChecked={isGame} onChange={handleGameSwitchChange} />} label="Game" />
+      </div>
       {/* Message */}
       <div id="message" className={classname}>{message && <p>{message}</p>}</div>
-      
       {/* From: Event / Game  */}
-      <FormGroup component="fieldset">
-        <FormControlLabel control={<Switch defaultChecked={isGame} onChange={handleGameSwitchChange} />} label="Game?" />
+      <FormGroup id ="schedule_form" component="fieldset">
         <div>
-          <FormLabel component="legend"> Event Details </FormLabel>
+          <FormLabel  component="legend"> Event Details </FormLabel>
           < CreateEventForm ref={eventFormRef} submitState={updateEventForm} clearFormFields={clearEventFormFields} /> 
         </div> 
-
+        <br></br>
         {isGame && 
         <div>
           <FormLabel component="legend"> Game Details</FormLabel>
-          {<CreateGameForm ref={gameFormRef} submitState={updateGameForm}  clearFormFields={clearGameFormFields}/>} {/*ref={createGameFormRef}*/}
+          {<CreateGameForm id="game_form" ref={gameFormRef} submitState={updateGameForm}  clearFormFields={clearGameFormFields}/>}
         </div>
         }
-        <button id='submit_event' onClick={handleSubmit}> Submit </button><br></br>
+        <Button id="submit_event" className="submit centre" onClick={handleSubmit}> Submit </Button><br></br>
+        {/*<button id='submit' onClick={handleSubmit}> Submit </button>*/}
       </FormGroup>
       {/*TODO: Refactor for pagination of upcoming events */}
       <button id='get_all_events' onClick={handleDisplayEventsButton}> {allEventsLabel} </button>
       <button id='clear_events' onClick={handleClearButton}> Clear </button>
-      <div>{eventsComponent(events)}</div>
+      <div className="events">{eventsComponent(events)}</div>
     </div>  
     );
   };

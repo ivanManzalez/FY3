@@ -41,7 +41,7 @@ const App = () => {
         <Route path="/schedule" element={<Schedule />} />
         <Route path="/standings" element={<Standings />} />
         <Route path="/stats" element={<Stats />} />
-
+        
       </Routes>
     </AuthProvider>
     </ Layout>

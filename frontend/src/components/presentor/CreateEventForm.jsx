@@ -83,13 +83,17 @@ const CreateEventForm = forwardRef(({submitState, clearFormFields}, ref) => {
   
 
 return (
-  <form id="create-event-form" className='form centre' onSubmit={clearFields}>
-    <TextField id={"name"} name={"name"} label={"Event Name"} variant={"outlined"} onChange={handleInputChange} value={formState.name} />
-    <CalendarPicker id={"date"} name={"date"} label={"Event Date"} variant={"outlined"} onChange={handleDateChange} value={dayjs(formState.date)}/>
-    <ClockPicker id={"start_time"} name = {"start_time"}  label={"Event Start Time"} variant={"outlined"} onChange={handleTimeChange} value={dayjs(formState.start_time)} />
-    <TextField type= {"number"} id={"street_number"} name = {"street_number"} label={"Street #"} variant={"outlined"}  onChange={handleInputChange} value={formState.street_number} />
-    <TextField id={"street_name"} name = {"street_name"} label={"Street"} variant={"outlined"} onChange={handleInputChange} value={formState.street_name} />
-    <TextField id={"city"} name = {"city"} label={"City"} variant={"outlined"} onChange={handleInputChange} value={formState.city} />
+  <form id="create-event-form" className='form' onSubmit={clearFields}>
+    <TextField id={"event_name"} name={"name"} label={"Event Name"} variant={"outlined"} onChange={handleInputChange} value={formState.name} />
+    <div id="event_datetime">
+      <CalendarPicker id={"date"} name={"date"} label={"Event Date"} variant={"outlined"} onChange={handleDateChange} value={dayjs(formState.date)}/>
+      <ClockPicker id={"start_time"} name = {"start_time"}  label={"Event Start Time"} variant={"outlined"} onChange={handleTimeChange} value={dayjs(formState.start_time)} />
+    </div>
+    <div id="event_location">
+      <TextField type= {"number"} id={"street_number"} name = {"street_number"} label={"Street #"} variant={"outlined"}  onChange={handleInputChange} value={formState.street_number} />
+      <TextField id={"street_name"} name = {"street_name"} label={"Street"} variant={"outlined"} onChange={handleInputChange} value={formState.street_name} />
+      <TextField id={"city"} name = {"city"} label={"City"} variant={"outlined"} onChange={handleInputChange} value={formState.city} />
+    </div>
   </form>
   )
 }); 

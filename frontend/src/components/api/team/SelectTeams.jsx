@@ -60,17 +60,13 @@ const SelectTeams = forwardRef(({setHomeTeam, setAwayTeam, validator},ref) => {
 
 const HomeTeamSelection = forwardRef(({homeTeamOptions, setHomeTeam},ref) => {
   return(
-  <div>
     <TeamsDropdown ref={ref} name="Home Team" options = {homeTeamOptions} setState={setHomeTeam} />
-  </div>
   )
 })
 
 const AwayTeamSelection = forwardRef(({awayTeamOptions, setAwayTeam}, ref) => {
   return(
-    <div>
     <TeamsDropdown ref={ref} name="Away Team" options = {awayTeamOptions} setState={setAwayTeam} />
-    </div>
   )
 })
 

@@ -98,12 +98,10 @@ const CreateGameForm = forwardRef(({submitState, clearFormFields}, ref) => {
   }));
   
 return (
-  <div >
-    <form id="create-game-form" className='form centre' onSubmit={clearFields}>
-      <SelectSeason ref={seasonDropdownRef} getSeason = {handleSeasonSelection} />
-      <SelectTeams ref={teamRef} setAwayTeam={handleAwayTeamSelection} setHomeTeam={handleHomeTeamSelection} validator={validHomeAndAwayTeams}/>  
-    </form>
-  </div>
+  <form id="create-game-form" className='form' onSubmit={clearFields}>
+    <SelectSeason ref={seasonDropdownRef} getSeason = {handleSeasonSelection} />
+    <SelectTeams ref={teamRef} setAwayTeam={handleAwayTeamSelection} setHomeTeam={handleHomeTeamSelection} validator={validHomeAndAwayTeams}/>  
+  </form>
   )
 }); 
 
