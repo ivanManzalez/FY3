@@ -63,6 +63,7 @@ const CreatePlayerForm = () => {
   // Function to handle input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+
     setFormState({
       ...formState,
       [name]: value,
@@ -72,13 +73,7 @@ const CreatePlayerForm = () => {
   const handleHeightChange = (e) => {
     const { name, value } = e.target;
 
-    if (name === "height_ft") {
-      // Ensure height_ft is a number and not exceeding a certain limit
-      let newHeightFt = parseInt(value, 10) || 0;
-      newHeightFt = Math.min(Math.max(newHeightFt, 0), 10); // Restrict to 0-7
-      handleInputChange({target:{name: newHeightFt}})
-
-    } else if (name === "height_in") {
+    if (name === "height_in") {
       // Ensure height_in is a number and not exceeding a certain limit
       let newHeightIn = parseInt(value, 10) || 0;
       newHeightIn = Math.min(Math.max(newHeightIn, 0), 12); // Restrict to 0-11
@@ -96,7 +91,6 @@ const CreatePlayerForm = () => {
       }
     }
   };
-
 
   const handleMessage = (response) => {
     if(response.status == 200){
@@ -120,7 +114,7 @@ return (
       </div>
       
       <div className="player_attr_fields">
-        <TextField type= {"number"} id={"player_height_ft"} name = {"height_ft"} label={"Player Height (Ft)"}  variant={"outlined"}  onChange={handleHeightChange} name = {"height_ft"}     value={formState.height_ft} placeholder={'5'}/>
+        <TextField type= {"number"} id={"player_height_ft"} name = {"height_ft"} label={"Player Height (Ft)"}  variant={"outlined"}  onChange={handleInputChange} name = {"height_ft"}     value={formState.height_ft} placeholder={'5'}/>
         <TextField type= {"number"} id={"player_height_in"} name = {"height_in"} label={"Player Height (In)"}  variant={"outlined"}  onChange={handleHeightChange} name = {"height_in"}     value={formState.height_in} placeholder={'5'}/>
         <TextField type= {"number"} id={"player_weight"}    name = {"weight"}    label={"Player Weight (lbs)"} variant={"outlined"}  onChange={handleInputChange} name = {"weight"}        value={formState.weight}    placeholder={150}/>
       </div> 

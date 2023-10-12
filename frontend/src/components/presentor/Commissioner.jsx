@@ -3,11 +3,12 @@ import CreatePlayerForm from "./CreatePlayerForm";
 import CreateTeamForm from "./CreateTeamForm";
 import CreateSeasonForm from "./CreateSeasonForm";
 import Api from "./Api";
+import Draft from "../draft/Draft";
 
 
 
 const Commssioner = () => {
-  const beginDraft = false;
+  const beginDraft = true;
   return (
     <div id='commissioner'>
       {/*< Api />*/}
