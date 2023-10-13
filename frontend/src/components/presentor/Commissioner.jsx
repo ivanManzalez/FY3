@@ -4,140 +4,65 @@ import CreateTeamForm from "./CreateTeamForm";
 import CreateSeasonForm from "./CreateSeasonForm";
 import Api from "./Api";
 import Draft from "../draft/Draft";
+import {getDraftees} from "../api/player/player";
 
-const availablePlayers = {
-    1:{
-      id:1,
-      name:"Player One",
-      age:25,
-      heightFt:6,
-      heightIn:0,
-      available:true,
-    },
-    2:{
-      id:2,
-      name:"Player Two",
-      age:25,
-      heightFt:6,
-      heightIn:0,
-      available:true,
-    },
-    3:{
-      id:3,
-      name:"Player Three",
-      age:25,
-      heightFt:6,
-      heightIn:0,
-      available:true,
-    },
-    4:{
-      id:4,
-      name:"Player Four",
-      age:25,
-      heightFt:6,
-      heightIn:0,
-      available:true,
-    },
-    5:{
-      id:5,
-      name:"Player Five",
-      age:25,
-      heightFt:6,
-      heightIn:0,
-      available:true,
-    },
-    6:{
-      id:6,
-      name:"Player Six",
-      age:25,
-      heightFt:6,
-      heightIn:0,
-      available:true,
-    },
-    7:{
-      id:7,
-      name:"Player Seven",
-      age:25,
-      heightFt:6,
-      heightIn:0,
-      available:true,
-    },
-    8:{
-      id:8,
-      name:"Player Eight",
-      age:25,
-      heightFt:6,
-      heightIn:0,
-      available:true,
-    },
-    9:{
-      id:9,
-      name:"Player Nine",
-      age:25,
-      heightFt:6,
-      heightIn:0,
-      available:true,
-    },
-    10:{
-      id:10,
-      name:"Player Ten",
-      age:25,
-      heightFt:6,
-      heightIn:0,
-      available:true,
-    },
-  }
-
-  const teamsList = {
-    Pick01:{
-      id:1,
-      name:"Team One",
-    },
-    Pick02:{
-      id:2,
-      name:"Team Two",
-    },
-    Pick03:{
-      id:3,
-      name:"Team Three",
-    },
-    Pick04:{
-      id:4,
-      name:"Team Four",
-    },
-    Pick05:{
-      id:5,
-      name:"Team Five",
-    },
-    Pick06:{
-      id:6,
-      name:"Team Five",
-    },
-    Pick07:{
-      id:7,
-      name:"Team Four",
-    },
-    Pick08:{
-      id:8,
-      name:"Team Three",
-    },
-    Pick09:{
-      id:9,
-      name:"Team Two",
-    },
-    Pick10:{
-      id:10,
-      name:"Team One",
-    },
-  }
+//////////////////////////////////////////////////////////////////////// 
   
+const teamsList = {
+  Pick01:{
+    id:1,
+    name:"Team One",
+  },
+  Pick02:{
+    id:2,
+    name:"Team Two",
+  },
+  Pick03:{
+    id:3,
+    name:"Team Three",
+  },
+  Pick04:{
+    id:4,
+    name:"Team Four",
+  },
+  Pick05:{
+    id:5,
+    name:"Team Five",
+  },
+  Pick06:{
+    id:6,
+    name:"Team Five",
+  },
+  Pick07:{
+    id:7,
+    name:"Team Four",
+  },
+  Pick08:{
+    id:8,
+    name:"Team Three",
+  },
+  Pick09:{
+    id:9,
+    name:"Team Two",
+  },
+  Pick10:{
+    id:10,
+    name:"Team One",
+  },
+}
 
-
-
+////////////////////////////////////////////////////////////////////////
 const Commssioner = () => {
   const [beginDraft, setBeginDraft] = useState(false);
   const [classname, setClassname] = useState("");
   const [message, setMessage] = useState("");
+  const [availablePlayers, setAvailablePlayers] = useState([]);
+
+  const getAvailablePlayers = async () => {
+    const drafteeResponse = await getDraftees();
+    handleMessage(drafteeResponse)
+    setAvailablePlayers(drafteeResponse.data);
+  }
 
   const handleMessage = (response) => {
     if(response.status == 200){
@@ -147,8 +72,9 @@ const Commssioner = () => {
     }
     setMessage(response.message);
   };
-  const beginDraftButtonHandler = () => {
-    setBeginDraft(true)
+  const beginDraftButtonHandler = async () => {
+    setBeginDraft(true);
+    await getAvailablePlayers();
   };
 
   return (

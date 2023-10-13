@@ -4,11 +4,15 @@ import Drafters from "./Drafters";
 
 const Draft = ({continueDraft, availablePlayers, teamsList, messageHandler}) => {
   const drafteeRef = useRef();
+  const teams = Object.values(teamsList);
+
   const currentSeason = "2023"; // use API to get latest season
   const [draftee, setDraftee] = useState(null); // set by Comissioner
+  const [drafteeName, setDrafteeName] = useState("");  
   const [drafter, setDrafter] = useState(0); // auto set by taking next team in ordered list
-  const draftLength = Object.keys(teamsList).length; // Calc.
 
+  const draftLength = Object.keys(teamsList).length; // Calc.
+  console.log("availablePlayers: \n",availablePlayers)
   const stpForm = {
     season:currentSeason,
     team:drafter,
@@ -16,15 +20,15 @@ const Draft = ({continueDraft, availablePlayers, teamsList, messageHandler}) => 
   };
 
   const createSTP = () => {
+
     const resp = {
-      message:"With the "+(drafter+1)+"th pick in the "+stpForm.season+" draft, the team["+stpForm.team+"] selects, "+stpForm.player,
+      message:"With the "+(drafter+1)+"th pick in the "+stpForm.season+" draft, the "+teams[drafter].name+" select, "+drafteeName,
       status: 200,
     }   
     messageHandler(resp); 
   }
 
   const drafterHandler = () => {
-    console.log("Draft completed: ",drafter >= draftLength);
     if(drafter >= draftLength-1)
     {
       const resp = {
@@ -35,12 +39,15 @@ const Draft = ({continueDraft, availablePlayers, teamsList, messageHandler}) => 
       continueDraft(false);
       return 0
     }
+    
     setDrafter(drafter+1);
   }
 
-  const handleDrafteeSelection = (e) => {
-    setDraftee(e.target.value);
+  const handleDrafteeSelection = (id, index) => {
+    setDraftee(id);
+    setDrafteeName(availablePlayers[index].first_name+" "+availablePlayers[index].last_name)
   }
+
 
   const handleDraftSelection = () => {
     if(draftee === null)
@@ -52,19 +59,19 @@ const Draft = ({continueDraft, availablePlayers, teamsList, messageHandler}) => 
       messageHandler(resp);
       return 0;
     }
-    
-    createSTP();
     drafteeRef.current.handleDraftPick(); // remove drafted player from available list
     setDraftee(null);
+    createSTP(); // 
     drafterHandler(); // get next drafter if one available
+    
   }
 
 return(
   <div>
     {/* Once START button is clicked, begin timer (?) and propmt Commissioner select player for ith team */}
     <div className="v_container draft outline">
-      < Drafters teamsList={teamsList} handler={drafterHandler} pickNumber={drafter} /> {/* Display list of teams in order of picks*/}
-      < Draftees availablePlayers={availablePlayers} handler={handleDrafteeSelection} ref={drafteeRef}/> {/* Display list of Draftable players*/}
+      < Drafters className="outline" teams={teams} handler={drafterHandler} pickNumber={drafter} /> {/* Display list of teams in order of picks*/}
+      < Draftees className="outline" availablePlayers={availablePlayers} handler={handleDrafteeSelection} ref={drafteeRef}/> {/* Display list of Draftable players*/}
     </div>
     <button className="submit" onClick={handleDraftSelection} > Confirm Draft Pick </button>
 
