@@ -5,63 +5,28 @@ import CreateSeasonForm from "./CreateSeasonForm";
 import Api from "./Api";
 import Draft from "../draft/Draft";
 import {getDraftees} from "../api/player/player";
+import {retrieveAllTeams} from "../api/team/team";
 
 //////////////////////////////////////////////////////////////////////// 
-  
-const teamsList = {
-  Pick01:{
-    id:1,
-    name:"Team One",
-  },
-  Pick02:{
-    id:2,
-    name:"Team Two",
-  },
-  Pick03:{
-    id:3,
-    name:"Team Three",
-  },
-  Pick04:{
-    id:4,
-    name:"Team Four",
-  },
-  Pick05:{
-    id:5,
-    name:"Team Five",
-  },
-  Pick06:{
-    id:6,
-    name:"Team Five",
-  },
-  Pick07:{
-    id:7,
-    name:"Team Four",
-  },
-  Pick08:{
-    id:8,
-    name:"Team Three",
-  },
-  Pick09:{
-    id:9,
-    name:"Team Two",
-  },
-  Pick10:{
-    id:10,
-    name:"Team One",
-  },
-}
-
-////////////////////////////////////////////////////////////////////////
 const Commssioner = () => {
   const [beginDraft, setBeginDraft] = useState(false);
   const [classname, setClassname] = useState("");
   const [message, setMessage] = useState("");
   const [availablePlayers, setAvailablePlayers] = useState([]);
+  const [teamsList, setTeamsList] = useState([]);
 
   const getAvailablePlayers = async () => {
     const drafteeResponse = await getDraftees();
     handleMessage(drafteeResponse)
     setAvailablePlayers(drafteeResponse.data);
+
+  }
+
+  const getTeams = async () => {
+    const drafterResponse = await retrieveAllTeams();
+    console.log(drafterResponse)
+    handleMessage(drafterResponse)
+    setTeamsList(drafterResponse.data)
   }
 
   const handleMessage = (response) => {
@@ -75,6 +40,7 @@ const Commssioner = () => {
   const beginDraftButtonHandler = async () => {
     setBeginDraft(true);
     await getAvailablePlayers();
+    await getTeams();
   };
 
   return (

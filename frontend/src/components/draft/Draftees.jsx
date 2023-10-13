@@ -13,8 +13,6 @@ const Draftees = forwardRef(({handler, availablePlayers},ref) => {
   }, [availablePlayers]);
 
   const handleDraftPick = () => {
-    console.log("playerIndex: ",playerId )
-    console.log("handleDraftPick:", draftees[playerId].is_registered);
     const updatedDraftees = [...draftees];
     updatedDraftees[playerId].is_registered = false;
     setDraftees(updatedDraftees);
@@ -27,10 +25,6 @@ const Draftees = forwardRef(({handler, availablePlayers},ref) => {
   const handleDrafteeSelection = (e) => {
     // update draftee
     const index = e.target.value;
-    // const  = e.target.getAttribute("index");
-    console.log("\nSelected Player:", draftees[index].first_name)
-    console.log("db ID= ",draftees[index].id);
-    console.log("Player Index = ",index);
     setPlayerId(index)
     handler(draftees[index].id ,index);
   }
@@ -55,14 +49,3 @@ const Draftees = forwardRef(({handler, availablePlayers},ref) => {
   )})
 
 export default Draftees;
-
-
-// <div className="draftees">
-//         {draftees.map((player) => (
-//           player.available ? (
-//             <button onClick={handleDrafteeSelection} className="draftee" key={player.id} value={player.id-1}>
-//               {player.name}
-//             </button>
-//           ) : null
-//         ))}
-//       </div>

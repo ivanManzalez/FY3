@@ -5,14 +5,16 @@ import Drafters from "./Drafters";
 const Draft = ({continueDraft, availablePlayers, teamsList, messageHandler}) => {
   const drafteeRef = useRef();
   const teams = Object.values(teamsList);
+  console.log("Drafters: ",teams)
+  const players = Object.values(availablePlayers);
+  const draftLength = Math.min(teams.length, players.length);
 
   const currentSeason = "2023"; // use API to get latest season
   const [draftee, setDraftee] = useState(null); // set by Comissioner
   const [drafteeName, setDrafteeName] = useState("");  
   const [drafter, setDrafter] = useState(0); // auto set by taking next team in ordered list
+  
 
-  const draftLength = Object.keys(teamsList).length; // Calc.
-  console.log("availablePlayers: \n",availablePlayers)
   const stpForm = {
     season:currentSeason,
     team:drafter,
@@ -22,7 +24,7 @@ const Draft = ({continueDraft, availablePlayers, teamsList, messageHandler}) => 
   const createSTP = () => {
 
     const resp = {
-      message:"With the "+(drafter+1)+"th pick in the "+stpForm.season+" draft, the "+teams[drafter].name+" select, "+drafteeName,
+      message:"With the "+(drafter+1)+"th pick in the "+stpForm.season+" draft, the "+teams[drafter].team_name+" select, "+drafteeName,
       status: 200,
     }   
     messageHandler(resp); 
@@ -41,6 +43,7 @@ const Draft = ({continueDraft, availablePlayers, teamsList, messageHandler}) => 
     }
     
     setDrafter(drafter+1);
+    // restart timer handler
   }
 
   const handleDrafteeSelection = (id, index) => {
@@ -61,22 +64,20 @@ const Draft = ({continueDraft, availablePlayers, teamsList, messageHandler}) => 
     }
     drafteeRef.current.handleDraftPick(); // remove drafted player from available list
     setDraftee(null);
-    createSTP(); // 
+    createSTP(); //
     drafterHandler(); // get next drafter if one available
-    
-  }
+  };
 
 return(
   <div>
     {/* Once START button is clicked, begin timer (?) and propmt Commissioner select player for ith team */}
     <div className="v_container draft outline">
-      < Drafters className="outline" teams={teams} handler={drafterHandler} pickNumber={drafter} /> {/* Display list of teams in order of picks*/}
+      < Drafters className="outline" teamsList={teams} handler={drafterHandler} pickNumber={drafter} /> {/* Display list of teams in order of picks*/}
       < Draftees className="outline" availablePlayers={availablePlayers} handler={handleDrafteeSelection} ref={drafteeRef}/> {/* Display list of Draftable players*/}
     </div>
-    <button className="submit" onClick={handleDraftSelection} > Confirm Draft Pick </button>
 
     {/* GIVEN  draftee & drafter & curr_season THEN createSTP(draftee, drafter, curr_season) */}
-    
+    <button className="submit" onClick={handleDraftSelection} > Confirm Draft Pick </button>    
   </div>
   )};
 

@@ -18,7 +18,7 @@ const Schedule = (props) => {
   const eventFormRef = useRef();
 
   useEffect(() => {
-  console.log('gameFormRef.current:', gameFormRef.current);
+  console.log('gameFormRef.current:', gameFormRef.current); // needed?
   }, [gameFormRef.current]);
   // DISPLAY
   const [message, setMessage] = useState("");
