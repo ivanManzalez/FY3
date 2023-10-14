@@ -3,6 +3,7 @@
 @import './commissioner.css';
 @import './login.css';
 @import './submit.css';
+@import './timer.css';
 /*********************************/
 
 :root {
@@ -49,7 +50,25 @@ html,body{
 .good{
   background-color: #66ff00;
 }
-.events{
-  /*width: 130%;*/
-  background-color: grey;
+
+.blue{
+  background-color: blue;
+}
+.red{
+  background-color: red;
+}
+.green{
+  background-color: green;
+}
+
+.h_container{
+  display: flex;
+  flex-direction: column;
+}
+.v_container{
+  display: flex;
+  flex-direction: row;
+}
+.outline{
+  border: 5px solid purple;
 }

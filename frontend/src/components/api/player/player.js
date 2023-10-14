@@ -3,12 +3,23 @@ import React from "react";
 // URL endpoints
 const TESTBASE = 'http://127.0.0.1:8000/';
 const API = 'players/';
+const DRAFTEES = 'draftees/'
 const RETRIEVE_PLAYER = 'player-profile/';
 const CREATEPLAYER = 'create-player/';
 
 // GET all existing players 
 const retrieveAllPlayers = () => {
   return fetch(TESTBASE+API)
+  .then((response)=>{
+    return response.json();
+  })
+  .catch((error) => {
+    return error;
+  })
+};
+
+const getDraftees = () => {
+  return fetch(TESTBASE+API+DRAFTEES)
   .then((response)=>{
     return response.json();
   })
@@ -68,6 +79,6 @@ const deletePlayerByFullName = (name, requestOptions) => {
   });
 };
 
-export {retrieveAllPlayers, retrievePlayerByFullName, createPlayer, updatePlayer,deletePlayerByFullName};
+export {retrieveAllPlayers, getDraftees, retrievePlayerByFullName, createPlayer, updatePlayer,deletePlayerByFullName};
 
 // 

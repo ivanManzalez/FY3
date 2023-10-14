@@ -17,9 +17,6 @@ const Schedule = (props) => {
   const gameFormRef = useRef();
   const eventFormRef = useRef();
 
-  useEffect(() => {
-  console.log('gameFormRef.current:', gameFormRef.current);
-  }, [gameFormRef.current]);
   // DISPLAY
   const [message, setMessage] = useState("");
   const [classname, setClassname] = useState("");
@@ -37,11 +34,9 @@ const Schedule = (props) => {
   const [gameFormState, setGameFormState] = useState("");
 
   const updateGameForm = (data) =>{
-    console.log("Schedule-Game",data);
     setGameFormState(data)
   };
   const updateEventForm = (data) =>{
-    console.log("Schedule-Event",data);
     setEventFormState(data);
   };
 

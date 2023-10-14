@@ -1,18 +1,7 @@
 @import './team_select.css';
 @import './event_form_fields.css';
 
-/*********************************/
-
-#create-player-form{
-  margin: 0;
-  padding:0;
-  /*height:75%;*/
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  border: thin black dotted;
-  width: 50%;
-}
+/******************************************************************************/
 
 #message{
 }
@@ -71,7 +60,6 @@
 }
 
 #schedule_form{
-  /*background-color: purple;*/
 }
 #create-game-form {
   display: grid;
@@ -84,15 +72,54 @@
   grid-gap: 10px;
 }
 
+#create_season_form{
+  width:60%;
+  display: grid;
+  grid-template-rows: 75% 25%;  /*Allocate 33% for col 1 and 67% for col 2 */
+  grid-gap: 15%;
+}
+
+#create_team_form{
+  width:90%;
+}
+
 #submit_event{
   width: 50%;
 }
 
 #game_switch{
-  /*background-color: red;*/
   width:10%;
 }
-.h_container{
-  display: flex;
-  flex-direction: column;
+.input_fields{
+  display: grid;
+  grid-gap: 10px;
 }
+#select_teams{
+  display: grid;
+  grid-template-columns: 48.5% 48.5%; 
+  grid-gap: 1.5%;
+}
+/******************************************************************************
+ PLAYER FORM
+******************************************************************************/
+#create_player_form{
+
+  width:90%;
+  min-height: 33vh;
+  display: grid;
+  grid-gap: 10px;
+}
+.player_name_fields{
+  display: grid;
+  grid-template-columns: 49.5% 49.5%;
+  grid-gap: 1%;
+}
+.player_attr_fields{
+  display: grid;
+  grid-template-columns: 20% 20% 30%;
+  grid-gap: 1%;
+}
+
+
+
+/******************************************************************************/

@@ -10,10 +10,14 @@ from .serializers import TeamSerializer, CreateTeamSerializer
 from .models.team import Team
 
 class TeamsView(generics.ListAPIView): ## CreateAPIView
-  queryset = Team.objects.all()
   serializer_class = TeamSerializer
 
-
+  def get(self, request, format=None):
+    queryset = Team.objects.all() #filter by what condition?
+    serialized_data = self.serializer_class(queryset, many=True).data
+    message = "Teams List received"
+    resp_status = status.HTTP_200_OK
+    return Response({'message': message, 'status': resp_status, 'data': serialized_data}, status=resp_status)
 
 # @csrf_exempt # only on method views
 class CreateTeamView(APIView): ## CreateAPIView

@@ -2,17 +2,32 @@ import React, {useState} from "react";
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 import {createPlayer} from '../../components/api/player/player';
+// 
+import TextField from '@mui/material/TextField';
+import dayjs from 'dayjs';
+import {CalendarPicker} from "../general/DateTimeSelection";
 
 const CreatePlayerForm = () => {
+  
+  const dateToYYYYMMDD = (dayjsObj) => {
+    const year = dayjsObj.$y;
+    const month = dayjsObj.$M+1;
+    const day = dayjsObj.$D;
+    const date = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+    const ret = {date, year};
+    return ret;
+  }
+  const defaultDOB = dayjs("01-01-1998");
+  const dob = dateToYYYYMMDD(dayjs(defaultDOB))
 
   const initialFormState = {
     first_name: '',
     last_name: '',
-    height_ft: '',
-    height_in: '',
-    weight: '',
-    origin: '',
-    age: '',
+    height_ft: '5',
+    height_in: '5',
+    weight: "150",
+    origin: 'Brampton',
+    age: dob.date,
   };
   // all fields initially blank
   const [formState, setFormState] = useState(initialFormState);
@@ -40,14 +55,41 @@ const CreatePlayerForm = () => {
     const createPlayerResponse = await createPlayer(requestOptions);
     handleMessage(createPlayerResponse);  
   };
+  const handleDOBChange = (e) => {
+    const birthDate = dateToYYYYMMDD(e);
+    handleInputChange({"age":birthDate})
+  }
 
   // Function to handle input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+
     setFormState({
       ...formState,
       [name]: value,
     });
+  };
+  
+  const handleHeightChange = (e) => {
+    const { name, value } = e.target;
+
+    if (name === "height_in") {
+      // Ensure height_in is a number and not exceeding a certain limit
+      let newHeightIn = parseInt(value, 10) || 0;
+      newHeightIn = Math.min(Math.max(newHeightIn, 0), 12); // Restrict to 0-11
+
+      // If height_in reaches 12, increment height_ft
+      if (newHeightIn === 12) {
+        const newHeightFt = parseInt(formState.height_ft, 10) + 1;
+        setFormState({
+          ...formState,
+          height_ft: newHeightFt,
+          height_in: 0, // Reset height_in to 0
+        });
+      } else {
+        handleInputChange({ target:{name, value} })
+      }
+    }
   };
 
   const handleMessage = (response) => {
@@ -60,46 +102,31 @@ const CreatePlayerForm = () => {
     setMessage(response.message);
   };
 
-
 return (
-  <div >
+  <div>
     <h3> Create Player </h3>
-    <h5> Add player details then click submit </h5>
+    
     <div id="message" className={classname}>{message && <p>{message}</p>}</div>
-    <form id="create-player-form" className='form centre'>
-    
-    <TextField name = {"first_name"} id={"player_first"} field={"Player First Name"} handler={handleInputChange} value={formState.first_name} />
-    <TextField name = {"last_name"} id={"player_last"} field={"Player Last Name"} handler={handleInputChange} value={formState.last_name} /> 
-    <NumberField name = {"height_ft"} id={"player_height_ft"} field={"Player Height (Ft)"} handler={handleInputChange} value={formState.height_ft} placeholder={5}/>
-    <NumberField name = {"height_in"} id={"player_height_in"} field={"Player Height (In)"} handler={handleInputChange} value={formState.height_in} placeholder={5}/>
-    <NumberField name = {"weight"} id={"player_weight"} field={"Player Weight"} handler={handleInputChange} value={formState.weight} placeholder={150}/>
-    <TextField name = {"origin"} id={"player_origin"} field={"Player Origin"} handler={handleInputChange} value={formState.origin} />
-    <TextField name = {"age"} id={"player_age"} field={"Player Age"} handler={handleInputChange} value={formState.age} placeholder={25}/>
-    
-    <button type='submit' placeholder="Create Player" onClick={handleCreatePlayerButton}> Create Player</button>
+    <form id="create_player_form" className='h_container'>
+      <div className="player_name_fields">
+        <TextField id={"first_name"} label={"Player First Name"} variant={"outlined"} onChange={handleInputChange} name = {"first_name"} value={formState.first_name}/>
+        <TextField id={"last_name"} label={"Player Last Name"} variant={"outlined"} onChange={handleInputChange} name = {"last_name"}  value={formState.last_name} />
+      </div>
+      
+      <div className="player_attr_fields">
+        <TextField type= {"number"} id={"player_height_ft"} name = {"height_ft"} label={"Player Height (Ft)"}  variant={"outlined"}  onChange={handleInputChange} name = {"height_ft"}     value={formState.height_ft} placeholder={'5'}/>
+        <TextField type= {"number"} id={"player_height_in"} name = {"height_in"} label={"Player Height (In)"}  variant={"outlined"}  onChange={handleHeightChange} name = {"height_in"}     value={formState.height_in} placeholder={'5'}/>
+        <TextField type= {"number"} id={"player_weight"}    name = {"weight"}    label={"Player Weight (lbs)"} variant={"outlined"}  onChange={handleInputChange} name = {"weight"}        value={formState.weight}    placeholder={150}/>
+      </div> 
+      
+      <div>
+        <CalendarPicker id={"dob"} name={"dob"} label={"Date of Birth"} variant={"outlined"} onChange={handleDOBChange} value={dayjs(formState.age)}/>
+      </div>
+
+      <button className="submit" type='submit' placeholder="Create Player" onClick={handleCreatePlayerButton}> Create Player</button>
     </form>
   </div>
   )
 }; 
-
-////////////////////////
-const TextField = (props) => {
-  return(
-    <div className = "entryarea">
-      <input className = "inputter" type="text" name = {props.name} id={props.id} value={props.value} onChange={props.handler} required/>
-      <div className="labelline">{"Enter " + props.field}</div>
-    </div>
-    )
-}
-
-////////////////////////
-const NumberField = (props) => {
-  return(
-    <div className = "entryarea">
-      <input className = "inputter" type="number" name = {props.name} id={props.id} value={props.value} onChange={props.handler} required/>
-      <div className="labelline">{"Enter " + props.field}</div>
-    </div>
-    )
-}
 
 export default CreatePlayerForm;

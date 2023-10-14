@@ -47,13 +47,14 @@ class CreateSeasonView(APIView): ## CreateAPIView
     season = Season(season_year = season_year,
                     start_date = start_date)
     season.save()
-
+    resp_status = status.HTTP_200_OK
     response_data = {
         'message': 'New Season Added',
-        'season': SeasonSerializer(season).data
+        'season': SeasonSerializer(season).data,
+        'status': resp_status
     }
 
-    return Response(response_data, status=status.HTTP_200_OK)
+    return Response(response_data, status=resp_status)
 
 class SeasonProfileView(APIView):
     """
