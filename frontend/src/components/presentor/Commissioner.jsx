@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import CreatePlayerForm from "./CreatePlayerForm";
 import CreateTeamForm from "./CreateTeamForm";
 import CreateSeasonForm from "./CreateSeasonForm";
@@ -6,9 +6,11 @@ import Api from "./Api";
 import Draft from "../draft/Draft";
 import {getDraftees} from "../api/player/player";
 import {retrieveAllTeams} from "../api/team/team";
+import Timer from "../draft/Timer";
 
 //////////////////////////////////////////////////////////////////////// 
 const Commssioner = () => {
+  const timeRef = useRef();
   const [beginDraft, setBeginDraft] = useState(false);
   const [classname, setClassname] = useState("");
   const [message, setMessage] = useState("");
@@ -19,12 +21,10 @@ const Commssioner = () => {
     const drafteeResponse = await getDraftees();
     handleMessage(drafteeResponse)
     setAvailablePlayers(drafteeResponse.data);
-
   }
 
   const getTeams = async () => {
     const drafterResponse = await retrieveAllTeams();
-    console.log(drafterResponse)
     handleMessage(drafterResponse)
     setTeamsList(drafterResponse.data)
   }
@@ -37,11 +37,25 @@ const Commssioner = () => {
     }
     setMessage(response.message);
   };
+
   const beginDraftButtonHandler = async () => {
     setBeginDraft(true);
     await getAvailablePlayers();
     await getTeams();
+    timeRef.current.startTimer();
   };
+
+  const restartClock = () => {
+    timeRef.current.resetTimer()
+    
+  }
+  const clockStop = () => {
+    timeRef.current.pauseTimer()
+  }
+
+  const startClock = () => {
+    timeRef.current.startTimer()
+  }
 
   return (
     <div id='commissioner'>
@@ -52,8 +66,11 @@ const Commssioner = () => {
         <div id="message" className={classname} >{message && <p>{message}</p>}</div>
         {
         beginDraft &&
-        < Draft continueDraft={setBeginDraft} messageHandler={handleMessage} availablePlayers={availablePlayers}  teamsList={teamsList} />
-        }
+        <div>
+          < Timer ref={timeRef} />
+          < Draft continueDraft={setBeginDraft} messageHandler={handleMessage} availablePlayers={availablePlayers}  teamsList={teamsList} clockReset={restartClock} clockStop={clockStop}/>
+        </div>
+      }
         < CreatePlayerForm />
         < CreateSeasonForm />
         < CreateTeamForm />

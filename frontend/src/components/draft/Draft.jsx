@@ -2,10 +2,10 @@ import React, {useState, useRef} from "react";
 import Draftees from "./Draftees";
 import Drafters from "./Drafters"; 
 
-const Draft = ({continueDraft, availablePlayers, teamsList, messageHandler}) => {
+
+const Draft = ({continueDraft, availablePlayers, teamsList, messageHandler, clockReset, clockStop}) => {
   const drafteeRef = useRef();
   const teams = Object.values(teamsList);
-  console.log("Drafters: ",teams)
   const players = Object.values(availablePlayers);
   const draftLength = Math.min(teams.length, players.length);
 
@@ -14,7 +14,6 @@ const Draft = ({continueDraft, availablePlayers, teamsList, messageHandler}) => 
   const [drafteeName, setDrafteeName] = useState("");  
   const [drafter, setDrafter] = useState(0); // auto set by taking next team in ordered list
   
-
   const stpForm = {
     season:currentSeason,
     team:drafter,
@@ -24,12 +23,30 @@ const Draft = ({continueDraft, availablePlayers, teamsList, messageHandler}) => 
   const createSTP = () => {
 
     const resp = {
-      message:"With the "+(drafter+1)+"th pick in the "+stpForm.season+" draft, the "+teams[drafter].team_name+" select, "+drafteeName,
+      message:"With the "+position(drafter)+" pick in the "+stpForm.season+" draft, the "+teams[drafter].team_name+" select, "+drafteeName,
       status: 200,
     }   
     messageHandler(resp); 
   }
 
+  const position = () => {
+
+    var ret = (drafter+1)+"th";
+    
+    if(drafter%10 === 0){
+      ret = (drafter+1)+"st";
+
+    }else if(drafter%10 === 1){
+      ret = (drafter+1)+"nd";
+
+    }else if(drafter%10 === 2){
+      ret = (drafter+1)+"rd";
+    }
+    else if(drafter === draftLength-1){
+      ret = "last"
+    }
+    return ret;
+  }
   const drafterHandler = () => {
     if(drafter >= draftLength-1)
     {
@@ -37,13 +54,14 @@ const Draft = ({continueDraft, availablePlayers, teamsList, messageHandler}) => 
         message:"The Draft is complete.",
         status: 200,
       }
+      clockStop()
       messageHandler(resp);
       continueDraft(false);
       return 0
     }
     
     setDrafter(drafter+1);
-    // restart timer handler
+    clockReset();
   }
 
   const handleDrafteeSelection = (id, index) => {
@@ -71,9 +89,9 @@ const Draft = ({continueDraft, availablePlayers, teamsList, messageHandler}) => 
 return(
   <div>
     {/* Once START button is clicked, begin timer (?) and propmt Commissioner select player for ith team */}
-    <div className="v_container draft outline">
-      < Drafters className="outline" teamsList={teams} handler={drafterHandler} pickNumber={drafter} /> {/* Display list of teams in order of picks*/}
-      < Draftees className="outline" availablePlayers={availablePlayers} handler={handleDrafteeSelection} ref={drafteeRef}/> {/* Display list of Draftable players*/}
+    <div className="draft">
+      < Drafters teamsList={teams} draftLength={draftLength} handler={drafterHandler} pickNumber={drafter} /> {/* Display list of teams in order of picks*/}
+      < Draftees availablePlayers={availablePlayers} handler={handleDrafteeSelection} ref={drafteeRef}/> {/* Display list of Draftable players*/}
     </div>
 
     {/* GIVEN  draftee & drafter & curr_season THEN createSTP(draftee, drafter, curr_season) */}

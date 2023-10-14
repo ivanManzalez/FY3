@@ -9,7 +9,6 @@ import Select from '@mui/material/Select';
 const SeasonDropdown = forwardRef(({ name, options, setState},ref) => {
 
   const [selection, setSelection] = useState("");
-  // const optionsArray = convertToArray(options);
 
   const handleChange = (event) =>{
     setSelection(event.target.value);
@@ -44,12 +43,5 @@ const SeasonDropdown = forwardRef(({ name, options, setState},ref) => {
     </Box>)
 });
 
-const convertToArray = (nonArray) => {
-  let newArr = nonArray;
-  if (!Array.isArray(nonArray)) {
-    newArr = Object.entries(nonArray);
-  };
-  return newArr;
-};
 
 export default SeasonDropdown;
