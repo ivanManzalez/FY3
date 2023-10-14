@@ -7,6 +7,7 @@ urlpatterns = [
   
   # Administration 
   path("commissioner/", index),
+  path("commissioner/players", index),
   
   # Content
   path("schedule/", index),
