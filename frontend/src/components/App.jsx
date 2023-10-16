@@ -2,7 +2,7 @@
 import React, { Component, useState, useEffect } from "react";
 import { render } from "react-dom";
 import {BrowserRouter as Router, Routes, Route, Link, Redirect} from "react-router-dom";
-import {AuthProvider} from "../contexts/AuthContext";
+import {AuthProvider} from "../fireBase/AuthContext";
 
 // Views/Pages
 // how to clean this up?
@@ -44,6 +44,7 @@ const App = () => {
         <Route path="/schedule" element={<Schedule />} />
         <Route path="/standings" element={<Standings />} />
         <Route path="/stats" element={<Stats />} />
+        {/**/}
 
         
       </Routes>

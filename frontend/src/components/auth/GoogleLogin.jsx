@@ -1,5 +1,5 @@
 import React, { Component, useState, useEffect } from "react";
-import {useAuth} from '../../contexts/AuthContext';
+import {useAuth} from '../../fireBase/AuthContext';
 import {useNavigate, useLocation} from 'react-router-dom';
 
 const GoogleLogin = () => {
