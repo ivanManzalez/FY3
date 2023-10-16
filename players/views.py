@@ -95,33 +95,32 @@ class PlayerProfileView(APIView):
     """
     Retrieve, update or delete a snippet instance.
     """
-    def get_object(self, first_name, last_name):
-      # first_name = first_name.title()
-      # last_name = last_name.title()
-      fullname = first_name +" "+ last_name
+    def get_object(self, player_id):
+
       try:
-        print("try: ", fullname)
-        return Player.objects.get(first_name = first_name, last_name = last_name)
+        return Player.objects.get(id = player_id)
       except Player.DoesNotExist:
         print(fullname+" does not exist")
-        message = fullname + " does not exist"
+        message = player_id + " does not exist"
         # return Response({'Bad Request': message}, status=status.HTTP_404_NOT_FOUND)
         raise Http404(message)
 
-    def get(self, request, first_name, last_name, format=None):
-        player = self.get_object(first_name, last_name)
+    def get(self, request, player_id, format=None):
+        player = self.get_object(player_id)
         serializer = PlayerSerializer(player)
         return Response(serializer.data)
 
-    def put(self, request, first_name, last_name, format=None):
-        player = self.get_object(first_name, last_name)
+    def put(self, request, player_id, format=None):
+        player = self.get_object(player_id)
         serializer = PlayerSerializer(player, data=request.data)
+        # check if new name already exists
+
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, first_name, last_name, format=None):
-        player = self.get_object(first_name, last_name)
+    def delete(self, request, player_id, format=None):
+        player = self.get_object(player_id)
         player.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)

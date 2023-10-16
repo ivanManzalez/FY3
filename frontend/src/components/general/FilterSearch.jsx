@@ -11,15 +11,44 @@ const FilterSearch = ({initialItems, handleSelection}) => {
       return [];
     }
 
-    return (
-      // Modify this logic based on your object structure.
-      // This example assumes 'name' is the field to filter on.
-      initialItems.filter((item) => {
-        const itemString = Object.values(item)
-        .map((value) => (value || '').toString().toLowerCase())
-        .join(' ');
-      return itemString.includes(filter.toLowerCase());
-    }))};
+    return initialItems
+      .filter((item) => {
+        // const itemString = Object.values(item)
+        // .map((value) => (value || '').toString().toLowerCase())
+        // .join(' ');
+        const itemString = (item.first_name + ' ' + item.last_name).toLowerCase();
+        return itemString.includes(filter.toLowerCase());
+      })
+      .sort((a, b) => {
+        // Calculate a relevance score for each item based on the filter value.
+        const aScore = calculateRelevanceScore(a, filter);
+        const bScore = calculateRelevanceScore(b, filter);
+
+        // Sort in descending order based on the relevance score.
+        return bScore - aScore;
+      });
+  };
+
+  const calculateRelevanceScore = (item, filter) => {
+    const itemString = Object.values(item)
+      .map((value, index) => {
+        if (index === 'first_name' || index === 'last_name') {
+          // If the field is 'first_name' or 'last_name', give it more weight.
+          return ((value || '') + ' ' + value).toString().toLowerCase();
+        } else {
+          return (value || '').toString().toLowerCase();
+        }
+      })
+      .join(' ');
+
+    // Count how many times the filter string appears in the item string.
+    const filterCount = (itemString.match(new RegExp(filter, 'g')) || []).length;
+
+    // You can adjust the scoring logic as needed.
+    // Here, we'll return the filter count as the score.
+    return filterCount;
+  };
+
 
   useEffect(() => {
     const filtered = filterSearch();
@@ -31,8 +60,10 @@ const FilterSearch = ({initialItems, handleSelection}) => {
   };
 
   const handleItemSelection = (e) => {
-    setFilter(' ')
-    handleSelection()
+    const itemId = e.currentTarget.getAttribute('data-key');
+    const selectedItem = initialItems.find((item) => item.id === parseInt(itemId));
+    setFilter('')
+    handleSelection(selectedItem)
   };
 
   return(
@@ -45,10 +76,10 @@ const FilterSearch = ({initialItems, handleSelection}) => {
       />
       <ul>
         {filteredItems.length === 0 ? (
-          <p>No results found.</p>
+          <p></p>
         ) : (
           filteredItems.map((item, index) => (
-            <li onClick={handleItemSelection} key={index}>{item.first_name +" "+item.last_name }</li>
+            <li onClick={handleItemSelection} data-key={item.id}> {item.first_name +" "+item.last_name } </li>
           ))
         )}
       </ul>
@@ -57,3 +88,6 @@ const FilterSearch = ({initialItems, handleSelection}) => {
 };
 
 export default FilterSearch;
+
+
+

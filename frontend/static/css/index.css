@@ -2,8 +2,10 @@
 @import './form.css';
 @import './commissioner.css';
 @import './login.css';
-@import './submit.css';
+@import './buttons.css';
 @import './timer.css';
+@import './players.css';
+@import './dragAndDrop.css';
 /*********************************/
 
 :root {
@@ -71,4 +73,11 @@ html,body{
 }
 .outline{
   border: 5px solid purple;
+}
+.small{
+  max-width:10%;
+  max-height: 40px;
+}
+.space_between{
+  justify-content: space-between;
 }
