@@ -2,16 +2,18 @@ import React, {useState, useEffect, useRef} from "react";
 import PlayerForm from "./PlayerForm";
 import DisplayPlayers from "./DisplayPlayers";
 import {retrieveAllPlayers, updatePlayerById,deletePlayerById } from "../api/player/player";
+import {createTestStorageRef, uploadFileResumable} from "../../fireBase/StorageReference";
 
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
-
+import dayjs from 'dayjs';
 // import FilterSearch from "../general/FilterSearch";
 import AutoCompleteDropdown from "../general/AutoCompleteDropdown";
 
 const Players = () => {
   // Ref to getPlayerForm
   const playerFormRef = useRef();
+
   // Players to select from
   const [allPlayers, setAllPlayers] = useState("");
 
@@ -30,6 +32,15 @@ const Players = () => {
     handleMessage(playerResp);
     setAllPlayers(Object.values(playerResp.data));
   };
+
+  const dateToYYYYMMDD = (dayjsObj) => {
+    const year = dayjsObj.$y;
+    const month = dayjsObj.$M+1;
+    const day = dayjsObj.$D;
+    const date = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+    const ret = {date, year};
+    return ret;
+  }
   
   // GET players on render
   useEffect(() => {
@@ -62,16 +73,13 @@ const Players = () => {
     setPlayer(playerSelected) 
   };
 
-  const getFormState = (data) => {
-    return data;
-  }
-
   // UPDATE form before submission to API
   // Event handler - Factor to Parent
   const handleUpdatePlayerButton = async (event) => {
     event.preventDefault();
 
     const formState = playerFormRef.current.getFormState()
+    console.log("update button",formState.id);
     // define API request options
     const requestOptions = {
       method: "PUT",
@@ -79,8 +87,17 @@ const Players = () => {
       body: JSON.stringify(formState),
     }; 
     
-    const updatePlayerResponse = await updatePlayerById(player.id, requestOptions);
+    const updatePlayerResponse = await updatePlayerById(formState.id, requestOptions);
     handleMessage(updatePlayerResponse);  
+    console.log("handleUpdatePlayerButton:",updatePlayerResponse.id)
+    if(updatePlayerResponse.id){
+      const playerId = updatePlayerResponse.id;
+      const fileuploadOutcome = handleFileUpload(playerFormRef.current.getFile(), playerId);
+      if(fileuploadOutcome){
+        playerFormRef.current.deleteImage();
+      }
+    }
+
     getPlayers();
     toggleEditPlayer();
   };
@@ -99,6 +116,23 @@ const Players = () => {
     getPlayers();
     toggleEditPlayer();
   };
+  const getFilepath = (playerId) => {
+    const today = dayjs();
+    const filename = dateToYYYYMMDD(today).date
+    return {playerId, filename};
+  }
+  const handleFileUpload = async (file,playerId) => {
+
+    const fileType = file.type.slice(6);
+    const {dir, filename} = getFilepath(playerId);
+    const fileName = filename+"."+fileType;
+    const storageRef = createTestStorageRef(playerId,fileName);
+    const uploadStatus = await uploadFileResumable(storageRef, file)
+      .catch((error)=>{
+        console.error('Upload failed:', error);
+      });
+    return uploadStatus;
+  }
 
   return(
     <>

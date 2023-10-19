@@ -103,7 +103,7 @@
 ******************************************************************************/
 #create_player_form{
 
-  width:90%;
+  width:98%;
   min-height: 33vh;
   display: grid;
   grid-gap: 10px;
@@ -115,7 +115,7 @@
 }
 .player_attr_fields{
   display: grid;
-  grid-template-columns: 20% 20% 30%;
+  grid-template-columns: 30% 30% 38%;
   grid-gap: 1%;
 }
 

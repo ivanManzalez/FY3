@@ -1,4 +1,4 @@
-import React, {useState, useEffect, forwardRef, useImperativeHandle } from "react";
+import React, {useState, useEffect, useRef, forwardRef, useImperativeHandle } from "react";
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 // 
@@ -7,9 +7,10 @@ import Switch from '@mui/material/Switch';
 import TextField from '@mui/material/TextField';
 import dayjs from 'dayjs';
 import {CalendarPicker} from "../general/DateTimeSelection";
+import DragAndDrop from '../dragAndDrop/DragAndDrop';
 
-const PlayerForm = forwardRef( ( {player},ref ) => {
-  
+const PlayerForm = forwardRef( ( {player, handleFileUpload} ,ref ) => {
+  const playerImgRef = useRef();
   // Refactor to Utilities components
   const dateToYYYYMMDD = (dayjsObj) => {
     const year = dayjsObj.$y;
@@ -28,6 +29,7 @@ const PlayerForm = forwardRef( ( {player},ref ) => {
   // Initial state of ingested player
 
   const initialFormState = {
+    id:player.id,
     first_name: player.first_name,
     last_name: player.last_name,
     height_ft: player.height_ft,
@@ -46,10 +48,19 @@ const PlayerForm = forwardRef( ( {player},ref ) => {
   const getFormState = () => {
     return formState;
   }
+  const getFile = () => {
+    console.log(playerImgRef.current.uploadedFile);
+    return playerImgRef.current.uploadedFile;
+  }
+  const deleteImage = () => {
+    playerImgRef.current.handleDelete();
+  }
 
   // Expose the formState via the ref
   useImperativeHandle(ref, () => ({
     getFormState,
+    getFile,
+    deleteImage,
   }));
 
   // clear all fields on form -- Needed?
@@ -141,12 +152,14 @@ const PlayerForm = forwardRef( ( {player},ref ) => {
     setFormState(initialFormState);
   },[player]);
 
+
 return (
   <div id="player_form_container">
     <div id="message" className={classname}>{message && <p>{message}</p>}</div>
     
-    <form id="player_form" className='h_container'>
+    <div className="grid_col_65_35">
 
+    <form id="player_form" className='h_container'>
       <div className="player_name_fields">
         <TextField id={"first_name"} label={"Player First Name"} variant={"outlined"} onChange={handleInputChange} name = {"first_name"} value={formState.first_name}/>
         <TextField id={"last_name"} label={"Player Last Name"} variant={"outlined"} onChange={handleInputChange} name = {"last_name"}  value={formState.last_name} />
@@ -162,8 +175,12 @@ return (
       <div>
         <CalendarPicker id={"dob"} name={"dob"} label={"Date of Birth"} variant={"outlined"} onChange={handleDOBChange} value={dayjs(formState.age)}/>
       </div>
-
     </form>
+
+    < DragAndDrop ref={playerImgRef} handleFileUpload={handleFileUpload}/>
+   
+    </div>
+
   </div>
   )
 }); 

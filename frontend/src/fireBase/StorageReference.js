@@ -1,4 +1,5 @@
 import {rootStorage} from "../firebaseConfig";
+// import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 // Get a reference to the storage service, 
 // which is used to create references in your storage bucket
@@ -6,8 +7,8 @@ const PLAYERS_BUCKET = "players/";
 const TEAMS_BUCKET = "teams/";
 const TEST_BUCKET = "test/";
 
-const createTestStorageRef = (dirname) => {
-  const testbucket = TEST_BUCKET+dirname +"/";
+const createTestStorageRef = (dirname, filename) => {
+  const testbucket = TEST_BUCKET+dirname +"/"+filename;
   console.log("createTestStorageRef: ",testbucket);
   return rootStorage.ref(testbucket);
 };
@@ -40,60 +41,115 @@ const uploadFileBytes = (storageRef, file) => {
 
 // uploadBytesResumable(storageRef, filename)
 const uploadFileResumable = (storageRef, file) => {
-  // Create a Blob from the file
-  const blob = new Blob([file]);
+  // Create a Blob using the input the file
+  return new Promise((resolve, reject) => {
+    const blob = new Blob([file]);
+    // Upload the file resumable
+    const uploadTask = storageRef.put(blob);
+    uploadTask.on('state_changed',
+      (snapshot) => {
+        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log('Upload is ' + progress + '% done');
+        switch (snapshot.state) {
+          case 'paused':
+            console.log('Upload is paused');
+            break;
+          case 'running':
+            console.log('Upload is running');
+            break;
+        }
+      }, 
+      (error) => {
+        // A full list of error codes is available at
+        // https://firebase.google.com/docs/storage/web/handle-errors
+        switch (error.code) {
+          case 'storage/unauthorized':
+            // User doesn't have permission to access the object
+            break;
+          case 'storage/canceled':
+            // User canceled the upload
+            break;
 
-  // Upload the file resumable
-  const uploadTask = storageRef.put(blob);
+          // ...
 
-  // const uploadTask = storageRef.uploadBytesResumable(file);
-  // Register three observers:
-  // 1. 'state_changed' observer, called any time the state changes
-  // 2. Error observer, called on failure
-  // 3. Completion observer, called on successful completion
-  uploadTask.on('state_changed', 
-    (snapshot) => {
-      // Observe state change events such as progress, pause, and resume
-      // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      console.log('Upload is ' + progress + '% done');
-      switch (snapshot.state) {
-        case 'paused':
-          console.log('Upload is paused');
-          break;
-        case 'running':
-          console.log('Upload is running');
-          break;
+          case 'storage/unknown':
+            // Unknown error occurred, inspect error.serverResponse
+            break;
+        }
+        console.error(error);
+      }, 
+      () => {
+        // Upload completed successfully, now we can get the download URL
+        uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+          resolve({ progress: 100, status: 'completed', downloadURL }); // Resolve the promise with the download URL or any other data you want to return
+        });
       }
-    }, 
-    (error) => {
-      // A full list of error codes is available at
-      // https://firebase.google.com/docs/storage/web/handle-errors
-      switch (error.code) {
-        case 'storage/unauthorized':
-          // User doesn't have permission to access the object
-          break;
-        case 'storage/canceled':
-          // User canceled the upload
-          break;
-
-        // ...
-
-        case 'storage/unknown':
-          // Unknown error occurred, inspect error.serverResponse
-          break;
-      }
-    }, 
-    () => {
-      // Handle successful uploads on complete
-      // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-      getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-        console.log('File available at', downloadURL);
-      });
-    })
+    );
+  });
 };
+//
+
+// const taskHandler = (uploadTask) => {
+//   uploadTask.on('state_change',
+//     (snapshot) => {
+//       const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+//       const state = snapshot.state;
+//       console.log("progress:",progress);
+//     },
+//     (error) => {
+//       switch (error.code) {
+//       case 'storage/unauthorized':
+//         // User doesn't have permission to access the object
+//         break;
+//       case 'storage/canceled':
+//         // User canceled the upload
+//         break;
+//       case 'storage/unknown':
+//         // Unknown error occurred, inspect error.serverResponse
+//         break;
+//       } 
+//     },
+//     () => uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+//       resolve({ progress: 100, status: 'completed', downloadURL }); // Resolve the promise with the download URL or any other data you want to return
+//   })
+//   ) 
+// }
+
 
 export {createTestStorageRef, createPlayerStorageRef, createTeamStorageRef, uploadFileResumable, uploadFileBytes};
+
+
+
+// 
+// uploadTask.on(
+//     'state_changed', 
+//     (snapshot) => {
+//       const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+//       const state = snapshot.state;
+//       console.log("progress:",progress);
+//     },
+
+//     (error) => {
+//       switch (error.code) {
+//       case 'storage/unauthorized':
+//         // User doesn't have permission to access the object
+//         break;
+//       case 'storage/canceled':
+//         // User canceled the upload
+//         break;
+//       case 'storage/unknown':
+//         // Unknown error occurred, inspect error.serverResponse
+//         break;
+//       }
+//       console.error(error);
+//     }, 
+    
+//     () => uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+//       resolve({ progress: 100, status: 'completed', downloadURL }); // Resolve the promise with the download URL or any other data you want to return
+//       }),
+//     )
+//   }
 
 /////// Navigating through ref
 

@@ -15,6 +15,7 @@
   --big: 2rem;
   --med: 1.5rem;
   --sm: 0.5rem;
+  overflow-x: hidden;
 }
 
 html,body{
@@ -44,6 +45,10 @@ html,body{
 .centre{
   display: flex;
   justify-content: center;
+}
+.align{
+  align-items: center;
+  text-align: center;
 }
 
 .bad{
@@ -80,4 +85,14 @@ html,body{
 }
 .space_between{
   justify-content: space-between;
+}
+
+.space_around{
+  justify-content: space-around;
+}
+
+.grid_col_65_35{
+  display:grid;
+  grid-template-columns: 65% 35%;
+  /*grid-gap: 5%;*/
 }
