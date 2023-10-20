@@ -3,7 +3,7 @@ import React from 'react';
 const DragAndDrop = React.forwardRef((props,ref) => {
   const [uploadedFile, setUploadedFile] = React.useState(null);
   const [isDragging, setIsDragging] = React.useState(false);
-  const [previewURL, setPreviewURL] = React.useState("");
+  const [previewURL, setPreviewURL] = React.useState(props.preview);
   const [className, setClassName] = React.useState("drop-area");
   const [progress, setProgress] = React.useState(null);
   
@@ -127,11 +127,10 @@ const DragAndDrop = React.forwardRef((props,ref) => {
       <div className=""> 
       {progress && <div>{progress}%</div>}
 
-      <img src={previewURL} alt="Dropped file preview" /> 
+      <img src={props.url || previewURL} alt="Dropped file preview" /> 
      
       <div className="">
       <button className={"delete"} onClick={handleDelete} > Delete File </button>
-      {/*{<button className={"submit"} onClick={handleUploadButton} > Upload file </button>}*/}
       </div>
 
       </div>}

@@ -22,10 +22,12 @@ const PlayerForm = forwardRef( ( {player, handleFileUpload} ,ref ) => {
   }
 
   // 
-  const defaultDOB = dayjs("1998-01-01","YYYY-MM-DD");
-  const dob = dateToYYYYMMDD(dayjs(defaultDOB))
+  console.log("DOB:",player.date_of_birth);
+  const defaultDOB = dayjs(player.date_of_birth,"YYYY-MM-DD");
+  const dob = dateToYYYYMMDD(dayjs(defaultDOB)).date
   const [eligibility, setEligibility] = useState(player.is_registered);
 
+  
   // Initial state of ingested player
 
   const initialFormState = {
@@ -35,8 +37,8 @@ const PlayerForm = forwardRef( ( {player, handleFileUpload} ,ref ) => {
     height_ft: player.height_ft,
     height_in: player.height_in,
     weight: player.weight,
-    origin: player.origin,
-    age: dob.date,
+    // origin: player.origin,
+    date_of_birth: dob,
     is_registered:eligibility,
   };
   
@@ -74,7 +76,7 @@ const PlayerForm = forwardRef( ( {player, handleFileUpload} ,ref ) => {
     const birthDate = dateToYYYYMMDD(e);
     handleInputChange({
       target:{
-        name:"age",
+        name:"date_of_birth",
         value:birthDate.date,
     }})
   };
@@ -156,7 +158,6 @@ const PlayerForm = forwardRef( ( {player, handleFileUpload} ,ref ) => {
 return (
   <div id="player_form_container">
     <div id="message" className={classname}>{message && <p>{message}</p>}</div>
-    
     <div className="grid_col_65_35">
 
     <form id="player_form" className='h_container'>
@@ -173,11 +174,11 @@ return (
       </div>  
       
       <div>
-        <CalendarPicker id={"dob"} name={"dob"} label={"Date of Birth"} variant={"outlined"} onChange={handleDOBChange} value={dayjs(formState.age)}/>
+        <CalendarPicker id={"dob"} name={"dob"} label={"Date of Birth"} variant={"outlined"} onChange={handleDOBChange} value={dayjs(formState.date_of_birth)}/>
       </div>
     </form>
 
-    < DragAndDrop ref={playerImgRef} handleFileUpload={handleFileUpload}/>
+    < DragAndDrop url={player.url} ref={playerImgRef} handleFileUpload={handleFileUpload}/>
    
     </div>
 

@@ -13,6 +13,7 @@ from .models.player import Player
 class PlayersView(generics.ListAPIView): ## CreateAPIView
   queryset = Player.objects.all()
   serializer_class = PlayerSerializer
+  
   def get(self, request, format=None):
     queryset = Player.objects.all()
     serialized_data = self.serializer_class(queryset, many=True).data
@@ -65,14 +66,26 @@ class CreatePlayerView(APIView): ## CreateAPIView
     
     height_in = serializer.data.get('height_in')
     height_ft = serializer.data.get('height_ft')
-    origin = serializer.data.get('origin')
+    weight = serializer.data.get('weight')
+    date_of_birth = serializer.data.get('date_of_birth')
+    is_registered = serializer.data.get('is_registered')
+    # profile_pic_loc = serializer.data.get('profile_pic_loc')
+
+    # fav_player = serializer.data.get('fav_player')
+    # experience = serializer.data.get('experience')
+    
         
     try:
       player = Player(first_name = first_name,
                     last_name = last_name,
                     height_in = height_in,
                     height_ft = height_ft,
-                    origin = origin
+                    weight=weight,
+                    date_of_birth = date_of_birth,
+                    is_registered = is_registered,
+                    # profile_pic_loc= profile_pic_loc,
+                    # fav_player=fav_player, 
+                    # experience=experience,
                   )
       player.save()
       message = first_name+" "+last_name+' Added'
@@ -100,7 +113,6 @@ class PlayerProfileView(APIView):
       try:
         return Player.objects.get(id = player_id)
       except Player.DoesNotExist:
-        print(fullname+" does not exist")
         message = player_id + " does not exist"
         # return Response({'Bad Request': message}, status=status.HTTP_404_NOT_FOUND)
         raise Http404(message)
@@ -111,16 +123,18 @@ class PlayerProfileView(APIView):
         return Response(serializer.data)
 
     def put(self, request, player_id, format=None):
+        print("\nplayer update:", player_id)
         player = self.get_object(player_id)
+        print("player got")
         serializer = PlayerSerializer(player, data=request.data)
-        # check if new name already exists
-
+        print("player serialized:", serializer)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, player_id, format=None):
+        print("\nplayer update:", player_id)
         player = self.get_object(player_id)
         player.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)

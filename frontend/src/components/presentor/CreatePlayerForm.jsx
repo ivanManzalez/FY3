@@ -3,13 +3,14 @@ import React, {useState, useRef} from "react";
 import {createPlayer} from '../../components/api/player/player';
 // Player profile pic
 import DragAndDrop from '../dragAndDrop/DragAndDrop';
-import {createTestStorageRef, uploadFileResumable} from "../../fireBase/StorageReference";
+import {getTestStorageRef, uploadFileResumable} from "../../fireBase/StorageReference";
 // Form API
 import TextField from '@mui/material/TextField';
 import dayjs from 'dayjs';
 import {CalendarPicker} from "../general/DateTimeSelection";
 
 const CreatePlayerForm = () => {
+  
   const playerImgRef = useRef();
 
   const dateToYYYYMMDD = (dayjsObj) => {
@@ -21,11 +22,6 @@ const CreatePlayerForm = () => {
     return ret;
   }
 
-  const getFilepath = (playerId) => {
-    const today = dayjs();
-    const filename = dateToYYYYMMDD(today).date
-    return {playerId, filename};
-  }
 
   const defaultDOB = dayjs("1998-01-01", "YYYY-MM-DD");
   const dob = dateToYYYYMMDD(dayjs(defaultDOB))
@@ -45,6 +41,7 @@ const CreatePlayerForm = () => {
   const [formState, setFormState] = useState(initialFormState);
   const [message, setMessage] = useState("");
   const [classname, setClassname] = useState("");
+  console.log(formState);
 
   // clear all fields on form
   const clearFields = () =>{
@@ -66,7 +63,7 @@ const CreatePlayerForm = () => {
 
     const createPlayerResponse = await createPlayer(requestOptions);
     handleMessage(createPlayerResponse);  
-    
+    console.log(createPlayerResponse);
     if(createPlayerResponse.player.id){
       const playerId = createPlayerResponse.player.id;
       const fileuploadOutcome = handleFileUpload(playerImgRef.current.uploadedFile, playerId);
@@ -135,11 +132,9 @@ const CreatePlayerForm = () => {
   };
 
   const handleFileUpload = async (file,playerId) => {
-    console.log(playerId);
-    const fileType = file.type.slice(6);
-    const {dir, filename} = getFilepath(playerId);
-    const fileName = filename+"."+fileType;
-    const storageRef = createTestStorageRef(playerId,fileName);
+
+    const filename = "profilepic.png";
+    const storageRef = getTestStorageRef(playerId,filename);
     const uploadStatus = await uploadFileResumable(storageRef, file)
       .catch((error)=>{
         console.error('Upload failed:', error);

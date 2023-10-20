@@ -1,5 +1,4 @@
 import {rootStorage} from "../firebaseConfig";
-// import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 // Get a reference to the storage service, 
 // which is used to create references in your storage bucket
@@ -7,27 +6,24 @@ const PLAYERS_BUCKET = "players/";
 const TEAMS_BUCKET = "teams/";
 const TEST_BUCKET = "test/";
 
-const createTestStorageRef = (dirname, filename) => {
+const getTestStorageRef = (dirname, filename) => {
   const testbucket = TEST_BUCKET+dirname +"/"+filename;
-  console.log("createTestStorageRef: ",testbucket);
   return rootStorage.ref(testbucket);
 };
 
 // PLAYERS_BUCKET/<playerId>/
-const createPlayerStorageRef = (playerId) => {
+const getPlayerStorageRef = (playerId) => {
   const playerBucket = playerId +"/";
   return PLAYERS_BUCKET.ref(playerBucket);
 };
 
 // TEAMS_BUCKET/<teamId>/
-const createTeamStorageRef = (teamId) => {
+const getTeamStorageRef = (teamId) => {
   const teamBucket = teamId +"/";
   return TEAMS_BUCKET.ref(teamBucket);
 };
 
 // Upload File to FILENAME
-
-// uploadBytes(storageRef, filename)
 const uploadFileBytes = (storageRef, file) => {
   storageRef.uploadBytes(file)
   .then((snapshot) => {
@@ -70,9 +66,6 @@ const uploadFileResumable = (storageRef, file) => {
           case 'storage/canceled':
             // User canceled the upload
             break;
-
-          // ...
-
           case 'storage/unknown':
             // Unknown error occurred, inspect error.serverResponse
             break;
@@ -88,68 +81,43 @@ const uploadFileResumable = (storageRef, file) => {
     );
   });
 };
-//
 
-// const taskHandler = (uploadTask) => {
-//   uploadTask.on('state_change',
-//     (snapshot) => {
-//       const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-//       const state = snapshot.state;
-//       console.log("progress:",progress);
-//     },
-//     (error) => {
-//       switch (error.code) {
-//       case 'storage/unauthorized':
-//         // User doesn't have permission to access the object
-//         break;
-//       case 'storage/canceled':
-//         // User canceled the upload
-//         break;
-//       case 'storage/unknown':
-//         // Unknown error occurred, inspect error.serverResponse
-//         break;
-//       } 
-//     },
-//     () => uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-//       resolve({ progress: 100, status: 'completed', downloadURL }); // Resolve the promise with the download URL or any other data you want to return
-//   })
-//   ) 
-// }
+const downloadFile = (storageRef) => {
+  return storageRef.getDownloadURL()
+    .then((url)=> {
+      console.log("downloadFile: returned url")
+      return url;
+    })
+    .catch((error) => {
+      console.log("downloadFile: did not return url")
+    // A full list of error codes is available at
+    // https://firebase.google.com/docs/storage/web/handle-errors
+    switch (error.code) {
+      case 'storage/object-not-found':
+        // File doesn't exist
+        break;
+      case 'storage/unauthorized':
+        // User doesn't have permission to access the object
+        break;
+      case 'storage/canceled':
+        // User canceled the upload
+        break;
+      case 'storage/unknown':
+        // Unknown error occurred, inspect the server response
+        break;
+    }
 
+  });
+} 
 
-export {createTestStorageRef, createPlayerStorageRef, createTeamStorageRef, uploadFileResumable, uploadFileBytes};
+const getProfilePicURL = (id) => {
+  console.log(id+"/profilepic.png")
+  const profilePicRef = getTestStorageRef(id, "profilepic.png");
+  return downloadFile(profilePicRef);
+};
 
+export {getProfilePicURL, getTestStorageRef, getPlayerStorageRef, getTeamStorageRef, uploadFileResumable, uploadFileBytes, downloadFile};
 
-
-// 
-// uploadTask.on(
-//     'state_changed', 
-//     (snapshot) => {
-//       const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-//       const state = snapshot.state;
-//       console.log("progress:",progress);
-//     },
-
-//     (error) => {
-//       switch (error.code) {
-//       case 'storage/unauthorized':
-//         // User doesn't have permission to access the object
-//         break;
-//       case 'storage/canceled':
-//         // User canceled the upload
-//         break;
-//       case 'storage/unknown':
-//         // Unknown error occurred, inspect error.serverResponse
-//         break;
-//       }
-//       console.error(error);
-//     }, 
-    
-//     () => uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-//       resolve({ progress: 100, status: 'completed', downloadURL }); // Resolve the promise with the download URL or any other data you want to return
-//       }),
-//     )
-//   }
 
 /////// Navigating through ref
 
@@ -171,3 +139,4 @@ export {createTestStorageRef, createPlayerStorageRef, createTeamStorageRef, uplo
 
 // Reference's bucket is the name of the storage bucket where files are stored
 // spaceRef.bucket;
+

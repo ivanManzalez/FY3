@@ -17,7 +17,6 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent # /Users/ivanmancia-gonzalez/Projects/FY3/FY3-Project
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
@@ -165,6 +164,7 @@ LOGOUT_REDIRECT_URL = "FY3-Home"
 # USE_PROXY = True
 # PROXY_URL = 'http://localhost:3000'
 
+CSRF_COOKIE_AGE = 604800*30 # TO DO
 CORS_ORIGIN_ALLOW_ALL = True
 # CORS_ALLOW_CREDENTIALS = True
 # CSRF_COOKIE_NAME = "csrftoken"

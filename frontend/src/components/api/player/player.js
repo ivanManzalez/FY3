@@ -60,6 +60,7 @@ const updatePlayerById = (id, requestOptions) => {
     return response.json();
     })
     .catch((error) => {
+      
       console.log(error)
       return error;
   });

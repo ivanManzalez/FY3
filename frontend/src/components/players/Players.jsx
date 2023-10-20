@@ -1,12 +1,14 @@
 import React, {useState, useEffect, useRef} from "react";
 import PlayerForm from "./PlayerForm";
 import DisplayPlayers from "./DisplayPlayers";
-import {retrieveAllPlayers, updatePlayerById,deletePlayerById } from "../api/player/player";
-import {createTestStorageRef, uploadFileResumable} from "../../fireBase/StorageReference";
+import {getDraftees, retrieveAllPlayers, updatePlayerById,deletePlayerById } from "../api/player/player";
+import {getProfilePicURL, getTestStorageRef, uploadFileResumable} from "../../fireBase/StorageReference";
 
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import dayjs from 'dayjs';
+
+// import {getPlayerIds} from './playerIDs';
 // import FilterSearch from "../general/FilterSearch";
 import AutoCompleteDropdown from "../general/AutoCompleteDropdown";
 
@@ -16,6 +18,7 @@ const Players = () => {
 
   // Players to select from
   const [allPlayers, setAllPlayers] = useState("");
+  const [profilePics, setProfilePics] = useState({});
 
   // utilities
   const [classname, setClassname] = useState("");
@@ -28,9 +31,30 @@ const Players = () => {
   const [player, setPlayer] = useState("");
 
   const getPlayers = async () => {
-    const playerResp = await retrieveAllPlayers();
+    const playerResp = await getDraftees();//retrieveAllPlayers();
+
     handleMessage(playerResp);
     setAllPlayers(Object.values(playerResp.data));
+    // getProfilePicPreview(Object.values(playerResp.data));
+  };
+
+  const getProfilePicPreview = (players) => {
+    const pics = {}
+    if(players){
+
+      players.map((player)=>{
+        const previewURL = getProfilePicURL(player.id)
+        .then((resolvedURL) => {
+          pics[player.id] = resolvedURL;
+        })
+        .catch((error) => {
+          pics[player.id] = null;
+          console.error(error);
+        });
+        
+      })
+    }
+    setProfilePics(pics);
   };
 
   const dateToYYYYMMDD = (dayjsObj) => {
@@ -70,7 +94,7 @@ const Players = () => {
     if(!editPlayer){
       setEditPlayer(true);
     }
-    setPlayer(playerSelected) 
+    setPlayer(playerSelected);
   };
 
   // UPDATE form before submission to API
@@ -79,7 +103,6 @@ const Players = () => {
     event.preventDefault();
 
     const formState = playerFormRef.current.getFormState()
-    console.log("update button",formState.id);
     // define API request options
     const requestOptions = {
       method: "PUT",
@@ -89,7 +112,7 @@ const Players = () => {
     
     const updatePlayerResponse = await updatePlayerById(formState.id, requestOptions);
     handleMessage(updatePlayerResponse);  
-    console.log("handleUpdatePlayerButton:",updatePlayerResponse.id)
+    
     if(updatePlayerResponse.id){
       const playerId = updatePlayerResponse.id;
       const fileuploadOutcome = handleFileUpload(playerFormRef.current.getFile(), playerId);
@@ -116,17 +139,12 @@ const Players = () => {
     getPlayers();
     toggleEditPlayer();
   };
-  const getFilepath = (playerId) => {
-    const today = dayjs();
-    const filename = dateToYYYYMMDD(today).date
-    return {playerId, filename};
-  }
+  
   const handleFileUpload = async (file,playerId) => {
 
-    const fileType = file.type.slice(6);
-    const {dir, filename} = getFilepath(playerId);
-    const fileName = filename+"."+fileType;
-    const storageRef = createTestStorageRef(playerId,fileName);
+    const filename = "profilepic.png";
+    console.log("handleFileUpload:", playerId, filename)
+    const storageRef = getTestStorageRef(playerId,filename);
     const uploadStatus = await uploadFileResumable(storageRef, file)
       .catch((error)=>{
         console.error('Upload failed:', error);
@@ -139,7 +157,7 @@ const Players = () => {
     <h1>Players</h1>
     <div id="message" className={classname} >{message && <p>{message}</p>}</div>
 
-      {/*<FilterSearch handleSelection={handlePlayerSelection} initialItems={allPlayers} /> */}
+      <p>{player.url}</p>
       
       {allPlayers &&
       <AutoCompleteDropdown handleSelection={handlePlayerSelection} options={allPlayers}/>}
@@ -160,7 +178,7 @@ const Players = () => {
       {/* Player is NOT Selected*/}
       { 
       !editPlayer && 
-        < DisplayPlayers players={allPlayers} handleSelection={handlePlayerSelection} />
+        < DisplayPlayers players={allPlayers} handleSelection={handlePlayerSelection} /> 
       }
 
     </>
