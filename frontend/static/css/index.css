@@ -45,6 +45,7 @@ html,body{
 .centre{
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 .align{
   align-items: center;
@@ -95,4 +96,17 @@ html,body{
   display:grid;
   grid-template-columns: 65% 35%;
   /*grid-gap: 5%;*/
+}
+
+.layer1{
+  position:absolute;
+  z-index: 1;
+}
+.layer2{
+  /*position:absolute;*/
+  z-index: 2;
+}
+
+.clickable{
+  cursor: pointer;
 }

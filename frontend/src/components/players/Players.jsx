@@ -2,7 +2,7 @@ import React, {useState, useEffect, useRef} from "react";
 import PlayerForm from "./PlayerForm";
 import DisplayPlayers from "./DisplayPlayers";
 import {getDraftees, retrieveAllPlayers, updatePlayerById,deletePlayerById } from "../api/player/player";
-import {getProfilePicURL, getTestStorageRef, uploadFileResumable} from "../../fireBase/StorageReference";
+import {deleteProfilePicURL, getProfilePicURL, getTestStorageRef, uploadFileResumable} from "../../fireBase/StorageReference";
 
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
@@ -31,7 +31,7 @@ const Players = () => {
   const [player, setPlayer] = useState("");
 
   const getPlayers = async () => {
-    const playerResp = await getDraftees();//retrieveAllPlayers();
+    const playerResp = await retrieveAllPlayers();// getDraftees();
 
     handleMessage(playerResp);
     setAllPlayers(Object.values(playerResp.data));
@@ -151,17 +151,20 @@ const Players = () => {
       });
     return uploadStatus;
   }
-
+  const handleDeleteImg = () => {
+    if(player){
+      deleteProfilePicURL(player.id);
+    }
+  };
+    
   return(
     <>
     <h1>Players</h1>
-    <div id="message" className={classname} >{message && <p>{message}</p>}</div>
-
-      <p>{player.url}</p>
+    <div id="message" className={" "+classname} >{message && <p>{message}</p>}</div>
       
       {allPlayers &&
       <AutoCompleteDropdown handleSelection={handlePlayerSelection} options={allPlayers}/>}
-      
+      <br></br>
       {/* Player is Selected*/}
       {
       editPlayer && 
@@ -170,7 +173,7 @@ const Players = () => {
           <h4>Edit Player</h4>
           <button className="small submit" type='submit' placeholder="Display Player Gallery" onClick={toggleEditPlayer}> Back </button>
         </div>
-        <PlayerForm player={player} ref={playerFormRef} />
+        <PlayerForm player={player} deleteImg={handleDeleteImg} ref={playerFormRef} />
         <button className="submit" type='submit' placeholder="Update Player" onClick={handleUpdatePlayerButton}> Update Player</button>
         <button className="delete" type='submit' placeholder="Delete Player" onClick={handleDeletePlayerButton}> Delete Player</button>
       </div>

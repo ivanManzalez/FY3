@@ -9,7 +9,7 @@ import dayjs from 'dayjs';
 import {CalendarPicker} from "../general/DateTimeSelection";
 import DragAndDrop from '../dragAndDrop/DragAndDrop';
 
-const PlayerForm = forwardRef( ( {player, handleFileUpload} ,ref ) => {
+const PlayerForm = forwardRef( ( {player, deleteImg, handleFileUpload} ,ref ) => {
   const playerImgRef = useRef();
   // Refactor to Utilities components
   const dateToYYYYMMDD = (dayjsObj) => {
@@ -178,7 +178,7 @@ return (
       </div>
     </form>
 
-    < DragAndDrop url={player.url} ref={playerImgRef} handleFileUpload={handleFileUpload}/>
+    < DragAndDrop url={player.url} ref={playerImgRef} handleFileUpload={handleFileUpload} handleImgDelete={deleteImg}/>
    
     </div>
 

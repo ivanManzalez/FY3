@@ -2,26 +2,42 @@ import React from "react";
 import {getProfilePicURL } from "../../fireBase/StorageReference";
 
 const DisplayPlayers = ({players , handleSelection}) => {
-  const [imageUrls, setImageUrls] = React.useState({});
-  // const [dataReady, setDataReady] = React.useState(false);
+  const [imageUrls, setImageUrls] = React.useState(JSON.parse(localStorage.getItem('cachedImageUrls')) || {});
+
+  const fetchProfilePicURLs = async (id) => {
+
+    try {
+      const resolvedURL = await getProfilePicURL(id);
+
+      setImageUrls((prevImageUrls) => ({
+      ...prevImageUrls,
+      [id]: resolvedURL,
+      }));
+
+      localStorage.setItem('cachedImageUrls', JSON.stringify({ ...imageUrls, [id]: resolvedURL }));
+    } catch (error) {
+      console.error(error);
+    }
+
+  }; 
 
   React.useEffect(() => {
     // Fetch profile picture URLs for all players when the component mounts
-    const fetchProfilePicURLs = async () => {
-      const urls = {};
-      for (const player of players) {
-        const { id } = player;
-        try {
-          const resolvedURL = await getProfilePicURL(id);
-          urls[id] = resolvedURL;
-        } catch (error) {
-          console.error(error);
-        }
-      }
-      setImageUrls(urls);
-    };
+    
+    if(players){
+      
+      players.forEach((player)=>{
+        
+        if(imageUrls[player.id] == null){
+          console.log("Id not in cached items:",player.id)
+          fetchProfilePicURLs(player.id);
+        }else{
 
-    fetchProfilePicURLs();
+        }
+      });
+    }
+    
+
   }, [players]);
 
   const registered = (eligibility) => {
@@ -32,45 +48,25 @@ const DisplayPlayers = ({players , handleSelection}) => {
     }
 
   const handlePlayerSelection = (e,player) => {
-    const id = player.id;
     const selection = {
       ...player,
-      // url: imageUrls[id],
+      url: imageUrls[player.id],
     }
     handleSelection(e,selection)
   }
 
-  // const getProfilePicPreview = (id) => {
-  //   getProfilePicURL(id)
-  //     .then((resolvedURL) => {
-  //       setImageUrls({
-  //       ... imageUrls,
-  //       [id]:resolvedURL,
-  //     })  
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //     })
-  //   };
-
-  
   return(
     <>
     <div className="gallery">
       {players && players.map((player) => {
         const { id: playerId , is_registered } = player;
-
-        {/*getProfilePicPreview(playerId);     */}
       
         return (
-        <div onClick={(e) => handlePlayerSelection(e,player)} className={"player_card "+registered(is_registered)} key={playerId}>
-          { imageUrls[playerId] && <img className={"player_card "} src={imageUrls[playerId]} alt="profile pic"></img>}
-          <p>{player.first_name +" "+player.last_name}</p>
-          <p>{player.height_ft +"'' "+player.height_in+'"'}</p>
-          <p>{player.weight+" lbs"}</p>
-          <p>Registered: {1}</p>
-          <p>ID: {playerId}</p>
-
+        <div onClick={(e) => handlePlayerSelection(e,player)} className={"clickable centre player_card "+registered(is_registered)}  key={playerId}>
+          { imageUrls[playerId] && <img id={"player_img"} className={"inner"} src={imageUrls[playerId]} alt="profile pic"></img>}
+          
+          <img src="/static/images/fy3-logo.png" alt="fy3-logo"></img>
+          <p className={"align centre inner player_name "}>{player.first_name +" "+player.last_name}</p>
         </div>
         )
       }
@@ -79,5 +75,6 @@ const DisplayPlayers = ({players , handleSelection}) => {
     </>
   )
 }
+
 
 export default DisplayPlayers;

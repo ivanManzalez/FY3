@@ -83,6 +83,7 @@ const uploadFileResumable = (storageRef, file) => {
 };
 
 const downloadFile = (storageRef) => {
+  console.log("commencing download for: ", storageRef.fullPath)
   return storageRef.getDownloadURL()
     .then((url)=> {
       console.log("downloadFile: returned url")
@@ -111,12 +112,16 @@ const downloadFile = (storageRef) => {
 } 
 
 const getProfilePicURL = (id) => {
-  console.log(id+"/profilepic.png")
   const profilePicRef = getTestStorageRef(id, "profilepic.png");
   return downloadFile(profilePicRef);
 };
 
-export {getProfilePicURL, getTestStorageRef, getPlayerStorageRef, getTeamStorageRef, uploadFileResumable, uploadFileBytes, downloadFile};
+const deleteProfilePicURL = (id) => {
+  const profilePicRef = getTestStorageRef(id, "profilepic.png");
+  return deleteObject(profilePicRef);
+}
+
+export {deleteProfilePicURL, getProfilePicURL, getTestStorageRef, getPlayerStorageRef, getTeamStorageRef, uploadFileResumable, uploadFileBytes, downloadFile};
 
 
 /////// Navigating through ref

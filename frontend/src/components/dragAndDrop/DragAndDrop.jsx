@@ -3,7 +3,7 @@ import React from 'react';
 const DragAndDrop = React.forwardRef((props,ref) => {
   const [uploadedFile, setUploadedFile] = React.useState(null);
   const [isDragging, setIsDragging] = React.useState(false);
-  const [previewURL, setPreviewURL] = React.useState(props.preview);
+  const [previewURL, setPreviewURL] = React.useState(props.url);
   const [className, setClassName] = React.useState("drop-area");
   const [progress, setProgress] = React.useState(null);
   
@@ -23,14 +23,15 @@ const DragAndDrop = React.forwardRef((props,ref) => {
     // Add visual cues to show that the element can be dropped here (e.g., change the background color).
     // You can update the component state here to change the style as well.
     setIsDragging(true);
-    setClassName("dragging")
   };
 
   const handleDragLeave = () => {
     // Remove any visual cues for leaving the drop area.
     // You can reset the component state here to remove styles.
-    setIsDragging(false);
-    setClassName("")
+    if(previewURL==null){
+      setIsDragging(false);
+      setClassName("drop-area")
+    }
   };
 
   const handleDrop = (e) => {
@@ -79,6 +80,7 @@ const DragAndDrop = React.forwardRef((props,ref) => {
     setPreviewURL(null);
     setProgress(null);
     setClassName("drop-area");
+    handleImgDelete();
   };
 
   // const handleUploadButton = async () => {
@@ -109,6 +111,8 @@ const DragAndDrop = React.forwardRef((props,ref) => {
     };
   });
 
+  console.log(props.url)
+  console.log(previewURL)
   return (
     <div id={"drag_and_drop"} 
       onDragStart={handleDragStart}
@@ -127,7 +131,7 @@ const DragAndDrop = React.forwardRef((props,ref) => {
       <div className=""> 
       {progress && <div>{progress}%</div>}
 
-      <img src={props.url || previewURL} alt="Dropped file preview" /> 
+      <img src={previewURL} alt="Dropped file preview" /> 
      
       <div className="">
       <button className={"delete"} onClick={handleDelete} > Delete File </button>
