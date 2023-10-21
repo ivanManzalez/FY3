@@ -7,12 +7,19 @@ import {AuthProvider} from "../fireBase/AuthContext";
 // Views/Pages
 // how to clean this up?
 import Home from "./presentor/Home";
-import Commissioner from "./presentor/Commissioner";
+
 import Schedule from "./presentor/Schedule";
 import Standings from "./presentor/Standings";
 import Stats from "./presentor/Stats";
 import Layout from "./navigator/Layout";
-import Players from "./players/Players"
+
+// Refactor (!)
+import Commissioner from "./presentor/Commissioner";
+import Players from "./players/Players";
+import Teams from "./teams/Teams";
+import Seasons from "./seasons/Seasons";
+import Events from "./events/Events";
+import DraftWorkflow from "./draft/DraftWorkflow";
 
 // Authentication
 import Login from "./auth/Login";
@@ -34,8 +41,15 @@ const App = () => {
     */}
         <Route exact path='/' element={<PrivateRoute />}>
           <Route index element={<Home name="Larry"/>}/>
+
+          {/*Refactor*/}
           <Route path="/commissioner" element={<Commissioner />}/>
           <Route path="/commissioner/players" element={<Players />}/>
+          <Route path="/commissioner/teams" element={<Teams />}/>
+          <Route path="/commissioner/seasons" element={<Seasons />}/>
+          <Route path="/commissioner/events" element={<Events />}/>
+          <Route path="/commissioner/draft" element={<DraftWorkflow />}/>
+
         </Route>
     
     {/*Public Routes*/}       

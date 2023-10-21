@@ -110,3 +110,10 @@ html,body{
 .clickable{
   cursor: pointer;
 }
+
+/***** Commissioner Action Buttons *****************/
+.action_button{
+  aspect-ratio:5/7;
+  height:500px;
+}
+
