@@ -29,10 +29,9 @@ const getDraftees = () => {
 };
 
 // GET existing player by First and Last name
-const retrievePlayerByFullName = async (name) => {
-  const fullname = name.first + "+" + name.last;
+const retrievePlayerById = async (id) => {
   
-  return fetch(TESTBASE + API + RETRIEVE_PLAYER + fullname)
+  return fetch(TESTBASE + API + RETRIEVE_PLAYER + id)
     .then((response) => {
       return response.json();
     })
@@ -55,21 +54,21 @@ const createPlayer = async (requestOptions) => {
 
 
 // PUT player w/ new player details
-const updatePlayer = (name, requestOptions) => {   
-  const fullname = name.first + "+" + name.last; 
-  return fetch(TESTBASE + API + RETRIEVE_PLAYER + fullname, requestOptions )
+const updatePlayerById = (id, requestOptions) => {  
+  return fetch(TESTBASE + API + RETRIEVE_PLAYER + id, requestOptions )
   .then((response)=>{
     return response.json();
     })
     .catch((error) => {
+      
+      console.log(error)
       return error;
   });
 };
 
 // DELETE player by full name
-const deletePlayerByFullName = (name, requestOptions) => {  
-  const fullname = name.first + "+" + name.last; 
-  return fetch(TESTBASE + API + RETRIEVE_PLAYER + fullname, requestOptions )
+const deletePlayerById = (id, requestOptions) => {  
+  return fetch(TESTBASE + API + RETRIEVE_PLAYER + id, requestOptions )
   .then((response) => {
     return response.json()
     })
@@ -79,6 +78,6 @@ const deletePlayerByFullName = (name, requestOptions) => {
   });
 };
 
-export {retrieveAllPlayers, getDraftees, retrievePlayerByFullName, createPlayer, updatePlayer,deletePlayerByFullName};
+export {retrieveAllPlayers, getDraftees, retrievePlayerById, createPlayer, updatePlayerById,deletePlayerById};
 
 // 

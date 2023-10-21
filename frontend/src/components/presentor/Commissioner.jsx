@@ -3,10 +3,10 @@ import CreatePlayerForm from "./CreatePlayerForm";
 import CreateTeamForm from "./CreateTeamForm";
 import CreateSeasonForm from "./CreateSeasonForm";
 import Api from "./Api";
-import Draft from "../draft/Draft";
 import {getDraftees} from "../api/player/player";
 import {retrieveAllTeams} from "../api/team/team";
 import Timer from "../draft/Timer";
+import Draft from "../draft/Draft";
 
 //////////////////////////////////////////////////////////////////////// 
 const Commssioner = () => {
@@ -28,7 +28,7 @@ const Commssioner = () => {
     handleMessage(drafterResponse)
     setTeamsList(drafterResponse.data)
   }
-
+  // Factor out as utility
   const handleMessage = (response) => {
     if(response.status == 200){
       setClassname('good');
@@ -59,7 +59,6 @@ const Commssioner = () => {
 
   return (
     <div id='commissioner'>
-      {/*< Api />*/}
       <h1>Commssioner</h1>
       <div className="h_container" >
         {!beginDraft && <button className="submit" type='submit' onClick={beginDraftButtonHandler}> Begin Draft </button>}

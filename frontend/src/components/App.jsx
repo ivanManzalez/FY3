@@ -2,7 +2,8 @@
 import React, { Component, useState, useEffect } from "react";
 import { render } from "react-dom";
 import {BrowserRouter as Router, Routes, Route, Link, Redirect} from "react-router-dom";
-import {AuthProvider} from "../contexts/AuthContext";
+import {AuthProvider} from "../fireBase/AuthContext";
+
 // Views/Pages
 // how to clean this up?
 import Home from "./presentor/Home";
@@ -11,6 +12,7 @@ import Schedule from "./presentor/Schedule";
 import Standings from "./presentor/Standings";
 import Stats from "./presentor/Stats";
 import Layout from "./navigator/Layout";
+import Players from "./players/Players"
 
 // Authentication
 import Login from "./auth/Login";
@@ -33,6 +35,7 @@ const App = () => {
         <Route exact path='/' element={<PrivateRoute />}>
           <Route index element={<Home name="Larry"/>}/>
           <Route path="/commissioner" element={<Commissioner />}/>
+          <Route path="/commissioner/players" element={<Players />}/>
         </Route>
     
     {/*Public Routes*/}       
@@ -41,6 +44,8 @@ const App = () => {
         <Route path="/schedule" element={<Schedule />} />
         <Route path="/standings" element={<Standings />} />
         <Route path="/stats" element={<Stats />} />
+        {/**/}
+
         
       </Routes>
     </AuthProvider>

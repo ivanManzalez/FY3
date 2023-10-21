@@ -2,8 +2,10 @@
 @import './form.css';
 @import './commissioner.css';
 @import './login.css';
-@import './submit.css';
+@import './buttons.css';
 @import './timer.css';
+@import './players.css';
+@import './dragAndDrop.css';
 /*********************************/
 
 :root {
@@ -13,6 +15,7 @@
   --big: 2rem;
   --med: 1.5rem;
   --sm: 0.5rem;
+  overflow-x: hidden;
 }
 
 html,body{
@@ -42,6 +45,11 @@ html,body{
 .centre{
   display: flex;
   justify-content: center;
+  align-items: center;
+}
+.align{
+  align-items: center;
+  text-align: center;
 }
 
 .bad{
@@ -71,4 +79,34 @@ html,body{
 }
 .outline{
   border: 5px solid purple;
+}
+.small{
+  max-width:10%;
+  max-height: 40px;
+}
+.space_between{
+  justify-content: space-between;
+}
+
+.space_around{
+  justify-content: space-around;
+}
+
+.grid_col_65_35{
+  display:grid;
+  grid-template-columns: 65% 35%;
+  /*grid-gap: 5%;*/
+}
+
+.layer1{
+  position:absolute;
+  z-index: 1;
+}
+.layer2{
+  /*position:absolute;*/
+  z-index: 2;
+}
+
+.clickable{
+  cursor: pointer;
 }
