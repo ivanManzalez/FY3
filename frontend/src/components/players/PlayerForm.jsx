@@ -9,7 +9,7 @@ import dayjs from 'dayjs';
 import {CalendarPicker} from "../general/DateTimeSelection";
 import DragAndDrop from '../dragAndDrop/DragAndDrop';
 
-const PlayerForm = forwardRef( ( {player, deleteImg, handleFileUpload} ,ref ) => {
+const PlayerForm = forwardRef( ( {player, deleteImg, handleFileUpload} ,ref ) => { 
   const playerImgRef = useRef();
   // Refactor to Utilities components
   const dateToYYYYMMDD = (dayjsObj) => {
@@ -21,12 +21,10 @@ const PlayerForm = forwardRef( ( {player, deleteImg, handleFileUpload} ,ref ) =>
     return ret;
   }
 
-  // 
-  console.log("DOB:",player.date_of_birth);
+  //
   const defaultDOB = dayjs(player.date_of_birth,"YYYY-MM-DD");
   const dob = dateToYYYYMMDD(dayjs(defaultDOB)).date
   const [eligibility, setEligibility] = useState(player.is_registered);
-
   
   // Initial state of ingested player
 
@@ -51,7 +49,6 @@ const PlayerForm = forwardRef( ( {player, deleteImg, handleFileUpload} ,ref ) =>
     return formState;
   }
   const getFile = () => {
-    console.log(playerImgRef.current.uploadedFile);
     return playerImgRef.current.uploadedFile;
   }
   const deleteImage = () => {

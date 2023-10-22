@@ -21,9 +21,7 @@ const Events = () => {
   // DISPLAY
   const [message, setMessage] = useState("");
   const [classname, setClassname] = useState("");
-  
   const [isGame, setIsGame] = useState(true);
-  
   const csrftoken = window.csrfToken;
 
   // API Data
@@ -39,8 +37,6 @@ const Events = () => {
   const updateEventForm = (data) =>{
     setEventFormState(data);
   };
-
-  
 
   // GAMES
   const handleGameSwitchChange = (event) => {

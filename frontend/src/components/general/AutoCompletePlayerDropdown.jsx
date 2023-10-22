@@ -3,7 +3,7 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import Stack from '@mui/material/Stack';
 
-const AutoCompleteDropdown = ({options, handleSelection}) => {
+const AutoCompletePlayerDropdown = ({options, handleSelection}) => {
   const [loadedOptions, setLoadedOptions] = React.useState([]);
   const [filteredOptions, setFilteredOptions] = React.useState([]);
   const [value, setValue] = React.useState(null);
@@ -73,4 +73,4 @@ const AutoCompleteDropdown = ({options, handleSelection}) => {
   );
 }
 
-export default AutoCompleteDropdown;
+export default AutoCompletePlayerDropdown;

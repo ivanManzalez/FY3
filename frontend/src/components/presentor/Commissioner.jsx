@@ -20,8 +20,6 @@ const Commssioner = () => {
         <ActionButton title={"Draft"} path={"/commissioner/draft"}/>
       </div>
 
-      
-
     </div>
   )
 }

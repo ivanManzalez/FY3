@@ -1,7 +1,7 @@
 import React, {useState, useRef} from "react";
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
-import {createTeam} from '../../components/api/team/team';
+import {updateTeamByID} from '../../components/api/team/team';
 import TextField from '@mui/material/TextField';
 
 // 
@@ -12,39 +12,63 @@ import Select from '@mui/material/Select';
 //
 import DragAndDrop from '../dragAndDrop/DragAndDrop';
 
-const CreateTeamForm = () => {
+const TeamForm = forwardRed( ({team, deleteImg, handleFileUpload}, ref) => {
+  
   const teamImageRef = useRef();
   // set form field init values
   const initialFormState = {
-    team_name: '',
-    abbr_name: '',
-    division_ind: "",
+    team_name: team.team_name,
+    abbr_name: team.abbr_name,
+    division_ind: team.division_ind,
   };
 
+  const [formState, setFormState] = useState(initialFormState);
   const [message, setMessage] = useState("");
   const [classname, setClassname] = useState("");
-  const [formState, setFormState] = useState(initialFormState);
+
+  const getFormState = () => {
+    return formState;
+  }
+  const getFormState = () => {
+    return formState;
+  }
+  const getFile = () => {
+    return teamImageRef.current.uploadedFile;
+  }
+  const deleteImage = () => {
+    teamImageRef.current.handleDelete();
+  }
+
+  useEffect(()=>{
+    setFormState(initialFormState);
+  },[team]);
+
+  // Expose the formState via the ref
+  useImperativeHandle(ref, () => ({
+    getFormState,
+    getFile,
+    deleteImage,
+  }));
 
   // clear all form fields
   const clearFields = () =>{
-    setFormState(initialFormState);
     setMessage("");
     setClassname("");
   };
   
   // event handler
-  const handleCreateTeamButton = async (event) => {
+  const handleUpdateTeamButton = async (event) => {
     event.preventDefault();
-    
+    const formState = 
     // define API request options
     const requestOptions = {
-      method: "POST",
+      method: "PUT",
       headers: {"Content-Type":"application/json"},
       body: JSON.stringify(formState),
       };
 
-    const createTeamResponse = await createTeam(requestOptions);
-    handleMessage(createTeamResponse); 
+    const updateTeamResponse = await updateTeamByID(team.id, requestOptions);
+    handleMessage(updateTeamResponse); 
 };
 
   // Function to handle input changes
@@ -68,34 +92,29 @@ const CreateTeamForm = () => {
     setMessage(response.message);
   };
 
-  const handleDeleteImg = () => {
-    if(team){
-      deleteProfilePicURL(team.id);
-    }
-  };
+  
 
   const DivisionIndicator = ({value, handler}) => {
   return(
-  <Box sx={{ minWidth: 50 }}>
-    <FormControl fullWidth>
-      <InputLabel id="div_ind">Division</InputLabel>
-      <Select
-        labelId="div_ind"
-        value={value}
-        label="Division"
-        onChange={handler}
-        name={"division_ind"}
-      >
-        <MenuItem value={"W"}>West</MenuItem>
-        <MenuItem value={"E"}>East</MenuItem>
-      </Select>
-    </FormControl>
-  </Box>)
-}
+    <Box sx={{ minWidth: 50 }}>
+      <FormControl fullWidth>
+        <InputLabel id="div_ind">Division</InputLabel>
+        <Select
+          labelId="div_ind"
+          value={value}
+          label="Division"
+          onChange={handler}
+          name={"division_ind"}
+        >
+          <MenuItem value={"W"}>West</MenuItem>
+          <MenuItem value={"E"}>East</MenuItem>
+        </Select>
+      </FormControl>
+    </Box>
+  )};
 
 return (
   <div >
-    <h3> Create Team </h3>
     
     <div id="message" className={classname}>{ message && <p>{message}</p> }</div>
     <form id="create_team_form" className='input_fields'>
@@ -108,8 +127,8 @@ return (
     
     </form>
   </div>
-  )}; 
+  )}); 
 
 
 
-export default CreateTeamForm;
+export default TeamForm;

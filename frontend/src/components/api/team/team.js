@@ -17,9 +17,9 @@ const retrieveAllTeams = () => {
   })
 };
 
-const retrieveTeamByName = async (name) => {
+const retrieveTeamByID = async (id) => {
   
-  return fetch(TESTBASE + API + RETRIEVE_TEAM + name)
+  return fetch(TESTBASE + API + RETRIEVE_TEAM + id)
   .then((response) => {
     return response.json();
   })
@@ -39,8 +39,8 @@ const createTeam = async (requestOptions) => {
   });
 };
 
-const updateTeam = (name, requestOptions) => {   
-  return fetch(TESTBASE + API + RETRIEVE_TEAM + name, requestOptions )
+const updateTeamByID = (id, requestOptions) => {   
+  return fetch(TESTBASE + API + RETRIEVE_TEAM + id, requestOptions )
   .then((response)=>{
     return response.json();
   })
@@ -49,8 +49,8 @@ const updateTeam = (name, requestOptions) => {
   });
 };
 
-const deleteTeamByName = (name, requestOptions) => {  
-  return fetch(TESTBASE + API + RETRIEVE_PLAYER + name, requestOptions )
+const deleteTeamByID = (id, requestOptions) => {  
+  return fetch(TESTBASE + API + RETRIEVE_PLAYER + id, requestOptions )
   .then((response) => {
     return response.json()
   })
@@ -60,6 +60,6 @@ const deleteTeamByName = (name, requestOptions) => {
   })
 };
 
-export {retrieveAllTeams, retrieveTeamByName, createTeam, updateTeam, deleteTeamByName};
+export {retrieveAllTeams, retrieveTeamByID, createTeam, updateTeamByID, deleteTeamByID};
 
 // 

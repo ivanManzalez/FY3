@@ -1,7 +1,7 @@
 import React from 'react';
 
 const DragAndDrop = React.forwardRef((props,ref) => {
-  const [uploadedFile, setUploadedFile] = React.useState(null);
+  const [uploadFile, setUploadFile] = React.useState(null);
   const [isDragging, setIsDragging] = React.useState(false);
   const [previewURL, setPreviewURL] = React.useState(props.url);
   const [className, setClassName] = React.useState("drop-area");
@@ -71,16 +71,16 @@ const DragAndDrop = React.forwardRef((props,ref) => {
   }
 
   const handleDroppedFile = (file, previewUrl) => {
-    setUploadedFile(file);
+    setUploadFile(file);
     setPreviewURL(previewUrl);
   };
 
   const handleDelete = () => {
-    setUploadedFile(null);
+    setUploadFile(null);
     setPreviewURL(null);
     setProgress(null);
     setClassName("drop-area");
-    handleImgDelete();
+    props.handleImgDelete();
   };
 
   // const handleUploadButton = async () => {
@@ -106,13 +106,11 @@ const DragAndDrop = React.forwardRef((props,ref) => {
   // Replace Submit button
   React.useImperativeHandle(ref, () => {
     return {
-      uploadedFile,
+      uploadFile,
       handleDelete,
     };
   });
 
-  console.log(props.url)
-  console.log(previewURL)
   return (
     <div id={"drag_and_drop"} 
       onDragStart={handleDragStart}

@@ -10,7 +10,7 @@ import dayjs from 'dayjs';
 
 // import {getPlayerIds} from './playerIDs';
 // import FilterSearch from "../general/FilterSearch";
-import AutoCompleteDropdown from "../general/AutoCompleteDropdown";
+import AutoCompletePlayerDropdown from "../general/AutoCompletePlayerDropdown";
 
 const Players = () => {
   // Ref to getPlayerForm
@@ -35,7 +35,6 @@ const Players = () => {
 
     handleMessage(playerResp);
     setAllPlayers(Object.values(playerResp.data));
-    // getProfilePicPreview(Object.values(playerResp.data));
   };
 
   const getProfilePicPreview = (players) => {
@@ -163,7 +162,7 @@ const Players = () => {
     <div id="message" className={" "+classname} >{message && <p>{message}</p>}</div>
       
       {allPlayers &&
-      <AutoCompleteDropdown handleSelection={handlePlayerSelection} options={allPlayers}/>}
+      <AutoCompletePlayerDropdown handleSelection={handlePlayerSelection} options={allPlayers}/>}
       <br></br>
       {/* Player is Selected*/}
       {
