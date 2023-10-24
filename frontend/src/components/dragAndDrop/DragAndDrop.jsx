@@ -4,18 +4,32 @@ const DragAndDrop = React.forwardRef((props,ref) => {
   const [uploadFile, setUploadFile] = React.useState(null);
   const [isDragging, setIsDragging] = React.useState(false);
   const [previewURL, setPreviewURL] = React.useState(props.url);
-  const [className, setClassName] = React.useState("drop-area");
+  const [className, setClassName] = React.useState("");
   const [progress, setProgress] = React.useState(null);
   
+
+  React.useEffect(()=>{
+    if(previewURL){
+      setClassName("img_preview");
+    }else{
+      setClassName("drop-area");
+    }
+
+  },[]);
   const handleDragStart = (e) => {
     e.dataTransfer.setData('image/*', 'This is the data that will be dropped.');
     setIsDragging(true);
-    setClassName("dragging")
   };
 
   const handleDragOver = (e) => {
     e.preventDefault(); // This is necessary to allow a drop.
-    setClassName("dragover")
+    console.log("dragover:", previewURL)
+    if(previewURL){
+      setIsDragging(false);
+      setClassName("img_preview dragover")
+    }else{
+      setClassName("dragover")
+    }
   };
 
   const handleDragEnter = (e) => {
@@ -28,8 +42,10 @@ const DragAndDrop = React.forwardRef((props,ref) => {
   const handleDragLeave = () => {
     // Remove any visual cues for leaving the drop area.
     // You can reset the component state here to remove styles.
-    if(previewURL==null){
+    if(previewURL){
       setIsDragging(false);
+      setClassName("img_preview")
+    }else{
       setClassName("drop-area")
     }
   };
@@ -37,7 +53,7 @@ const DragAndDrop = React.forwardRef((props,ref) => {
   const handleDrop = (e) => {
     e.preventDefault();
     setIsDragging(false);
-    setClassName(" img_preview");
+    setClassName("img_preview");
 
     // const acceptedTypes = ['image/png', 'image/jpeg', 'image/gif']; // Add the MIME types you want to accept.
     
@@ -110,7 +126,7 @@ const DragAndDrop = React.forwardRef((props,ref) => {
       handleDelete,
     };
   });
-
+  console.log("DragAndDrop:",previewURL)
   return (
     <div id={"drag_and_drop"} 
       onDragStart={handleDragStart}
@@ -118,7 +134,7 @@ const DragAndDrop = React.forwardRef((props,ref) => {
       onDragEnter={handleDragEnter}
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
-      className={" centre align "+className}
+      className={"outline centre align "+className}
     >
     {!previewURL && 
       <>
@@ -126,7 +142,7 @@ const DragAndDrop = React.forwardRef((props,ref) => {
       </>
     }
     {previewURL && 
-      <div className=""> 
+      <div className="img_container"> 
       {progress && <div>{progress}%</div>}
 
       <img src={previewURL} alt="Dropped file preview" /> 

@@ -1,4 +1,4 @@
-import React, {useState, useRef} from "react";
+import React, {useState, useRef, forwardRef, useEffect, useImperativeHandle} from "react";
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 import {updateTeamByID} from '../../components/api/team/team';
@@ -12,11 +12,12 @@ import Select from '@mui/material/Select';
 //
 import DragAndDrop from '../dragAndDrop/DragAndDrop';
 
-const TeamForm = forwardRed( ({team, deleteImg, handleFileUpload}, ref) => {
+const TeamForm = forwardRef( ({team, deleteImg, handleFileUpload, formType}, ref) => {
   
   const teamImageRef = useRef();
   // set form field init values
   const initialFormState = {
+    id:team.id,
     team_name: team.team_name,
     abbr_name: team.abbr_name,
     division_ind: team.division_ind,
@@ -26,9 +27,6 @@ const TeamForm = forwardRed( ({team, deleteImg, handleFileUpload}, ref) => {
   const [message, setMessage] = useState("");
   const [classname, setClassname] = useState("");
 
-  const getFormState = () => {
-    return formState;
-  }
   const getFormState = () => {
     return formState;
   }
@@ -56,21 +54,6 @@ const TeamForm = forwardRed( ({team, deleteImg, handleFileUpload}, ref) => {
     setClassname("");
   };
   
-  // event handler
-  const handleUpdateTeamButton = async (event) => {
-    event.preventDefault();
-    const formState = 
-    // define API request options
-    const requestOptions = {
-      method: "PUT",
-      headers: {"Content-Type":"application/json"},
-      body: JSON.stringify(formState),
-      };
-
-    const updateTeamResponse = await updateTeamByID(team.id, requestOptions);
-    handleMessage(updateTeamResponse); 
-};
-
   // Function to handle input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -81,8 +64,6 @@ const TeamForm = forwardRed( ({team, deleteImg, handleFileUpload}, ref) => {
   };
 
   const handleMessage = (response) => {
-    console.log(response.status)
-    console.log(classname)
     if(response.status == 200){
       clearFields();
       setClassname('good');
@@ -117,14 +98,17 @@ return (
   <div >
     
     <div id="message" className={classname}>{ message && <p>{message}</p> }</div>
-    <form id="create_team_form" className='input_fields'>
-
+    <form id="create_team_form" className="grid_col_65_35" >
+      
+      <div className='input_fields'>
       <TextField id={"team_name"} label={"Team Name"} variant={"outlined"} onChange={handleInputChange} value={formState.team_name} name={"team_name"} />
       <TextField id={"abbr_name"} label={"Team Short Name"} variant={"outlined"} onChange={handleInputChange} value={formState.abbr_name} name={"abbr_name"} />
       <DivisionIndicator  label={"Team Division"} variant={"outlined"} handler={handleInputChange}  value={formState.division_ind} />
-      <DragAndDrop ref={teamImageRef} handleImgDelete={deleteImg} />
-      <button className="submit" type='submit' placeholder="Create Team" onClick={handleCreateTeamButton}> Create Team </button>
-    
+      </div>
+      
+      <div>
+      <DragAndDrop url={team.url} ref={teamImageRef} handleImgDelete={deleteImg} />
+      </div>
     </form>
   </div>
   )}); 

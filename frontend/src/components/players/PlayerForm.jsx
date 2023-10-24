@@ -155,7 +155,7 @@ const PlayerForm = forwardRef( ( {player, deleteImg, handleFileUpload} ,ref ) =>
 return (
   <div id="player_form_container">
     <div id="message" className={classname}>{message && <p>{message}</p>}</div>
-    <div className="grid_col_65_35">
+    <div className="grid_col_65_35 outline">
 
     <form id="player_form" className='h_container'>
       <div className="player_name_fields">
@@ -175,7 +175,7 @@ return (
       </div>
     </form>
 
-    < DragAndDrop url={player.url} ref={playerImgRef} handleFileUpload={handleFileUpload} handleImgDelete={deleteImg}/>
+    < DragAndDrop url={player.url} ref={playerImgRef} handleImgDelete={deleteImg}/>
    
     </div>
 

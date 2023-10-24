@@ -4,7 +4,7 @@ import React from "react";
 const TESTBASE = 'http://127.0.0.1:8000/';
 const API = 'teams/';
 const RETRIEVE_TEAM = 'team-profile/';
-const CREATETEAM = 'create-team/';
+const CREATE_TEAM = 'create-team/';
 
 // GET all existing players 
 const retrieveAllTeams = () => {
@@ -30,7 +30,7 @@ const retrieveTeamByID = async (id) => {
 };
 
 const createTeam = async (requestOptions) => { 
-  return fetch(TESTBASE + API + CREATETEAM, requestOptions )
+  return fetch(TESTBASE + API + CREATE_TEAM, requestOptions )
   .then((response)=>{
     return response.json();
   })
@@ -39,8 +39,9 @@ const createTeam = async (requestOptions) => {
   });
 };
 
-const updateTeamByID = (id, requestOptions) => {   
-  return fetch(TESTBASE + API + RETRIEVE_TEAM + id, requestOptions )
+const updateTeamByID = (id, requestOptions) => {  
+  console.log("updateTeamByID",id) 
+  return fetch(TESTBASE + API + RETRIEVE_TEAM + id+"/", requestOptions )
   .then((response)=>{
     return response.json();
   })
@@ -49,8 +50,9 @@ const updateTeamByID = (id, requestOptions) => {
   });
 };
 
-const deleteTeamByID = (id, requestOptions) => {  
-  return fetch(TESTBASE + API + RETRIEVE_PLAYER + id, requestOptions )
+const deleteTeamByID = (id, requestOptions) => {
+  console.log(TESTBASE + API + RETRIEVE_TEAM + id) ; 
+  return fetch(TESTBASE + API + RETRIEVE_TEAM + id, requestOptions )
   .then((response) => {
     return response.json()
   })

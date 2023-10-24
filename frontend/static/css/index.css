@@ -9,20 +9,20 @@
 /*********************************/
 
 :root {
-  --background:grey;
+  --background:#71706e;/*grey;*/
   --good:#66ff00;
   --bad:#8B0000;
   --big: 2rem;
   --med: 1.5rem;
   --sm: 0.5rem;
-  overflow-x: hidden;
+  /*overflow-x: hidden;*/
 }
 
 html,body{
   height: 100vh;
   margin:0;
   padding:0;
-  background-color: grey;
+  background-color: #71706e;
 }
 
 #main{
@@ -69,6 +69,10 @@ html,body{
   background-color: green;
 }
 
+.silver{
+  background-color: #C0C0C0;
+}
+
 .h_container{
   display: flex;
   flex-direction: column;
@@ -110,10 +114,12 @@ html,body{
 .clickable{
   cursor: pointer;
 }
-
+.shadow{
+  box-shadow: 0px 0px 10px black;
+}
 /***** Commissioner Action Buttons *****************/
 .action_button{
   aspect-ratio:5/7;
-  height:500px;
+  height:300px;
 }
 

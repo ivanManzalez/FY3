@@ -19,36 +19,7 @@ const AutoCompletePlayerDropdown = ({options, handleSelection}) => {
       : [], // Return an empty array if options is not an array
   };
 
-  const filterOptions = (options, filterCriteria) => {
-    return options.filter((option) => {
-      // Filter based on the criteria passed to the function
-      return filterCriteria(option);
-    });
-  };
-  
-  const fullnameFilter = (option, filterValue) => {
-    return (
-      option.first_name.toLowerCase().includes(filterValue.first_name.toLowerCase()) ||
-      option.last_name.toLowerCase().includes(filterValue.last_name.toLowerCase())
-    );
-  };
-
-  // const handleInputChange = (event, newInputValue) => {
-  //   // Filter the options based on the new input value.
-  //   const filtered = loadedOptions.filter(
-  //     // Refactor?
-  //     (option) =>
-  //       option.first_name.toLowerCase().includes(newInputValue.first_name.toLowerCase()) ||
-  //       option.last_name.toLowerCase().includes(newInputValue.last_name.toLowerCase())
-  //     //
-  //   );
-  //   setFilteredOptions(filtered);
-  //   handleSelection(event, newInputValue);
-  // };
-
   const handleInputChange = (event, newInputValue) => {
-    const filtered = filterOptions(loadedOptions, (option) => fullnameFilter(option, newInputValue));
-    setFilteredOptions(filtered);
     handleSelection(event, newInputValue);
   };
 
@@ -61,9 +32,9 @@ const AutoCompletePlayerDropdown = ({options, handleSelection}) => {
     <Stack spacing={1} sx={{ width: 500 }}>
       <Autocomplete
         {...defaultProps}
-        id="clear-on-escape"
+        id=""
         value={value}
-        clearOnEscape
+        clearOnEscape={true}
         onChange={handleInputChange}
         renderInput={(params) => (
           <TextField {...params} label="Select Player" variant="outlined" />

@@ -18,7 +18,7 @@ const CreateTeamForm = () => {
   const initialFormState = {
     team_name: '',
     abbr_name: '',
-    division_ind: "",
+    division_ind: '',
   };
 
   const [message, setMessage] = useState("");
@@ -68,11 +68,7 @@ const CreateTeamForm = () => {
     setMessage(response.message);
   };
 
-  const handleDeleteImg = () => {
-    if(team){
-      deleteProfilePicURL(team.id);
-    }
-  };
+  
 
   const DivisionIndicator = ({value, handler}) => {
   return(
@@ -103,7 +99,7 @@ return (
       <TextField id={"team_name"} label={"Team Name"} variant={"outlined"} onChange={handleInputChange} value={formState.team_name} name={"team_name"} />
       <TextField id={"abbr_name"} label={"Team Short Name"} variant={"outlined"} onChange={handleInputChange} value={formState.abbr_name} name={"abbr_name"} />
       <DivisionIndicator  label={"Team Division"} variant={"outlined"} handler={handleInputChange}  value={formState.division_ind} />
-      <DragAndDrop ref={teamImageRef} handleImgDelete={deleteImg} />
+      {/*<DragAndDrop url={team.url} ref={teamImageRef} handleImgDelete={deleteImg} />*/}
       <button className="submit" type='submit' placeholder="Create Team" onClick={handleCreateTeamButton}> Create Team </button>
     
     </form>

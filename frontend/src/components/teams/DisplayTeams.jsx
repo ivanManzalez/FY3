@@ -4,7 +4,8 @@ import {getProfilePicURL } from "../../fireBase/StorageReference";
 const DisplayTeams = ({teams , handleSelection}) => {
   // const [imageUrls, setImageUrls] = React.useState(JSON.parse(localStorage.getItem('cachedImageUrls')) || {});
   const [imageUrls, setImageUrls] = React.useState({});
-  console.log(teams);
+
+  //********************************************************************
 
   const fetchProfilePicURLs = async (id) => {
     try {
@@ -22,25 +23,31 @@ const DisplayTeams = ({teams , handleSelection}) => {
 
   }; 
 
+  //********************************************************************
+
   React.useEffect(() => {
     // Fetch profile picture URLs for all players when the component mounts
     
     if(teams){
-      
       teams.forEach((team)=>{
-        console.log(team);
-    //     if(imageUrls[team.id] == null){
-    //       console.log("Id not in cached items:",team.id)
-    //       fetchProfilePicURLs(team.id);
-    //     }else{
+        if(imageUrls[team.id] == null){
 
-    //     }
-        });
-      }
-    
-    console.log(teams)
+        
+          const pathname = "/static/images/team_logos/"+camelCase(team.team_name)+".png";
+          setImageUrls((prevImageUrls)=>({
+            ...prevImageUrls,
+            [team.id]:pathname,
+          }))
+
+          // fetchProfilePicURLs(team.id);
+        }
+      })
+    }
+    console.log("imageUrls:",imageUrls);
   }, [teams]);
 
+
+  //********************************************************************
 
   const handleTeamSelection = (e,team) => {
     const selection = {
@@ -49,19 +56,34 @@ const DisplayTeams = ({teams , handleSelection}) => {
     }
     handleSelection(e,selection)
   }
-  console.log("teams not null? ",teams)
+  //********************************************************************
+
+  function camelCase(str) {
+    // converting all characters to lowercase
+    let ans = str.toLowerCase();
+ 
+    // Returning string to camelcase
+    return ans.split(" ").reduce((s, c) => s
+        + (c.charAt(0).toUpperCase() + c.slice(1)));
+ 
+  }
+  //********************************************************************
+
   return(
     <>
     <div className="gallery">
       {teams && teams.map((team) => {
         const { id: teamId } = team;
-        console.log(teamId)
+        console.log(teamId, imageUrls[teamId])
         return (
-        <div onClick={(e) => handleTeamSelection(e, team)} className={"clickable centre player_card "}  key={teamId}>
-          {/* imageUrls[teamId] && <img id={"team_img"} className={"inner"} src={imageUrls[teamId]} alt="profile pic"></img>}*/}
-          
-          <img src="/static/images/fy3-logo.png" alt="fy3-logo"></img>
-          <p className={"align centre inner player_name "}>{team.team_name}</p>
+        <div onClick={(e) => handleTeamSelection(e, team)} className={"clickable centre player_card shadow silver"}  key={teamId}>
+          { imageUrls[teamId] && <img id={"team_img"} className={"inner"} src={imageUrls[teamId]} alt="profile pic"></img>}
+          { imageUrls[teamId] == null && 
+            <>
+            <img src="/static/images/fy3-logo.png" alt="fy3-logo"></img>
+            <p className={"align centre inner player_name "}>{team.team_name}</p>
+            </>
+          }
         </div>
         )
       }
