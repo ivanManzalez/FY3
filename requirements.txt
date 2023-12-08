@@ -1,10 +1,12 @@
 asgiref==3.6.0
 Django==4.1.5
+django-cors-headers==4.2.0
+django-extensions==3.2.3
 django-filter==23.2
 djangorestframework==3.14.0
 Markdown==3.4.3
+psycopg2==2.9.7
+psycopg2-binary==2.9.7
+python-decouple==3.8
 pytz==2023.3
 sqlparse==0.4.3
-psycopg2-binary
-django-extensions
-python-decouple

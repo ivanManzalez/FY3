@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     #### Default Apps Included
     'rest_framework',
     'corsheaders',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -58,6 +59,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -66,7 +69,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-    'corsheaders.middleware.CorsMiddleware',
+    
+
 ]
 
 ROOT_URLCONF = 'FY3.urls'
@@ -150,10 +154,14 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# CUSTOM DEFINED USER MODEL
+# AUTH_USER_MODEL = "users.User"
 
 # Redirect Log IN/OUT URL
 LOGIN_REDIRECT_URL = "FY3-Home"
 LOGOUT_REDIRECT_URL = "FY3-Home"
+
+################################################################################################
 
 # Configure the Django server to proxy requests to the React server
 # When Django server receives requests for the React app, 
@@ -166,10 +174,19 @@ LOGOUT_REDIRECT_URL = "FY3-Home"
 
 CSRF_COOKIE_AGE = 604800*30 # TO DO
 CORS_ORIGIN_ALLOW_ALL = True
-# CORS_ALLOW_CREDENTIALS = True
+
 # CSRF_COOKIE_NAME = "csrftoken"
 # CORS_ORIGIN_WHITELIST = ('http://localhost:3000', 'http://127.0.0.1:3000', 'localhost:3000', '127.0.0.1:3000')
-# CSRF_TRUSTED_ORIGINS = [
-#     'http://localhost:8000',
-#     'http://127.0.0.1:8000',
-# ] 
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:8000',
+    'http://127.0.0.1:8000',
+] 
+################################################################################################
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:8000',
+    'http://127.0.0.1:8000',
+] 
+CORS_ALLOW_CREDENTIALS = True
+
+################################################################################################
