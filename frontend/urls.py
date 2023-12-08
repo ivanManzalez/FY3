@@ -12,7 +12,6 @@ urlpatterns = [
   path("commissioner/seasons", index),
   path("commissioner/events", index),
   path("commissioner/draft", index),
-
   
   # Content
   path("schedule/", index),
