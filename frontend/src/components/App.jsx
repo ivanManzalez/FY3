@@ -26,6 +26,7 @@ import Login from "./auth/Login";
 import EmailSignUp from "./auth/EmailSignUp";
 import Registration from "./user/Registration";
 
+
 // Navigation
 import PrivateRoute from "./navigator/PrivateRoute";
 
