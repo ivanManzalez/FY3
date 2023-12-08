@@ -21,6 +21,7 @@ const TeamForm = forwardRef( ({team, deleteImg, handleFileUpload, formType}, ref
     team_name: team.team_name,
     abbr_name: team.abbr_name,
     division_ind: team.division_ind,
+    url:team.image_url,
   };
 
   const [formState, setFormState] = useState(initialFormState);
@@ -98,7 +99,7 @@ return (
   <div >
     
     <div id="message" className={classname}>{ message && <p>{message}</p> }</div>
-    <form id="create_team_form" className="grid_col_65_35" >
+    <form id="create_team_form" className="grid_col_65_30" >
       
       <div className='input_fields'>
       <TextField id={"team_name"} label={"Team Name"} variant={"outlined"} onChange={handleInputChange} value={formState.team_name} name={"team_name"} />
@@ -109,6 +110,7 @@ return (
       <div>
       <DragAndDrop url={team.url} ref={teamImageRef} handleImgDelete={deleteImg} />
       </div>
+      
     </form>
   </div>
   )}); 

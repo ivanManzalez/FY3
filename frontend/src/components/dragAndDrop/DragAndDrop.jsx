@@ -126,7 +126,7 @@ const DragAndDrop = React.forwardRef((props,ref) => {
       handleDelete,
     };
   });
-  console.log("DragAndDrop:",previewURL)
+
   return (
     <div id={"drag_and_drop"} 
       onDragStart={handleDragStart}
@@ -134,7 +134,7 @@ const DragAndDrop = React.forwardRef((props,ref) => {
       onDragEnter={handleDragEnter}
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
-      className={"outline centre align "+className}
+      className={" centre align "+className}
     >
     {!previewURL && 
       <>

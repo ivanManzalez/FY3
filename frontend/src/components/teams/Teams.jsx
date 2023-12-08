@@ -68,13 +68,28 @@ const Teams = () => {
   }, []);
 
   //********************************************************************
+  function camelCase(str) {
+    // converting all characters to lowercase
+    let ans = str.toLowerCase();
+ 
+    // Returning string to camelcase
+    return ans.split(" ").reduce((s, c) => s
+        + (c.charAt(0).toUpperCase() + c.slice(1)));
+ 
+  }
+  
+  //********************************************************************
 
   // GET selected player from Search
   const handleTeamSelection = (event, teamSelected) => {
     if(!editTeam){
       setEditTeam(true);
     }
-    setTeam(teamSelected);
+    const pathname = "/static/images/team_logos/"+camelCase(teamSelected.team_name)+".png";
+    setTeam({
+      ... teamSelected,
+      url:pathname,
+    });
   };
 
   //********************************************************************
@@ -182,16 +197,6 @@ const Teams = () => {
   };
   //********************************************************************
 
-  function camelCase(str) {
-    // converting all characters to lowercase
-    let ans = str.toLowerCase();
- 
-    // Returning string to camelcase
-    return ans.split(" ").reduce((s, c) => s
-        + (c.charAt(0).toUpperCase() + c.slice(1)));
- 
-  }
-  //********************************************************************
   
   return (
     <>

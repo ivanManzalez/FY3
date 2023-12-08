@@ -10,7 +10,9 @@ import {CalendarPicker} from "../general/DateTimeSelection";
 import DragAndDrop from '../dragAndDrop/DragAndDrop';
 
 const PlayerForm = forwardRef( ( {player, deleteImg, handleFileUpload} ,ref ) => { 
+  
   const playerImgRef = useRef();
+  
   // Refactor to Utilities components
   const dateToYYYYMMDD = (dayjsObj) => {
     const year = dayjsObj.$y;
@@ -27,7 +29,6 @@ const PlayerForm = forwardRef( ( {player, deleteImg, handleFileUpload} ,ref ) =>
   const [eligibility, setEligibility] = useState(player.is_registered);
   
   // Initial state of ingested player
-
   const initialFormState = {
     id:player.id,
     first_name: player.first_name,
@@ -155,13 +156,14 @@ const PlayerForm = forwardRef( ( {player, deleteImg, handleFileUpload} ,ref ) =>
 return (
   <div id="player_form_container">
     <div id="message" className={classname}>{message && <p>{message}</p>}</div>
-    <div className="grid_col_65_35 outline">
+    <div className="grid_col_65_30">
 
-    <form id="player_form" className='h_container'>
-      <div className="player_name_fields">
+    <form id="" className='grid_row_45_20_20'>
+      
+      <div className="player_name_fields grid_col_49_49">
         <TextField id={"first_name"} label={"Player First Name"} variant={"outlined"} onChange={handleInputChange} name = {"first_name"} value={formState.first_name}/>
         <TextField id={"last_name"} label={"Player Last Name"} variant={"outlined"} onChange={handleInputChange} name = {"last_name"}  value={formState.last_name} />
-        <FormControlLabel id="draft_eligibility" control={<Switch defaultChecked={formState.is_registered} onChange={handleEligibilityChange} />} label="Draft Eligibility" />
+        <FormControlLabel id="draft_eligibility" control={<Switch defaultChecked={formState.is_registered} onChange={handleEligibilityChange} />} label="Draft Eligibility"  className="" />
       </div>
       
       <div className="player_attr_fields">
@@ -173,6 +175,7 @@ return (
       <div>
         <CalendarPicker id={"dob"} name={"dob"} label={"Date of Birth"} variant={"outlined"} onChange={handleDOBChange} value={dayjs(formState.date_of_birth)}/>
       </div>
+
     </form>
 
     < DragAndDrop url={player.url} ref={playerImgRef} handleImgDelete={deleteImg}/>

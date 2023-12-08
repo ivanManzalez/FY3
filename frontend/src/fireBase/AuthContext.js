@@ -19,7 +19,7 @@ const AuthProvider = ({ children }) => {
 
   // If firebase no longer wanted, can change return to use different authentication
   // use auth to sign up
-  const signup = (email, password) =>{
+  const emailSignup = (email, password) =>{
     return auth.createUserWithEmailAndPassword(email, password);
   };
   // use auth to login
@@ -50,7 +50,7 @@ const AuthProvider = ({ children }) => {
     login,
     googleLogin,
     logout,
-    signup
+    emailSignup
   }
   // if we are not loading, then dont render children 
   return (

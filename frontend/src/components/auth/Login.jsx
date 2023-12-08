@@ -1,6 +1,6 @@
 import React, { Component, useState, useEffect } from "react";
 import {useAuth} from '../../fireBase/AuthContext';
-import {useNavigate, useLocation} from 'react-router-dom';
+import {Link, useNavigate, useLocation} from 'react-router-dom';
 import GoogleLogin from './GoogleLogin';
 
 const Login = () => {
@@ -13,6 +13,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+
 
   // Event handlers
   const handleEmailChange = (e) => {
@@ -40,6 +41,10 @@ const Login = () => {
     console.log('handle login button');
     };
 
+  const handleSignupButton = () => {
+    // call user api
+  }
+
   return (
     <div id="login-container">
       <h3> Login </h3>
@@ -50,6 +55,7 @@ const Login = () => {
         <TextField id={"password"} field={"Password"} handler={handlePasswordChange} value={password} />
         <button type='submit' placeholder="Login" disabled={loading} onClick={handleLoginButton}> Login </button>
         <GoogleLogin />
+        <Link to="/signup" ><button>Sign Up</button></Link>
       </form>
     </div>
   );

@@ -9,7 +9,11 @@
 /*********************************/
 
 :root {
-  --background:#71706e;/*grey;*/
+  --background:#3C415C;/*#71706e;*//*grey;*/
+  --primary:#301B3F;
+  --secondary:#151515;
+  --accent1:#6F4A8E;
+  --accent2:#EBEBEB;
   --good:#66ff00;
   --bad:#8B0000;
   --big: 2rem;
@@ -22,7 +26,7 @@ html,body{
   height: 100vh;
   margin:0;
   padding:0;
-  background-color: #71706e;
+  background-color: var(--background);
 }
 
 #main{
@@ -31,7 +35,6 @@ html,body{
   height: 100%;
   left: 0;
   top:0;
-  background-color: grey;
 }
 
 #app{
@@ -96,10 +99,22 @@ html,body{
   justify-content: space-around;
 }
 
-.grid_col_65_35{
+.grid_col_65_30{
   display:grid;
-  grid-template-columns: 65% 35%;
-  /*grid-gap: 5%;*/
+  grid-template-columns: 65% 30%;
+  grid-gap: 5%;
+}
+
+.grid_col_49_49{
+  display:grid;
+  grid-template-columns: 49.5% 49.5%;
+  grid-gap: 1%;
+}
+
+.grid_row_45_20_20{
+  display:grid;
+  grid-template-rows: 45% 30% 30%;
+  grid-gap: 2.5%;
 }
 
 .layer1{
@@ -117,9 +132,7 @@ html,body{
 .shadow{
   box-shadow: 0px 0px 10px black;
 }
-/***** Commissioner Action Buttons *****************/
-.action_button{
-  aspect-ratio:5/7;
-  height:300px;
-}
 
+.fy3_logo{
+  border-radius: 90%;
+}

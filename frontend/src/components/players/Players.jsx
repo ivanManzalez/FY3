@@ -15,6 +15,7 @@ import AutoCompletePlayerDropdown from "../general/AutoCompletePlayerDropdown";
 const Players = () => {
   // Ref to getPlayerForm
   const playerFormRef = useRef();
+  const [imageUrls, setImageUrls] = React.useState(JSON.parse(localStorage.getItem('cachedImageUrls')) || {});
 
   // Players to select from
   const [allPlayers, setAllPlayers] = useState("");
@@ -124,7 +125,7 @@ const Players = () => {
     toggleEditPlayer();
   };
 
-  const handleDeletePlayerButton = async () => {
+  const handleDeletePlayerButton = async (event) => {
     event.preventDefault();
 
     const requestOptions = { 
@@ -142,7 +143,6 @@ const Players = () => {
   const handleFileUpload = async (file,playerId) => {
 
     const filename = "profilepic.png";
-    console.log("handleFileUpload:", playerId, filename)
     const storageRef = getTestStorageRef(playerId,filename);
     const uploadStatus = await uploadFileResumable(storageRef, file)
       .catch((error)=>{
@@ -155,7 +155,6 @@ const Players = () => {
       deleteProfilePicURL(player.id);
     }
   };
-    
   return(
     <>
     <h1>Players</h1>

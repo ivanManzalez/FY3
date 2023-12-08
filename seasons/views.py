@@ -12,7 +12,14 @@ from .models.season import Season
 class SeasonsView(generics.ListAPIView): ## CreateAPIView
   queryset = Season.objects.all()
   serializer_class = SeasonSerializer
-
+  
+  def get(self, request, format=None):
+    queryset = Season.objects.all()
+    serialized_data = self.serializer_class(queryset, many=True).data
+    message = "Seasons List received"
+    resp_status = status.HTTP_200_OK
+    return Response({'message': message, 'status': resp_status, 'data': serialized_data}, status=resp_status)   
+    
 
 
 # @csrf_exempt # only on method views

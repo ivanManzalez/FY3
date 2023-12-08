@@ -1,9 +1,11 @@
 import React from "react";
 import {getProfilePicURL } from "../../fireBase/StorageReference";
+import axios from 'axios';
 
 const DisplayTeams = ({teams , handleSelection}) => {
   // const [imageUrls, setImageUrls] = React.useState(JSON.parse(localStorage.getItem('cachedImageUrls')) || {});
   const [imageUrls, setImageUrls] = React.useState({});
+  const fy3Logo = "/static/images/fy3-logo.png";
 
   //********************************************************************
 
@@ -24,26 +26,25 @@ const DisplayTeams = ({teams , handleSelection}) => {
   }; 
 
   //********************************************************************
-
+  
   React.useEffect(() => {
     // Fetch profile picture URLs for all players when the component mounts
     
     if(teams){
       teams.forEach((team)=>{
         if(imageUrls[team.id] == null){
-
-        
           const pathname = "/static/images/team_logos/"+camelCase(team.team_name)+".png";
-          setImageUrls((prevImageUrls)=>({
-            ...prevImageUrls,
+          
+          setImageUrls((imageUrls)=>({
+            ... imageUrls,
             [team.id]:pathname,
-          }))
+          }))    
 
           // fetchProfilePicURLs(team.id);
         }
       })
     }
-    console.log("imageUrls:",imageUrls);
+    
   }, [teams]);
 
 
@@ -74,16 +75,19 @@ const DisplayTeams = ({teams , handleSelection}) => {
     <div className="gallery">
       {teams && teams.map((team) => {
         const { id: teamId } = team;
-        console.log(teamId, imageUrls[teamId])
+
         return (
         <div onClick={(e) => handleTeamSelection(e, team)} className={"clickable centre player_card shadow silver"}  key={teamId}>
-          { imageUrls[teamId] && <img id={"team_img"} className={"inner"} src={imageUrls[teamId]} alt="profile pic"></img>}
-          { imageUrls[teamId] == null && 
+
+          { !imageUrls[teamId] && 
             <>
-            <img src="/static/images/fy3-logo.png" alt="fy3-logo"></img>
             <p className={"align centre inner player_name "}>{team.team_name}</p>
+            <img src={fy3Logo} alt="fy3-logo"></img>
             </>
           }
+          <p>{team.id}</p>
+          <img id={"team_img"} className={"inner"} src={imageUrls[teamId]} alt="profile pic"></img>
+          
         </div>
         )
       }

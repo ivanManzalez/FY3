@@ -35,8 +35,6 @@ const DisplayPlayers = ({players , handleSelection}) => {
         }
       });
     }
-    
-
   }, [players]);
 
   const registered = (eligibility) => {
@@ -53,7 +51,7 @@ const DisplayPlayers = ({players , handleSelection}) => {
     }
     handleSelection(e,selection)
   }
-
+  console.log("Players loaded:", players != null)
   return(
     <>
     <div className="gallery">
@@ -61,7 +59,7 @@ const DisplayPlayers = ({players , handleSelection}) => {
         const { id: playerId , is_registered } = player;
       
         return (
-        <div onClick={(e) => handlePlayerSelection(e, player)} className={"outline clickable centre player_card "+registered(is_registered)}  key={playerId}>
+        <div onClick={(e) => handlePlayerSelection(e, player)} className={" clickable centre player_card "+registered(is_registered)}  key={playerId}>
           { imageUrls[playerId] && <img id={"player_img"} className={"inner"} src={imageUrls[playerId]} alt="profile pic"></img>}
           
           <img src="/static/images/fy3-logo.png" alt="fy3-logo"></img>

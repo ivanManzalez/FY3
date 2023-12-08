@@ -23,7 +23,8 @@ import DraftWorkflow from "./draft/DraftWorkflow";
 
 // Authentication
 import Login from "./auth/Login";
-import SignUp from "./auth/SignUp";
+import EmailSignUp from "./auth/EmailSignUp";
+import Registration from "./user/Registration";
 
 // Navigation
 import PrivateRoute from "./navigator/PrivateRoute";
@@ -54,11 +55,13 @@ const App = () => {
     
     {/*Public Routes*/}       
         <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
+        <Route path="/signup" element={<EmailSignUp />} />
+        <Route path="/register" element={<Registration />} />
+
         <Route path="/schedule" element={<Schedule />} />
         <Route path="/standings" element={<Standings />} />
         <Route path="/stats" element={<Stats />} />
-        {/**/}
+    {/***************/}
 
         
       </Routes>

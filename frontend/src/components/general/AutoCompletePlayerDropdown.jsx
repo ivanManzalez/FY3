@@ -7,6 +7,7 @@ const AutoCompletePlayerDropdown = ({options, handleSelection}) => {
   const [loadedOptions, setLoadedOptions] = React.useState([]);
   const [filteredOptions, setFilteredOptions] = React.useState([]);
   const [value, setValue] = React.useState(null);
+  const [imageUrls, setImageUrls] = React.useState(JSON.parse(localStorage.getItem('cachedImageUrls')) || {});
   
   const defaultProps = {
     options: filteredOptions,
@@ -19,8 +20,12 @@ const AutoCompletePlayerDropdown = ({options, handleSelection}) => {
       : [], // Return an empty array if options is not an array
   };
 
-  const handleInputChange = (event, newInputValue) => {
-    handleSelection(event, newInputValue);
+  const handleInputChange = (event, player) => {
+    const selection = {
+      ...player,
+      url: imageUrls[player.id],
+    }
+    handleSelection(event,selection)
   };
 
   React.useEffect(()=>{
