@@ -7,8 +7,8 @@ const API = 'users/';
 const USER_JOIN_PLAYER = 'user-join-player/';
 
 // GET all existing Users 
-const joinUserPlayer = () => {
-  return fetch(TESTBASE+API+USER_JOIN_PLAYER)
+const joinUserPlayer = (requestOptions) => {
+  return fetch(TESTBASE+API+USER_JOIN_PLAYER, requestOptions)
   .then((response)=>{
     return response.json();
   })

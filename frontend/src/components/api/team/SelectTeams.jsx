@@ -25,7 +25,8 @@ const SelectTeams = forwardRef(({setHomeTeam, setAwayTeam, validator},ref) => {
   // Populate seasons on initial render
   React.useEffect(async () => {
     const teamOptions = await retrieveAllTeams(); // TODO: retrieve ACTIVE teams
-    const teams = Object.values(teamOptions)
+    const teams = Object.values(teamOptions.data)
+    console.log("teams....",teams)
     setAllTeams(teams);
     setHomeTeams(teams);
     setAwayTeams(teams);
@@ -49,7 +50,8 @@ const SelectTeams = forwardRef(({setHomeTeam, setAwayTeam, validator},ref) => {
     const teams = getAvailableTeams(awayTeam)
     setHomeTeams(teams)
   };
-
+  // console.log("home teams:", homeTeams)
+  // console.log("away teams:", awayTeams)
   return(
     <div id = "select_teams" >
       <HomeTeamSelection ref={homeTeamRef} homeTeamOptions={homeTeams} setHomeTeam = {handleHomeTeamChange}  />

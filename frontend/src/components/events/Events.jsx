@@ -80,6 +80,7 @@ const Events = () => {
       body: JSON.stringify(eventFormState),
     };
     const createEventResponse = await createEvent(requestOptions)
+    console.log("createEventResponse",createEventResponse)
     handleMessage(createEventResponse); 
 
     return createEventResponse.event.id;

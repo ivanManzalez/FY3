@@ -9,10 +9,26 @@ import TextField from '@mui/material/TextField';
 
 // 
 const CreateEventForm = forwardRef(({submitState, clearFormFields}, ref) => {
-  const defaultTime = dayjs().hour(0).minute(0); 
+  const defaultTime = dayjs().hour(0).minute(0); // YYYY-MM-DD
   const today = dayjs();
-  console.log("ref: " + ref);
+  
 
+  const transformDate = (date) => {
+    const year = date.$y;
+    const month = date.$M+1;
+    const day = date.$D;
+    
+    return `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+  }
+
+  const transformTime = (time) => {
+    const hour = time.$H;
+    const minute = time.$m;
+    const second = time.$s;
+    
+   return `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}:${second.toString().padStart(2, '0')}`;
+    
+  }
   // set form field init values
   const initialFormState = {
     name: '',
@@ -23,12 +39,9 @@ const CreateEventForm = forwardRef(({submitState, clearFormFields}, ref) => {
     street_name:'',
     city:'',
   };
-
   const [formState, setFormState] = useState(initialFormState);
-
   // clear all form fields
   const clearFields = () =>{
-    // event.preventDefault();
     console.log("clearFields-Event");
     setFormState(initialFormState);
   };
@@ -44,7 +57,7 @@ const CreateEventForm = forwardRef(({submitState, clearFormFields}, ref) => {
   const handleInputChange = (e) => {
     console.log(formState)
     console.log("On change called... ");
-    // console.log(e);
+    console.log(e.target);
 
     const { name, value } = e.target;
     setFormState({
@@ -58,30 +71,22 @@ const CreateEventForm = forwardRef(({submitState, clearFormFields}, ref) => {
   };
 
   const handleDateChange = (e) => {
-    const year = e.$y;
-    const month = e.$M+1;
-    const day = e.$D;
-    
-    // const value = year+"-"+month+"-"+day;
-    const value = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+    const value = transformDate(e);
+
     const name = 'date';
     const obj = {target:{name, value}}
+    console.log(obj)
     handleInputChange(obj);
   };
 
   const handleTimeChange = (e) => {
-    const hour = e.$H;
-    const minute = e.$m;
-    const second = e.$s;
-    
-    const value = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}:${second.toString().padStart(2, '0')}`;
+    const value = transformTime(e);
     const name = 'start_time';
     const obj = {target:{name, value}}
     handleInputChange(obj);
   };
 
-  
-
+console.log(formState)
 return (
   <form id="create-event-form" className='form' onSubmit={clearFields}>
     <TextField id={"event_name"} name={"name"} label={"Event Name"} variant={"outlined"} onChange={handleInputChange} value={formState.name} />

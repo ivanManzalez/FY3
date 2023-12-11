@@ -105,15 +105,16 @@ const EmailSignUp = () => {
   }
 
   const registerUser = async (userForm) => {
-    console.log(userForm);
+    console.log("- registerUser");
+
     const requestOptions = {
       method: "POST",
       headers: {"Content-Type":"application/json"},
       body: JSON.stringify(userForm),
     }; 
-    const createUserResp = await createUser(requestOptions);
-    console.log(createUserResp);
-    return {success:true, userId:userForm.uid}
+    const resp = await createUser(requestOptions);
+    console.log(resp)
+    return resp;
   }
 
   const registerPlayer = async (playerForm) => {
@@ -129,8 +130,19 @@ const EmailSignUp = () => {
   }
 
   const joinUserAndPlayer = async (uid, userId, playerId) => {
+    const data = {
+      firebase_id:uid,
+      user:userId,
+      player:playerId
+    }
+    const requestOptions = {
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify(data),
+    }; 
+    const joinUserPlayerResp = await joinUserPlayer(requestOptions);
     console.log(`Join ${uid}, ${userId}, and ${playerId}`)
-    return {id:null, success:true}
+    return joinUserPlayerResp;
   }
 
   const handleSignUpButton = async (e) => {
@@ -138,31 +150,51 @@ const EmailSignUp = () => {
     setMessage('');
     setLoading(true);
     if(password !== passwordConfirm){
-      return setMessage('Passwords do not match'); 
+      setMessage('Passwords do not match'); 
+      setLoading(false);
+      return
     }
 
     try{
       setMessage('');
-      const signupResp = await emailSignup(email, password); // firebase
-      const userId = signupResp.user.uid;
-
+      
       // sign up in django  
+      console.log("-- Call registerUser --")
       const userRegisterResp = await registerUser(userFormState)
-      const successful = true;
+      setMessage(userRegisterResp.message)
+      if(!userRegisterResp.success){
+        throw new Error(userRegisterResp.message)
+      }
+      console.log("registerUser resp:",userRegisterResp)
+      //////////////////////////////////////////////////////////////////////////////// 
+      console.log("-- Call emailSignup --")
+      const signupResp = emailSignup(email, password)
+        .catch(resp => setMessage(resp.message));
+      setMessage(signupResp.message);
+      if(!signupResp.success){
+        throw new Error(signupResp.message);
+      }
+      console.log("emailSignup resp:",signupResp);
+      
+      const userId = signupResp.user.uid;
       console.log("signup:",userId);
       
-      var playerRegisterResp = {id:""};
-      if(userFormState.isPlayer && userRegisterResp.success && userId){
-        playerRegisterResp = await registerPlayer(playerFormState); // django
-        successful = registerResp.statusCode;
+      // register as player
+      var playerRegisterResp = {id:"", success:true};
+
+      if(userFormState.isPlayer){
+        console.log("-- Call registerPlayer --")
+        playerRegisterResp = registerPlayer(playerFormState); // django
+        if(!playerRegisterResp.success){
+          throw new Error(playerRegisterResp.message)
+        }
         console.log(`Send Player creation with UID = ${userId}`)
         }
+      // join player, user & firebase
+      if(userId && userRegisterResp.success && playerRegisterResp.success){
+        const userJoinPlayerResp = await joinUserAndPlayer(userId, userRegisterResp.user.id, playerRegisterResp.id )
+      }
 
-      console.log('message');
-      console.log(message);
-      const userJoinPlayerResp = await joinUserAndPlayer(userId, userRegisterResp.id, playerRegisterResp.id )
-
-      console.log((userRegisterResp.id || playerRegisterResp.userId) && successful && userJoinPlayerResp.success)
       if((userRegisterResp.success || playerRegisterResp.userId) && successful && userJoinPlayerResp.success){
         navigate(successfulSignUpRedirect); // redirect
       }else{

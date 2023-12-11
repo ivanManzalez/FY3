@@ -21,7 +21,7 @@ const SeasonDropdown = forwardRef(({ name, options, setState},ref) => {
   useImperativeHandle(ref, () => ({
     clearSeasonSelection,
   }));
-
+  console.log("SeasonDropdown options -- ",options);
   return (
     <Box sx={{ minWidth: 120 }}>
       <FormControl fullWidth>
@@ -33,7 +33,7 @@ const SeasonDropdown = forwardRef(({ name, options, setState},ref) => {
           label={name}
           onChange={handleChange}
           >
-        {options.map((option) => (
+        {options && options.map((option) => (
             <MenuItem key={option.id} value={option.id}>
               {option.season_year}
             </MenuItem>
@@ -43,5 +43,5 @@ const SeasonDropdown = forwardRef(({ name, options, setState},ref) => {
     </Box>)
 });
 
-
+console.log("...end...")
 export default SeasonDropdown;
