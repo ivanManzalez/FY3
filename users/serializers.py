@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
+from players.models.player import Player
 from .models.user_join_profile import UserJoinPlayer
 
 # in order to map DB values to JSON values
@@ -37,15 +38,23 @@ class UserPermissionsSerializer(serializers.ModelSerializer):
     )
 
 class CreateUserJoinPlayerSerializer(serializers.ModelSerializer):
+  user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), required=True)
+  player_id = serializers.PrimaryKeyRelatedField(queryset=Player.objects.all(), required=False, allow_null=True)
+  
   class Meta:
     model = UserJoinPlayer
     # fields that will be sent in paylod
     # serialize request in python format
     fields = (
-      'id',
+      'firebase_id',
       'player_id',
-      'user_id',
+      'user',
     )
+  # def __init__(self, *args, **kwargs):
+  #     player_id = kwargs.pop('player_id', None)
+  #     super().__init__(*args, **kwargs)
+  #     if player_id is not None:
+  #       self.fields['player'].queryset = Player.objects.filter(id=player_id)
 
 class UserJoinPlayerSerializer(serializers.ModelSerializer):
   class Meta:
@@ -53,6 +62,7 @@ class UserJoinPlayerSerializer(serializers.ModelSerializer):
     # fields that will be sent in paylod
     # serialize request in python format
     fields = (
-      'player_id',
-      'user_id',
+      'firebase_id',
+      'player',
+      'user',
     )

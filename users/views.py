@@ -12,7 +12,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from .models.user_join_profile import UserJoinPlayer
 
-from .models.user_utils import check_all_field, MissingFieldError
+from .models.user_utils import check_user_field, check_userjoinplayer_field, MissingFieldError
 
 
 class UsersView(generics.ListAPIView): ## CreateAPIView
@@ -36,7 +36,12 @@ class CreateUserView(APIView): ## CreateAPIView
     serializer = self.serializer_class(data=request.data)
     print("serializer:", serializer)
     if (not serializer.is_valid()): 
-      return Response({'message':'Invalid request'}, status=status.HTTP_406_NOT_ACCEPTABLE) # message = Bad Request
+      
+      username_error = serializer.errors.get('username')[0]
+      print("serializer errors:", username_error)
+      error_message = username_error if username_error else ''
+
+      return Response({'message':f'Invalid request:{error_message}', 'success':False}, status=status.HTTP_406_NOT_ACCEPTABLE) # message = Bad Request
     
     try:
       username = serializer.data.get('username')   
@@ -51,7 +56,7 @@ class CreateUserView(APIView): ## CreateAPIView
       return Response({'message': message}, status=status.HTTP_409_CONFLICT) # message = Conflict
     
     try:
-      password, email, first_name, last_name, is_player = check_all_field(serializer.data)
+      password, email, first_name, last_name, is_player = check_user_field(serializer.data)
     except MissingFieldError as exp:
       return Response({'message':'Username, password, email, first_name, or last_name is missing'}, status=status.HTTP_406_NOT_ACCEPTABLE) # message = Bad Request 
     
@@ -159,27 +164,37 @@ class CreateUserJoinPlayerView(APIView):
       self.request.session.create()
 
     serializer = self.serializer_class(data=request.data)
-    print("serializer:", serializer)
+    print("----Test----")
+    print("serializer:\n", serializer)
+    print("valid?")
     if (not serializer.is_valid()): 
-      return Response({'message':'Invalid request'}, status=status.HTTP_406_NOT_ACCEPTABLE) # message = Bad Request
-    
-    uid = serializer.data.get("id")
-    player_id = serializer.data.get("player_id")
-    user_id = serializer.data.get("user_id")
+      print("no")
+      print("Error:",serializer.errors)
+      return Response({'message':f'Invalid request:{serializer.errors}'}, status=status.HTTP_406_NOT_ACCEPTABLE) # message = Bad Request
+
+    try:
+      print("Data:",serializer.data)
+      uid, player_id, user_id = check_userjoinplayer_field(serializer.data)
+    except MissingFieldError as exp:
+      return Response({'message':'Firebase Id or User Id is missing'}, status=status.HTTP_406_NOT_ACCEPTABLE) # message = Bad Request 
     
     print("unique?")
-    queryset = UserJoinPlayer.objects.filter(id = uid) 
+    queryset = UserJoinPlayer.objects.filter(player__id = player_id, user__id = user_id) 
 
-    if (queryset.exists()):
+    if(queryset.exists()):
       message = "User/Player already exists"
       return Response({'message': message}, status=status.HTTP_409_CONFLICT) # message = Conflict
     
+
+    user = User.objects.filter(id=user_id)
+    if(player_id):
+      player = Player.objects.filter(id=player_id)
     
     # Create a User instance
     user_player = UserJoinPlayer.objects.create(
       firebase_id = uid,
-      player = player_id,
-      user = user_id
+      player = player,
+      user = user
       )
     user_player.save()
 
