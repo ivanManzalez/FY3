@@ -3,10 +3,11 @@ import {useAuth} from '../../fireBase/AuthContext';
 import {useNavigate} from 'react-router-dom';
 import {createUser} from '../api/user/user';
 import {joinUserPlayer} from '../api/user/userJoinPlayer';
+import {getCookie} from '../general/getCookies'
 
 const EmailSignUp = () => {
   // pull sign up functino directly from AuthContext.js
-  const {emailSignup, currentUser} = useAuth();
+  const {emailSignup, login, currentUser} = useAuth();
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -109,9 +110,13 @@ const EmailSignUp = () => {
 
     const requestOptions = {
       method: "POST",
-      headers: {"Content-Type":"application/json"},
+      headers: {
+        "Content-Type":"application/json",
+        'X-CSRFToken': getCookie('csrftoken'),
+      },
       body: JSON.stringify(userForm),
     }; 
+    console.log("requestOptions",requestOptions)
     const resp = await createUser(requestOptions);
     console.log(resp)
     return resp;
@@ -141,7 +146,7 @@ const EmailSignUp = () => {
       body: JSON.stringify(data),
     }; 
     const joinUserPlayerResp = await joinUserPlayer(requestOptions);
-    console.log(`Join ${uid}, ${userId}, and ${playerId}`)
+    // console.log(`Join ${uid}, ${userId}, and ${playerId}`)
     return joinUserPlayerResp;
   }
 
@@ -167,35 +172,43 @@ const EmailSignUp = () => {
       }
       console.log("registerUser resp:",userRegisterResp)
       //////////////////////////////////////////////////////////////////////////////// 
-      console.log("-- Call emailSignup --")
-      const signupResp = emailSignup(email, password)
-        .catch(resp => setMessage(resp.message));
-      setMessage(signupResp.message);
-      if(!signupResp.success){
-        throw new Error(signupResp.message);
-      }
-      console.log("emailSignup resp:",signupResp);
       
-      const userId = signupResp.user.uid;
-      console.log("signup:",userId);
+      // console.log("-- Call emailSignup --")
+      // const signupResp = emailSignup(email, password)
+        // .catch(resp => setMessage(resp.message));
+      // setMessage(signupResp.message);
+      // if(!signupResp.success){
+      //   throw new Error(signupResp.message);
+      // }
+      // console.log("emailSignup resp:",signupResp);
       
+      // const userId = signupResp.user.uid;
+      // console.log("signup:",userId);
+      
+      ////////////////////////////////////////////////////////////////////////////////
       // register as player
-      var playerRegisterResp = {id:"", success:true};
-
-      if(userFormState.isPlayer){
-        console.log("-- Call registerPlayer --")
-        playerRegisterResp = registerPlayer(playerFormState); // django
-        if(!playerRegisterResp.success){
-          throw new Error(playerRegisterResp.message)
-        }
-        console.log(`Send Player creation with UID = ${userId}`)
-        }
+      // var playerRegisterResp = {userId:"", success:true};
+      console.log("register as player")
+      // if(userFormState.isPlayer){
+      //   console.log("-- Call registerPlayer --")
+      //   playerRegisterResp = registerPlayer(playerFormState); // django
+      //   if(!playerRegisterResp.success){
+      //     throw new Error(playerRegisterResp.message)
+      //   }
+      //   // console.log(`Send Player creation with UID = ${userId}`)
+      // }
       // join player, user & firebase
-      if(userId && userRegisterResp.success && playerRegisterResp.success){
-        const userJoinPlayerResp = await joinUserAndPlayer(userId, userRegisterResp.user.id, playerRegisterResp.id )
-      }
+      // if(userRegisterResp.success && playerRegisterResp.success){
+      //   const userJoinPlayerResp = await joinUserAndPlayer(userId, userRegisterResp.user.id, playerRegisterResp.id )
+      // }
 
-      if((userRegisterResp.success || playerRegisterResp.userId) && successful && userJoinPlayerResp.success){
+      ////////////////////////////////////////////////////////////////////////////////
+      // 
+      console.log("Credentials")
+      console.log(userFormState.email, userFormState.password)
+      // if((userRegisterResp.success || playerRegisterResp.userId) && successful && userJoinPlayerResp.success){
+      if(userRegisterResp.success){
+        await login(userFormState.email, userFormState.password); //Login
         navigate(successfulSignUpRedirect); // redirect
       }else{
         setLoading(false);

@@ -9,8 +9,8 @@ import dayjs from 'dayjs';
 import {CalendarPicker} from "../general/DateTimeSelection";
 import DragAndDrop from '../dragAndDrop/DragAndDrop';
 
+
 const PlayerForm = forwardRef( ( {player, deleteImg, handleFileUpload} ,ref ) => { 
-  
   const playerImgRef = useRef();
   
   // Refactor to Utilities components

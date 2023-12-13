@@ -8,12 +8,14 @@ from rest_framework.authtoken.models import Token
 
 from .serializers import UserSerializer, CreateUserSerializer,UserPermissionsSerializer,CreateUserJoinPlayerSerializer, UserJoinPlayerSerializer
 
+from django.db.models import Q
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from .models.user_join_profile import UserJoinPlayer
 
 from .models.user_utils import check_user_field, check_userjoinplayer_field, MissingFieldError
 
+from firebase_admin import auth
 
 class UsersView(generics.ListAPIView): ## CreateAPIView
   queryset = User.objects.all()
@@ -44,30 +46,68 @@ class CreateUserView(APIView): ## CreateAPIView
       return Response({'message':f'Invalid request:{error_message}', 'success':False}, status=status.HTTP_406_NOT_ACCEPTABLE) # message = Bad Request
     
     try:
-      username = serializer.data.get('username')   
-    except Exception as e:   
-      return Response({'message':'Username required'}, status=status.HTTP_406_NOT_ACCEPTABLE) # message = Bad Request
-    
-    print("unique?")
-    queryset = User.objects.filter(username=username) 
+      username = serializer.data.get('username')
+      email = serializer.data.get('email')
+      firebase_qset = auth.get_user_by_email(email)
 
-    if (queryset.exists()):
-      message = username+" already exists"
+    except auth.UserNotFoundError as e:
+      firebase_qset = False
+    
+    except Exception as e:   
+      return Response({'message':'Username/Email required'}, status=status.HTTP_406_NOT_ACCEPTABLE) # message = Bad Request
+    
+
+    django_qset = User.objects.filter(Q(username=username) | Q(email=email))
+    
+    print(django_qset, firebase_qset)
+    print(django_qset.exists() or not firebase_qset)
+    print(django_qset.exists(), not firebase_qset)
+    
+
+    if (django_qset.exists() or firebase_qset):
+      message = username+" &/or " +email+" already exists"
       return Response({'message': message}, status=status.HTTP_409_CONFLICT) # message = Conflict
     
     try:
-      password, email, first_name, last_name, is_player = check_user_field(serializer.data)
+      username, password, email, first_name, last_name = check_user_field(serializer.data)
     except MissingFieldError as exp:
       return Response({'message':'Username, password, email, first_name, or last_name is missing'}, status=status.HTTP_406_NOT_ACCEPTABLE) # message = Bad Request 
-    
+  
     # Create a User instance
-    user = User.objects.create_user(
-      username = username, 
-      password = password,
-      email = email,
-      first_name = first_name,
-      last_name = last_name,
+    print("firebase username:",username)
+    print("firebase email:",email)
+    try:
+      firebase_user = auth.create_user(
+        display_name = username,
+        email = email,
+        password = password
+        )
+
+    except ValueError as ve:
+      return Response({'message':'User properties are invalid.'}, status=status.HTTP_406_NOT_ACCEPTABLE) # message = Bad Request 
+    except auth.FirebaseError as fe:
+      return Response({'message':'Error creating user'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR) # message = Bad Request 
+
+    try:
+      user = User.objects.create_user(
+          username=username,
+          password=password,
+          email=email,
+          first_name=first_name,
+          last_name=last_name,
       )
+      user.save()
+
+    except Exception as e:
+      # If Django user creation fails, delete the Firebase user
+      try:
+        auth.delete_user(firebase_user.uid)
+      except auth.FirebaseError as fe:
+        # retry
+        pass
+
+      return Response({'message': 'Error creating Django user'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
     user.save()
 
     message = username+' created'

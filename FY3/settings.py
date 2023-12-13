@@ -68,9 +68,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
-    
-
 ]
 
 ROOT_URLCONF = 'FY3.urls'
@@ -175,7 +172,7 @@ LOGOUT_REDIRECT_URL = "FY3-Home"
 CSRF_COOKIE_AGE = 604800*30 # TO DO
 CORS_ORIGIN_ALLOW_ALL = True
 
-# CSRF_COOKIE_NAME = "csrftoken"
+CSRF_COOKIE_NAME = "csrftoken"
 # CORS_ORIGIN_WHITELIST = ('http://localhost:3000', 'http://127.0.0.1:3000', 'localhost:3000', '127.0.0.1:3000')
 CSRF_TRUSTED_ORIGINS = [
     'http://localhost:8000',
@@ -190,3 +187,14 @@ CORS_ALLOWED_ORIGINS = [
 CORS_ALLOW_CREDENTIALS = True
 
 ################################################################################################
+FIREBASE_ACCOUNT_TYPE                = config('FIREBASE_ACCOUNT_TYPE')
+FIREBASE_PROJECT_ID                  = config('FIREBASE_PROJECT_ID')
+FIREBASE_PRIVATE_KEY_ID              = config('FIREBASE_PRIVATE_KEY_ID')
+FIREBASE_PRIVATE_KEY                 = config('FIREBASE_PRIVATE_KEY')
+FIREBASE_CLIENT_EMAIL                = config('FIREBASE_CLIENT_EMAIL')
+FIREBASE_CLIENT_ID                   = config('FIREBASE_CLIENT_ID')
+FIREBASE_AUTH_URI                    = config('FIREBASE_AUTH_URI')
+FIREBASE_TOKEN_URI                   = config('FIREBASE_TOKEN_URI')
+FIREBASE_AUTH_PROVIDER_X509_CERT_URL = config('FIREBASE_AUTH_PROVIDER_X509_CERT_URL')
+FIREBASE_CLIENT_X509_CERT_URL        = config('FIREBASE_CLIENT_X509_CERT_URL')
+print("Settings.FIREBASE_ACCOUNT_TYPE = ", FIREBASE_ACCOUNT_TYPE)

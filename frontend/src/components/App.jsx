@@ -2,7 +2,7 @@
 import React, { Component, useState, useEffect } from "react";
 import { render } from "react-dom";
 import {BrowserRouter as Router, Routes, Route, Link, Redirect} from "react-router-dom";
-import {AuthProvider} from "../fireBase/AuthContext";
+import {AuthProvider, useAuth} from "../fireBase/AuthContext";
 
 // Views/Pages
 // how to clean this up?
@@ -31,6 +31,7 @@ import Registration from "./user/Registration";
 import PrivateRoute from "./navigator/PrivateRoute";
 
 const App = () => {
+  const {currentUser} = useAuth();
 
   return (
     <Router>
@@ -39,29 +40,38 @@ const App = () => {
       <Routes>
     {/*
     Private Routes
-    - Add any private <Route/> within outter Route component
+    - Add any private <Route/> within outer Route component
     */}
         <Route exact path='/' element={<PrivateRoute />}>
-          <Route index element={<Home name="Larry"/>}/>
+          <Route index element={<Home name=""/>}/>
 
           {/*Refactor*/}
-          <Route path="/commissioner" element={<Commissioner />}/>
-          <Route path="/commissioner/players" element={<Players />}/>
-          <Route path="/commissioner/teams" element={<Teams />}/>
-          <Route path="/commissioner/seasons" element={<Seasons />}/>
-          <Route path="/commissioner/events" element={<Events />}/>
-          <Route path="/commissioner/draft" element={<DraftWorkflow />}/>
-
+          <Route path="/commissioner"         element={< Commissioner  />}/>
+          <Route path="/commissioner/players" element={< Players       />}/>
+          <Route path="/commissioner/teams"   element={< Teams         />}/>
+          <Route path="/commissioner/seasons" element={< Seasons       />}/>
+          <Route path="/commissioner/events"  element={< Events        />}/>
+          <Route path="/commissioner/draft"   element={< DraftWorkflow />}/>
+          
+          {currentUser.role === 'Commissioner' && (
+            <>
+              <Route path="/commissioner"         element={< Commissioner  />} />
+              <Route path="/commissioner/players" element={< Players       />} />
+              <Route path="/commissioner/teams"   element={< Teams         />} />
+              <Route path="/commissioner/seasons" element={< Seasons       />} />
+              <Route path="/commissioner/events"  element={< Events        />} />
+              <Route path="/commissioner/draft"   element={< DraftWorkflow />} />
+            </>
+          )}
         </Route>
     
     {/*Public Routes*/}       
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<EmailSignUp />} />
-        <Route path="/register" element={<Registration />} />
-
-        <Route path="/schedule" element={<Schedule />} />
-        <Route path="/standings" element={<Standings />} />
-        <Route path="/stats" element={<Stats />} />
+        <Route path="/login"     element={< Login        />}/>
+        <Route path="/signup"    element={< EmailSignUp  />}/>
+        <Route path="/register"  element={< Registration />}/>
+        <Route path="/schedule"  element={< Schedule     />}/>
+        <Route path="/standings" element={< Standings    />}/>
+        <Route path="/stats"     element={< Stats        />}/>
     {/***************/}
 
         

@@ -7,10 +7,10 @@ import {deleteProfilePicURL, getProfilePicURL, getTestStorageRef, uploadFileResu
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import dayjs from 'dayjs';
-
 // import {getPlayerIds} from './playerIDs';
 // import FilterSearch from "../general/FilterSearch";
 import AutoCompletePlayerDropdown from "../general/AutoCompletePlayerDropdown";
+import {useAuth} from '../../fireBase/AuthContext';
 
 const Players = () => {
   // Ref to getPlayerForm
@@ -30,9 +30,18 @@ const Players = () => {
 
   // player selected
   const [player, setPlayer] = useState("");
+  const {currentUser} = useAuth();
 
   const getPlayers = async () => {
-    const playerResp = await retrieveAllPlayers();// getDraftees();
+    const idToken = await currentUser.getIdToken();
+    const requestOptions = {
+      method: "GET",
+      headers: {
+        "Content-Type":"application/json",
+        "Authorization": `Bearer ${idToken}`,
+      },
+    }; 
+    const playerResp = await retrieveAllPlayers(requestOptions);// getDraftees();
 
     handleMessage(playerResp);
     setAllPlayers(Object.values(playerResp.data));
@@ -101,24 +110,30 @@ const Players = () => {
   // Event handler - Factor to Parent
   const handleUpdatePlayerButton = async (event) => {
     event.preventDefault();
+    const idToken = await currentUser.getIdToken();
 
     const formState = playerFormRef.current.getFormState()
     // define API request options
     const requestOptions = {
       method: "PUT",
-      headers: {"Content-Type":"application/json"},
+      headers: {
+        "Content-Type":"application/json",
+        'X-CSRFToken': getCookie('csrftoken'),
+        "Authorization": `Bearer ${idToken}`,
+      },
       body: JSON.stringify(formState),
     }; 
+    console.log("requestOptions",requestOptions)
     
     const updatePlayerResponse = await updatePlayerById(formState.id, requestOptions);
     handleMessage(updatePlayerResponse);  
     
     if(updatePlayerResponse.id){
-      const playerId = updatePlayerResponse.id;
-      const fileuploadOutcome = handleFileUpload(playerFormRef.current.getFile(), playerId);
-      if(fileuploadOutcome){
-        playerFormRef.current.deleteImage();
-      }
+      // const playerId = updatePlayerResponse.id;
+      // const fileuploadOutcome = handleFileUpload(playerFormRef.current.getFile(), playerId);
+      // if(fileuploadOutcome){
+        // playerFormRef.current.deleteImage();
+      // }
     }
 
     getPlayers();
@@ -127,11 +142,12 @@ const Players = () => {
 
   const handleDeletePlayerButton = async (event) => {
     event.preventDefault();
-
+    const idToken = await currentUser.getIdToken();
     const requestOptions = { 
       method: 'DELETE', 
       headers: { 
-          'Content-type': 'application/json'
+        'Content-type': 'application/json',
+        "Authorization": `Bearer ${idToken}`,
         }
       } 
     const deletePlayerResp = await deletePlayerById(player.id,requestOptions); 

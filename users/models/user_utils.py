@@ -7,8 +7,7 @@ def check_user_field(data):
     data.get('password'),
     data.get('email'),
     data.get('first_name'),
-    data.get('last_name'),
-    
+    data.get('last_name'),   
   ]
 
   for field in fields:
