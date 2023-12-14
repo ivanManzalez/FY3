@@ -3,6 +3,7 @@ import React, { Component, useState, useEffect } from "react";
 import { render } from "react-dom";
 import {BrowserRouter as Router, Routes, Route, Link, Redirect} from "react-router-dom";
 import {AuthProvider, useAuth} from "../fireBase/AuthContext";
+import {getUserAuthorization} from "./api/user/authorizations"
 
 // Views/Pages
 // how to clean this up?
@@ -31,7 +32,7 @@ import Registration from "./user/Registration";
 import PrivateRoute from "./navigator/PrivateRoute";
 
 const App = () => {
-  const {currentUser} = useAuth();
+  // const {currentUser} = useAuth();
 
   return (
     <Router>
@@ -53,7 +54,7 @@ const App = () => {
           <Route path="/commissioner/events"  element={< Events        />}/>
           <Route path="/commissioner/draft"   element={< DraftWorkflow />}/>
           
-          {currentUser.role === 'Commissioner' && (
+          {/*{currentUser && currentUser.role === 'Commissioner' && (
             <>
               <Route path="/commissioner"         element={< Commissioner  />} />
               <Route path="/commissioner/players" element={< Players       />} />
@@ -62,7 +63,7 @@ const App = () => {
               <Route path="/commissioner/events"  element={< Events        />} />
               <Route path="/commissioner/draft"   element={< DraftWorkflow />} />
             </>
-          )}
+          )}*/}
         </Route>
     
     {/*Public Routes*/}       

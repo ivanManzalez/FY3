@@ -6,7 +6,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response #send custom response from view
 from rest_framework.authtoken.models import Token
 
-from .serializers import UserSerializer, CreateUserSerializer,UserPermissionsSerializer,CreateUserJoinPlayerSerializer, UserJoinPlayerSerializer
+from .serializers import UserSerializer, CreateUserSerializer,UserPermissionsSerializer,CreateUserJoinPlayerSerializer, UserJoinPlayerSerializer, UserGroupsSerializer
 
 from django.db.models import Q
 from django.contrib.auth.models import User
@@ -242,6 +242,35 @@ class CreateUserJoinPlayerView(APIView):
     response_data = {
         'message': message ,
         'user': UserJoinPlayerSerializer(user_player).data
+    }
+    return Response(response_data, status=status.HTTP_200_OK)
+ 
+class UserGroupsView(APIView):
+  serializer_class = UserSerializer
+  def get(self, request, format=None):
+    if not self.request.session.exists(self.request.session.session_key):
+      #create session
+      self.request.session.create()
+
+    serializer = self.serializer_class(data=request.data)
+    
+    if (not serializer.is_valid()): 
+      print("Error:",serializer.errors)
+      return Response({'message':f'Invalid request:{serializer.errors}'}, status=status.HTTP_406_NOT_ACCEPTABLE) # message = Bad Request
+    
+    user_id = serializer.get("id")
+    queryset = User.objects.filter(id = user_id) 
+
+    if(not queryset.exists()):
+      message = "User does not exist"
+      return Response({'message': message}, status=status.HTTP_409_CONFLICT) # message = Conflict
+    
+    groups_list = list(user.groups.all())
+    message = f'{user} groups found.'
+    response_data = {
+        'message': message ,
+        'groups': UserGroupsSerializer(groups_list).data,
+        'success':True
     }
     return Response(response_data, status=status.HTTP_200_OK)
  

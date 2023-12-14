@@ -15,4 +15,5 @@ urlpatterns = [
     path('userperms/', views.UserPermissionsView.as_view()),
     path('user-player/', views.UserJoinPlayerView.as_view()),
     path('user-join-player/', views.CreateUserJoinPlayerView.as_view()),
+    path('user-groups/', views.UserGroupsView.as_view()),
   ]
