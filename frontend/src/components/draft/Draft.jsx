@@ -27,6 +27,8 @@ const Draft = ({continueDraft, availablePlayers, teamsList, messageHandler, cloc
       status: 200,
     }   
     messageHandler(resp); 
+
+    
   }
 
   const position = () => {

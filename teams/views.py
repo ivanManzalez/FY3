@@ -76,30 +76,30 @@ class TeamProfileView(APIView):
     """
     Retrieve, update or delete a snippet instance.
     """
-    def get_object(self, team_name):
+    def get_object(self, team_id):
       try:
-        print("try: ", team_name)
-        return Team.objects.get(team_name=team_name)
+        print("try: ", team_id)
+        return Team.objects.get(id=team_id)
       except Team.DoesNotExist:
         print("Team does not exist")
-        message = "Bad Request: "+team_name + " does not exist"
+        message = "Bad Request: "+team_id + " does not exist"
         return Response({'message': message}, status=status.HTTP_404_NOT_FOUND)
 
-    def get(self, request, team_name, format=None):
-        team = self.get_object(team_name)
-        serializer = PlayerSerializer(team)
+    def get(self, request, team_id, format=None):
+        team = self.get_object(team_id)
+        serializer = TeamSerializer(team)
         return Response(serializer.data)
 
-    def put(self, request, team_name, format=None):
-        team = self.get_object(team_name)
-        serializer = PlayerSerializer(team, data=request.data)
+    def put(self, request, team_id, format=None):
+        team = self.get_object(team_id)
+        serializer = TeamSerializer(team, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, team_name, format=None):
-        team = self.get_object(team_name)
+    def delete(self, request, team_id, format=None):
+        team = self.get_object(team_id)
         team.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 

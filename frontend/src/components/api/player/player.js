@@ -8,8 +8,8 @@ const RETRIEVE_PLAYER = 'player-profile/';
 const CREATEPLAYER = 'create-player/';
 
 // GET all existing players 
-const retrieveAllPlayers = () => {
-  return fetch(TESTBASE+API)
+const retrieveAllPlayers = (requestOptions) => {
+  return fetch(TESTBASE+API, requestOptions)
   .then((response)=>{
     return response.json();
   })

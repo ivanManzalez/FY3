@@ -1,21 +1,35 @@
 import React from 'react';
 
 const DragAndDrop = React.forwardRef((props,ref) => {
-  const [uploadedFile, setUploadedFile] = React.useState(null);
+  const [uploadFile, setUploadFile] = React.useState(null);
   const [isDragging, setIsDragging] = React.useState(false);
   const [previewURL, setPreviewURL] = React.useState(props.url);
-  const [className, setClassName] = React.useState("drop-area");
+  const [className, setClassName] = React.useState("");
   const [progress, setProgress] = React.useState(null);
   
+
+  React.useEffect(()=>{
+    if(previewURL){
+      setClassName("img_preview");
+    }else{
+      setClassName("drop-area");
+    }
+
+  },[]);
   const handleDragStart = (e) => {
     e.dataTransfer.setData('image/*', 'This is the data that will be dropped.');
     setIsDragging(true);
-    setClassName("dragging")
   };
 
   const handleDragOver = (e) => {
     e.preventDefault(); // This is necessary to allow a drop.
-    setClassName("dragover")
+    console.log("dragover:", previewURL)
+    if(previewURL){
+      setIsDragging(false);
+      setClassName("img_preview dragover")
+    }else{
+      setClassName("dragover")
+    }
   };
 
   const handleDragEnter = (e) => {
@@ -28,8 +42,10 @@ const DragAndDrop = React.forwardRef((props,ref) => {
   const handleDragLeave = () => {
     // Remove any visual cues for leaving the drop area.
     // You can reset the component state here to remove styles.
-    if(previewURL==null){
+    if(previewURL){
       setIsDragging(false);
+      setClassName("img_preview")
+    }else{
       setClassName("drop-area")
     }
   };
@@ -37,7 +53,7 @@ const DragAndDrop = React.forwardRef((props,ref) => {
   const handleDrop = (e) => {
     e.preventDefault();
     setIsDragging(false);
-    setClassName(" img_preview");
+    setClassName("img_preview");
 
     // const acceptedTypes = ['image/png', 'image/jpeg', 'image/gif']; // Add the MIME types you want to accept.
     
@@ -71,16 +87,16 @@ const DragAndDrop = React.forwardRef((props,ref) => {
   }
 
   const handleDroppedFile = (file, previewUrl) => {
-    setUploadedFile(file);
+    setUploadFile(file);
     setPreviewURL(previewUrl);
   };
 
   const handleDelete = () => {
-    setUploadedFile(null);
+    setUploadFile(null);
     setPreviewURL(null);
     setProgress(null);
     setClassName("drop-area");
-    handleImgDelete();
+    props.handleImgDelete();
   };
 
   // const handleUploadButton = async () => {
@@ -106,13 +122,11 @@ const DragAndDrop = React.forwardRef((props,ref) => {
   // Replace Submit button
   React.useImperativeHandle(ref, () => {
     return {
-      uploadedFile,
+      uploadFile,
       handleDelete,
     };
   });
 
-  console.log(props.url)
-  console.log(previewURL)
   return (
     <div id={"drag_and_drop"} 
       onDragStart={handleDragStart}
@@ -128,7 +142,7 @@ const DragAndDrop = React.forwardRef((props,ref) => {
       </>
     }
     {previewURL && 
-      <div className=""> 
+      <div className="img_container"> 
       {progress && <div>{progress}%</div>}
 
       <img src={previewURL} alt="Dropped file preview" /> 

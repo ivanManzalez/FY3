@@ -9,18 +9,24 @@ from rest_framework.response import Response #send custom response from view
 from .serializers import PlayerSerializer, CreatePlayerSerializer
 
 from .models.player import Player
-
+######
+from rest_framework.permissions import IsAuthenticated
+from users.authentication import FirebaseAuthentication
+######
 class PlayersView(generics.ListAPIView): ## CreateAPIView
   queryset = Player.objects.all()
   serializer_class = PlayerSerializer
-  
+  permission_classes = [ IsAuthenticated ]
+  authentication_classes = [ FirebaseAuthentication ]
   def get(self, request, format=None):
+    print(request)
     queryset = Player.objects.all()
     serialized_data = self.serializer_class(queryset, many=True).data
     message = "Players List received"
     resp_status = status.HTTP_200_OK
     return Response({'message': message, 'status': resp_status, 'data': serialized_data}, status=resp_status)   
-    
+
+
 class DrafteesView(generics.ListAPIView):
   serializer_class = PlayerSerializer
 
@@ -37,7 +43,8 @@ class CreatePlayerView(APIView): ## CreateAPIView
   # 
   serializer_class = CreatePlayerSerializer
   resp_status = ''
-
+  permission_classes = [ IsAuthenticated ]
+  authentication_classes = [ FirebaseAuthentication ]
   # define GET POST UPDATE DELETE methods
   def post(self, request, format=None):
     # sessions needed? lets try

@@ -101,22 +101,25 @@
 /******************************************************************************
  PLAYER FORM
 ******************************************************************************/
-#create_player_form{
+#player_form{
 
-  width:98%;
-  min-height: 33vh;
-  display: grid;
-  grid-gap: 10px;
 }
 .player_name_fields{
-  display: grid;
-  grid-template-columns: 49.5% 49.5%;
-  grid-gap: 1%;
+  
 }
 .player_attr_fields{
   display: grid;
   grid-template-columns: 30% 30% 38%;
   grid-gap: 1%;
+}
+
+#player_form{
+  display: grid;
+  grid-template-rows: 32% 32% 32%;
+  grid-gap: 2%;
+}
+#draft_eligibility{
+  
 }
 
 

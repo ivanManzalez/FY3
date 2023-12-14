@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useRef} from "react";
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 import {createTeam} from '../../components/api/team/team';
@@ -9,14 +9,16 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+//
+import DragAndDrop from '../dragAndDrop/DragAndDrop';
 
 const CreateTeamForm = () => {
-
+  const teamImageRef = useRef();
   // set form field init values
   const initialFormState = {
     team_name: '',
     abbr_name: '',
-    division_ind: "",
+    division_ind: '',
   };
 
   const [message, setMessage] = useState("");
@@ -66,22 +68,9 @@ const CreateTeamForm = () => {
     setMessage(response.message);
   };
 
-return (
-  <div >
-    <h3> Create Team </h3>
-    
-    <div id="message" className={classname}>{ message && <p>{message}</p> }</div>
-    <form id="create_team_form" className='input_fields'>
+  
 
-      <TextField id={"team_name"} label={"Team Name"} variant={"outlined"} onChange={handleInputChange} value={formState.team_name} name={"team_name"} />
-      <TextField id={"abbr_name"} label={"Team Short Name"} variant={"outlined"} onChange={handleInputChange} value={formState.abbr_name} name={"abbr_name"} />
-      <DivisionIndicator  label={"Team Division"} variant={"outlined"} handler={handleInputChange}  value={formState.division_ind} />
-      <button className="submit" type='submit' placeholder="Create Team" onClick={handleCreateTeamButton}> Create Team </button>
-    
-    </form>
-  </div>
-  )}; 
-const DivisionIndicator = ({value, handler}) => {
+  const DivisionIndicator = ({value, handler}) => {
   return(
   <Box sx={{ minWidth: 50 }}>
     <FormControl fullWidth>
@@ -99,6 +88,24 @@ const DivisionIndicator = ({value, handler}) => {
     </FormControl>
   </Box>)
 }
+
+return (
+  <div >
+    <h3> Create Team </h3>
+    
+    <div id="message" className={classname}>{ message && <p>{message}</p> }</div>
+    <form id="create_team_form" className='input_fields'>
+
+      <TextField id={"team_name"} label={"Team Name"} variant={"outlined"} onChange={handleInputChange} value={formState.team_name} name={"team_name"} />
+      <TextField id={"abbr_name"} label={"Team Short Name"} variant={"outlined"} onChange={handleInputChange} value={formState.abbr_name} name={"abbr_name"} />
+      <DivisionIndicator  label={"Team Division"} variant={"outlined"} handler={handleInputChange}  value={formState.division_ind} />
+      {/*<DragAndDrop url={team.url} ref={teamImageRef} handleImgDelete={deleteImg} />*/}
+      <button className="submit" type='submit' placeholder="Create Team" onClick={handleCreateTeamButton}> Create Team </button>
+    
+    </form>
+  </div>
+  )}; 
+
 
 
 export default CreateTeamForm;

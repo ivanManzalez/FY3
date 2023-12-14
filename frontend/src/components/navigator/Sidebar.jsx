@@ -14,7 +14,7 @@ const StyledSidebar = styled(Drawer)(({ theme }) => ({
   "& .MuiDrawer-paper": {
     width: "250px",
     border: "none",
-    backgroundColor:"#090619",//"#0b091e",
+    backgroundColor: "#221F3B",//"#6F4A8E",//"#090619",//"#0b091e",
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
@@ -63,7 +63,9 @@ const Sidebar = () => {
 
   const list = (
     <List>
-      <Logo>LOGO PLACEHOLDER</Logo>
+      <Logo>
+        <a href="/"><img className={" fy3_logo"} src="/static/images/fy3-logo.png" alt="fy3-logo"></img></a>
+      </Logo>
       <OuterBox>
         <StyledLink to="/" activeClassName="active">
           <LinkBox isActive={location.pathname === '/'}>

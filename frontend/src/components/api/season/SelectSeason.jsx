@@ -9,7 +9,9 @@ const SelectSeason = forwardRef(({getSeason},ref) => {
 
   // Populate seasons on initial render
   useEffect(async () => {
+    console.log("Retrieving all seasons...")
     const allSeasons = await retrieveAllSeasons();
+    console.log("Setting seasons list...")
     setSeasonsList(allSeasons);
   }, []);
 
@@ -19,7 +21,7 @@ const SelectSeason = forwardRef(({getSeason},ref) => {
   };
 
   return (
-    <SeasonDropdown ref={ref} name="Season" options = {seasonsList} setState={handleChange} />
+    <SeasonDropdown ref={ref} name="Season" options = {seasonsList.data} setState={handleChange} />
   );
 });
 

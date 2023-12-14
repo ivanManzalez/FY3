@@ -23,4 +23,5 @@ class CreateTeamSerializer(serializers.ModelSerializer):
       'team_name', 
       'abbr_name',
       'division_ind',
+      'image_url',
     )
