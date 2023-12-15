@@ -78,7 +78,7 @@ const App = () => {
         
       </Routes>
     </AuthProvider>
-    </ Layout>
+    </Layout>
     </Router>
     );
   }

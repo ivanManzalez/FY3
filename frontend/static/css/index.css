@@ -136,3 +136,7 @@ html,body{
 .fy3_logo{
   border-radius: 90%;
 }
+.fy3_logo-nav{
+  /*max-height: 40%;*/
+  background-color: yellow;
+}

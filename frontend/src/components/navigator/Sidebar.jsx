@@ -64,8 +64,9 @@ const Sidebar = () => {
   const list = (
     <List>
       <Logo>
-        <a href="/"><img className={" fy3_logo"} src="/static/images/fy3-logo.png" alt="fy3-logo"></img></a>
+        <a href="/"><img className={"fy3_logo"} src="/static/images/fy3-logo.png" alt="fy3-logo"></img></a>
       </Logo>
+      {/*************/}
       <OuterBox>
         <StyledLink to="/" activeClassName="active">
           <LinkBox isActive={location.pathname === '/'}>
@@ -74,6 +75,7 @@ const Sidebar = () => {
           </LinkBox>
         </StyledLink>
       </OuterBox>
+      {/*************/}
       <OuterBox>
         <StyledLink to="/commissioner">
           <LinkBox isActive={location.pathname === '/commissioner'}>
@@ -82,6 +84,7 @@ const Sidebar = () => {
           </LinkBox>
         </StyledLink>
       </OuterBox>
+      {/*************/}
       <OuterBox>
         <StyledLink to="/standings">
           <LinkBox isActive={location.pathname === '/standings'}>
@@ -90,6 +93,7 @@ const Sidebar = () => {
           </LinkBox>
         </StyledLink>
       </OuterBox>
+      {/*************/}
       <OuterBox>
         <StyledLink to="/stats">
           <LinkBox isActive={location.pathname === '/stats'}>
@@ -98,6 +102,7 @@ const Sidebar = () => {
           </LinkBox>
         </StyledLink>
       </OuterBox>
+      {/*************/}
       <OuterBox>
         <StyledLink to="/schedule">
           <LinkBox isActive={location.pathname === '/schedule'}>
@@ -106,6 +111,7 @@ const Sidebar = () => {
           </LinkBox>
         </StyledLink>
       </OuterBox>
+      {/*************/}
     </List>
   );
 
