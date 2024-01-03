@@ -9,5 +9,4 @@ db.sqlite3*
 .DS_Store
 .DS_Store/
 */.DS_Store/
-static/frontend/
-frontend/static/frontend
+frontend/static/frontend/
