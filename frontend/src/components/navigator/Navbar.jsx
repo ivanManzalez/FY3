@@ -1,6 +1,7 @@
 import React, {useState} from "react";
+import Sidebar from "./Sidebar";
 import { Link, NavLink } from "react-router-dom";
-import { AppBar, Toolbar, Grid, Avatar, Menu, MenuItem, Box, Typography } from "@mui/material";
+import { AppBar, Toolbar, Grid, Avatar, Menu, MenuItem, Box, Typography, useTheme, useMediaQuery, Drawer} from "@mui/material";
 import { styled } from "@mui/system";
 import SettingsIcon from "./SettingsIcon";
 import HomeIcon from "./HomeIcon";
@@ -8,10 +9,15 @@ import ScheduleIcon from "./ScheduleIcon";
 import BarChartIcon from "./BarChartIcon";
 import CommissionerIcon from "./ComissionerIcon";
 import StandingIcon from "./StandingIcon";
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+
+
 
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
-  background: "linear-gradient(#221F3B 90%, transparent)",//"linear-gradient(#1936d2, transparent)" //'#090619' //#1936d2
-   boxShadow: "none",
+  background: "#221F3B",//"linear-gradient(#221F3B 90%, transparent)",//"linear-gradient(#1936d2, transparent)" //'#090619' //#1936d2
+  boxShadow: "1px",
+  maxHeight:"30%",
 }));
 
 
@@ -37,10 +43,16 @@ const SearchBar = styled("input")({
     },
 });
 const Logo = styled(Box)({
+    marginLeft:"20px",
     color: "rgba(255,255,255,0.3)",
+    // backgroundColor:"red",
     display: "flex",
     justifyContent: "center",
-    padding: "25px 25px 35px 25px",
+    alignItems: 'center',
+    // maxHeight:"100%",
+    maxWidth:"7%",
+
+    // padding: "25px 25px 35px 25px",
     // width: "20px",
   })
 const LinkBox = styled(Box)(({ isActive }) => ({
@@ -54,6 +66,7 @@ const LinkBox = styled(Box)(({ isActive }) => ({
     borderRadius: '12px',
   },
 }));
+
 const StyledLink = styled(NavLink)({
   color: 'rgba(255,255,255, 0.75)',
   textDecoration: 'none',
@@ -61,7 +74,7 @@ const StyledLink = styled(NavLink)({
     color: 'white',
     textDecoration: 'none',
   },
-  '&.active': {
+  '&:active': {
     backgroundColor: '#120E26', // Apply your active background color
     borderRadius: '12px',
   },
@@ -69,8 +82,64 @@ const StyledLink = styled(NavLink)({
 const OuterBox = styled(Box)({
   padding: '8px 20px',
 });
-const Navbar = () => {
+
+const NavLinks = () => {
+  return (
+    <>
+      <OuterBox>
+        <StyledLink to="/" activeClassName="active">
+        <LinkBox isActive={location.pathname === '/'}>
+            <HomeIcon width={"18px"} height={"18px"} fill={"none"} color={"rgba(255,255,255,0.7)"} style={{ cursor: "pointer" }}/>
+            <Typography style={{paddingLeft:"10px"}}>Home</Typography>
+          </LinkBox>
+        </StyledLink>
+      </OuterBox>
+      
+      <OuterBox>
+        <StyledLink to="/commissioner">
+          <LinkBox isActive={location.pathname === '/commissioner'}>
+            <CommissionerIcon width={"18px"} height={"18px"} fill={"none"} color={"rgba(255,255,255,0.7)"} style={{ cursor: "pointer" }}/>
+            <Typography style={{paddingLeft:"10px"}}>Commissioner</Typography>
+          </LinkBox>
+        </StyledLink>
+      </OuterBox>
+      
+      <OuterBox>
+        <StyledLink to="/standings">
+          <LinkBox isActive={location.pathname === '/standings'}>
+            <StandingIcon width={"18px"} height={"18px"} fill={"none"} color={"rgba(255,255,255,0.7)"} style={{ cursor: "pointer" }}/>
+            <Typography style={{paddingLeft:"10px"}}>Standings</Typography>
+          </LinkBox>
+        </StyledLink>
+      </OuterBox>
+      
+      <OuterBox>
+        <StyledLink to="/stats">
+          <LinkBox isActive={location.pathname === '/stats'}>
+            <BarChartIcon width={"18px"} height={"18px"} fill={"none"} color={"rgba(255,255,255,0.7)"} style={{ cursor: "pointer" }}/>
+            <Typography style={{paddingLeft:"10px"}}>Stats</Typography>
+          </LinkBox>
+        </StyledLink>
+      </OuterBox>
+      
+      <OuterBox>
+        <StyledLink to="/schedule">
+          <LinkBox isActive={location.pathname === '/schedule'}>
+            <ScheduleIcon width={"18px"} height={"18px"} fill={"none"} color={"rgba(255,255,255,0.7)"} style={{ cursor: "pointer" }}/>
+            <Typography style={{paddingLeft:"10px"}}>Schedule</Typography>
+          </LinkBox>
+        </StyledLink>
+      </OuterBox> 
+    </>
+  )}
+
+const Navbar = ({isLarge, openSidebar}) => {
   const [menuAnchor, setMenuAnchor] = useState(null);
+  const [showSidebar,setShowSidebar] = useState(true)
+  const drawerWidth = 240;
+  const [open, setOpen] = React.useState(false);
+
+
 
   const handleMenuOpen = (event) => {
     setMenuAnchor(event.currentTarget);
@@ -79,89 +148,100 @@ const Navbar = () => {
   const handleMenuClose = () => {
     setMenuAnchor(null);
   };
+
+  const toggleSidebar = () => {
+    setOpen(!open);
+    console.log(!open);
+    console.log("Toggle")
+  }
+
+
+  const theme = useTheme();
+  const showNavLinks = useMediaQuery(theme.breakpoints.up("md"))
   
   return (
     <StyledAppBar position="fixed">
       <Toolbar>
-        {/*<Logo>
+        <Logo>
           <a href="/"><img className={"fy3_logo-nav"} src="/static/images/fy3-logo.png" alt="fy3-logo"></img></a>
-        </Logo>*/}
+          {/*<Typography variant="h5" style={{paddingLeft:"10px"}}>FY3</Typography>*/}
+        </Logo>
         <Grid container alignItems="center" justifyContent="flex-end">
-        {/*<SearchBar placeholder="Search here..." style={{marginRight:'30px'}}/>*/}
-        {/*<Link to="/settings">
-          <SettingsIcon 
-            width={"24px"}
-            height={"24px"} 
-            fill={"none"} 
-            color={"rgba(255,255,255,0.7)"} 
-            style={{ cursor: "pointer" }}
-          />
-        </Link>*/}
-      {/*************/}
-        <OuterBox>
-          <StyledLink to="/" activeClassName="active">
-          <LinkBox isActive={location.pathname === '/'}>
-              <HomeIcon width={"18px"} height={"18px"} fill={"none"} color={"rgba(255,255,255,0.7)"} style={{ cursor: "pointer" }}/>
-              <Typography style={{paddingLeft:"10px"}}>Home</Typography>
-            </LinkBox>
-          </StyledLink>
-        </OuterBox>
-      {/*************/}
-        <OuterBox>
-          <StyledLink to="/commissioner">
-            <LinkBox isActive={location.pathname === '/commissioner'}>
-              <CommissionerIcon width={"18px"} height={"18px"} fill={"none"} color={"rgba(255,255,255,0.7)"} style={{ cursor: "pointer" }}/>
-              <Typography style={{paddingLeft:"10px"}}>Commissioner</Typography>
-            </LinkBox>
-          </StyledLink>
-        </OuterBox>
-      {/*************/}
-        <OuterBox>
-          <StyledLink to="/standings">
-            <LinkBox isActive={location.pathname === '/standings'}>
-              <StandingIcon width={"18px"} height={"18px"} fill={"none"} color={"rgba(255,255,255,0.7)"} style={{ cursor: "pointer" }}/>
-              <Typography style={{paddingLeft:"10px"}}>Standings</Typography>
-            </LinkBox>
-          </StyledLink>
-        </OuterBox>
-      {/*************/}
-        <OuterBox>
-          <StyledLink to="/stats">
-            <LinkBox isActive={location.pathname === '/stats'}>
-              <BarChartIcon width={"18px"} height={"18px"} fill={"none"} color={"rgba(255,255,255,0.7)"} style={{ cursor: "pointer" }}/>
-              <Typography style={{paddingLeft:"10px"}}>Stats</Typography>
-            </LinkBox>
-          </StyledLink>
-        </OuterBox>
-      {/*************/}
-        <OuterBox>
-          <StyledLink to="/schedule">
-            <LinkBox isActive={location.pathname === '/schedule'}>
-              <ScheduleIcon width={"18px"} height={"18px"} fill={"none"} color={"rgba(255,255,255,0.7)"} style={{ cursor: "pointer" }}/>
-              <Typography style={{paddingLeft:"10px"}}>Schedule</Typography>
-            </LinkBox>
-          </StyledLink>
-        </OuterBox>
-      {/*************/}
+        <Drawer
+        sx={{
+          width: drawerWidth,
+          flexShrink: 0,
+          '& .MuiDrawer-paper': {
+            width: drawerWidth,
+            boxSizing: 'border-box',
+          },
+        }}
+        variant="persistent"
+        anchor="left"
+        open={open}
+      >
+      <Sidebar/>
+      </Drawer>
+        { isLarge 
+          ?
+          (<NavLinks />)
+          :
+          (<IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={toggleSidebar}
+            edge="start"
+            sx={{ mr: 2, ...(open) }}
+          >
+            <MenuIcon />
+          </IconButton>
+          )}
 
         <Avatar
-            alt="User Profile"
-            src="/path/to/profile-image.png"
-            onClick={handleMenuOpen}
-            style={{ cursor: "pointer", marginLeft:'15px'}}
-          />
-          <Menu
-            anchorEl={menuAnchor}
-            open={Boolean(menuAnchor)}
-            onClose={handleMenuClose}
-          >
-            <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-            <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
-          </Menu>
-        </Grid>
+          alt="User Profile"
+          src="/path/to/profile-image.png"
+          onClick={handleMenuOpen}
+          style={{ cursor: "pointer", marginLeft:'15px'}}
+        />
+        <Menu
+          anchorEl={menuAnchor}
+          open={Boolean(menuAnchor)}
+          onClose={handleMenuClose}
+        >
+          <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+          <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
+        </Menu>
+
+        
+      </Grid>
       </Toolbar>
     </StyledAppBar>
   );
 };
 
 export default Navbar;
+
+{/*<SearchBar placeholder="Search here..." style={{marginRight:'30px'}}/>*/}
+{/*<Link to="/settings">
+  <SettingsIcon 
+    width={"24px"}
+    height={"24px"} 
+    fill={"none"} 
+    color={"rgba(255,255,255,0.7)"} 
+    style={{ cursor: "pointer" }}
+  />
+</Link>*/}
+
+ {/*<Drawer
+  sx={{
+    width: drawerWidth,
+    flexShrink: 0,
+    '& .MuiDrawer-paper': {
+      width: drawerWidth,
+      boxSizing: 'border-box',
+    },
+  }}
+  variant="persistent"
+  anchor="left"
+  open={open}
+/>*/}

@@ -137,6 +137,11 @@ html,body{
   border-radius: 90%;
 }
 .fy3_logo-nav{
-  /*max-height: 40%;*/
-  background-color: yellow;
+  /*max-height: 100%;*/
+  max-width: 100%;
+  /*background-color: blue;*/
+}
+a{
+  /*max-height: 65px;*/
+  /*border:2px solid black;*/
 }
