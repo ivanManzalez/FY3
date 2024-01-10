@@ -8,6 +8,7 @@ import {getUserAuthorization} from "./api/user/authorizations"
 // Views/Pages
 // how to clean this up?
 import Home from "./presentor/Home";
+import Home2 from "../pages/home/Home2";
 
 import Schedule from "./presentor/Schedule";
 import Standings from "./presentor/Standings";
@@ -43,8 +44,8 @@ const App = () => {
     Private Routes
     - Add any private <Route/> within outer Route component
     */}
-        <Route exact path='/' element={<PrivateRoute />}>
-          <Route index element={<Home name=""/>}/>
+        <Route exact path='/commissioner' element={<PrivateRoute />}>
+          
 
           {/*Refactor*/}
           <Route path="/commissioner"         element={< Commissioner  />}/>
@@ -66,14 +67,15 @@ const App = () => {
           )}*/}
         </Route>
     
-    {/*Public Routes*/}       
+    {/*Public Routes*/}
+        <Route index             element={< Home2        />}/>       
         <Route path="/login"     element={< Login        />}/>
         <Route path="/signup"    element={< EmailSignUp  />}/>
         <Route path="/register"  element={< Registration />}/>
         <Route path="/schedule"  element={< Schedule     />}/>
         <Route path="/standings" element={< Standings    />}/>
         <Route path="/stats"     element={< Stats        />}/>
-        
+
     {/***************/}
 
         

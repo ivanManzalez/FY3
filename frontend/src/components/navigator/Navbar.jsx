@@ -133,7 +133,7 @@ const NavLinks = () => {
     </>
   )}
 
-const Navbar = ({isLarge, openSidebar}) => {
+const Navbar = ({isLarge, isXlarge}) => {
   const [menuAnchor, setMenuAnchor] = useState(null);
   const [showSidebar,setShowSidebar] = useState(true)
   const drawerWidth = 240;
@@ -182,9 +182,33 @@ const Navbar = ({isLarge, openSidebar}) => {
       >
       <Sidebar/>
       </Drawer>
-        { isLarge 
+        { isLarge || isXlarge 
           ?
-          (<NavLinks />)
+          (<>
+            <NavLinks />
+            {
+              isXlarge
+              ?
+              <><Avatar
+                alt="User Profile"
+                src="/path/to/profile-image.png"
+                onClick={handleMenuOpen}
+                style={{ cursor: "pointer", marginLeft:'15px'}}
+              />
+              <Menu
+                anchorEl={menuAnchor}
+                open={Boolean(menuAnchor)}
+                onClose={handleMenuClose}
+              >
+                <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+                <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
+              </Menu>
+              </>
+              :
+              <></>
+            }
+            
+          </>)
           :
           (<IconButton
             color="inherit"
@@ -196,22 +220,6 @@ const Navbar = ({isLarge, openSidebar}) => {
             <MenuIcon />
           </IconButton>
           )}
-
-        <Avatar
-          alt="User Profile"
-          src="/path/to/profile-image.png"
-          onClick={handleMenuOpen}
-          style={{ cursor: "pointer", marginLeft:'15px'}}
-        />
-        <Menu
-          anchorEl={menuAnchor}
-          open={Boolean(menuAnchor)}
-          onClose={handleMenuClose}
-        >
-          <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-          <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
-        </Menu>
-
         
       </Grid>
       </Toolbar>

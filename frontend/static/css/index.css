@@ -6,10 +6,12 @@
 @import './timer.css';
 @import './players.css';
 @import './dragAndDrop.css';
+@import './carousel.css';
+@import './toggleSwitch.css';
 /*********************************/
 
 :root {
-  --background:#3C415C;/*#71706e;*//*grey;*/
+  --background:#000;/*#3C415C;*//*#71706e;*//*grey;*/
   --primary:#301B3F;
   --secondary:#151515;
   --accent1:#6F4A8E;
@@ -138,10 +140,14 @@ html,body{
 }
 .fy3_logo-nav{
   /*max-height: 100%;*/
-  max-width: 100%;
+  max-width: 10vw;
   /*background-color: blue;*/
 }
 a{
   /*max-height: 65px;*/
   /*border:2px solid black;*/
+}
+
+.eventsWheelContainer::-webkit-scrollbar {
+  display: none;
 }
