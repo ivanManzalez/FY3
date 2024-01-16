@@ -6,10 +6,12 @@
 @import './timer.css';
 @import './players.css';
 @import './dragAndDrop.css';
+@import './carousel.css';
+@import './toggleSwitch.css';
 /*********************************/
 
 :root {
-  --background:#3C415C;/*#71706e;*//*grey;*/
+  --background:#000;/*#3C415C;*//*#71706e;*//*grey;*/
   --primary:#301B3F;
   --secondary:#151515;
   --accent1:#6F4A8E;
@@ -135,4 +137,37 @@ html,body{
 
 .fy3_logo{
   border-radius: 90%;
+}
+.fy3_logo-nav{
+  /*max-height: 100%;*/
+  max-width: 10vw;
+  /*background-color: blue;*/
+}
+a{
+  /*max-height: 65px;*/
+  /*border:2px solid black;*/
+}
+
+.eventsWheelContainer::-webkit-scrollbar {
+  display: none;
+}
+
+.glass{
+  background: linear-gradient(
+    135deg, 
+    rgba(255, 255, 255,  0.1),
+    rgba(255, 255, 255,  0)
+    );
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  border-radius: 10px;
+  box-shadow: 0 8px 32px 0;
+}
+
+.blur-content{
+  -webkit-filter: blur(1px);
+  -moz-filter: blur(1px);
+  -o-filter: blur(1px);
+  -ms-filter: blur(1px);
+  filter: blur(1px);
 }

@@ -11,14 +11,17 @@ import StandingIcon from "./StandingIcon";
 const StyledSidebar = styled(Drawer)(({ theme }) => ({
   width: "300px",
   flexShrink: 0,
+
   "& .MuiDrawer-paper": {
     width: "250px",
     border: "none",
-    backgroundColor: "#221F3B",//"#6F4A8E",//"#090619",//"#0b091e",
+    background: `linear-gradient(135deg, rgba(34, 31, 59, 0.99), rgba(27, 9, 82, 0.95), rgba(34, 31, 59, 0.99))`,
+    // backgroundColor: 'rgba(34, 31, 59, 0.99)',//"#221F3B",//"#6F4A8E",//"#090619",//"#0b091e",
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
     height: "100%", 
+    // zIndex:5,
   },
 }));
 
@@ -64,8 +67,9 @@ const Sidebar = () => {
   const list = (
     <List>
       <Logo>
-        <a href="/"><img className={" fy3_logo"} src="/static/images/fy3-logo.png" alt="fy3-logo"></img></a>
+        <a href="/"><img className={"fy3_logo"} src="/static/images/fy3-logo.png" alt="fy3-logo"></img></a>
       </Logo>
+      {/*************/}
       <OuterBox>
         <StyledLink to="/" activeClassName="active">
           <LinkBox isActive={location.pathname === '/'}>
@@ -74,6 +78,7 @@ const Sidebar = () => {
           </LinkBox>
         </StyledLink>
       </OuterBox>
+      {/*************/}
       <OuterBox>
         <StyledLink to="/commissioner">
           <LinkBox isActive={location.pathname === '/commissioner'}>
@@ -82,6 +87,7 @@ const Sidebar = () => {
           </LinkBox>
         </StyledLink>
       </OuterBox>
+      {/*************/}
       <OuterBox>
         <StyledLink to="/standings">
           <LinkBox isActive={location.pathname === '/standings'}>
@@ -90,6 +96,7 @@ const Sidebar = () => {
           </LinkBox>
         </StyledLink>
       </OuterBox>
+      {/*************/}
       <OuterBox>
         <StyledLink to="/stats">
           <LinkBox isActive={location.pathname === '/stats'}>
@@ -98,6 +105,7 @@ const Sidebar = () => {
           </LinkBox>
         </StyledLink>
       </OuterBox>
+      {/*************/}
       <OuterBox>
         <StyledLink to="/schedule">
           <LinkBox isActive={location.pathname === '/schedule'}>
@@ -106,6 +114,7 @@ const Sidebar = () => {
           </LinkBox>
         </StyledLink>
       </OuterBox>
+      {/*************/}
     </List>
   );
 

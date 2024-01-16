@@ -1,6 +1,48 @@
-import React, { useState, useRef, forwardRef, useImperativeHandle } from "react";
+import React, {useState} from 'react';
+import Card from '@mui/material/Card';
+import CardMedia from '@mui/material/CardMedia';
+import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
+
+{/*<div style={{display:"flex", flexDirection:"row", justifyContent:"space-evenly"}}>*/}
+const ToggleSwitch = ({changeState, labels}) => {
+  
+  const [isChecked, setIsChecked] = useState(true);
+  const conference = (isChecked) ?labels.right :labels.left;
+  
+  const handleCheckboxChange = (event) => {
+    setIsChecked(event.target.checked);
+    changeState();
+  };
+
+  const labelContainerStyles = {
+    backgroundColor:"black",
+    color:"#260880",
+    borderRadius:5,
+    height:"100%",
+  };
+
+  const sliderStyles = {
+  };
+
+  return(
+    <label className="switch">
+
+      <input 
+        type="checkbox"
+        checked={isChecked}
+        onChange={handleCheckboxChange} />
+
+      <span className="slider" style={{height:0}}></span>
+      <span className="slider-content round">{conference}</span>
+      <Grid container direction="row" xs={12} style={labelContainerStyles}>
+        <Grid item xs={6} justifyContent="center" textAlign="center" alignItems="center" >{labels.left  && <Typography variant="h4" >{labels.left}</Typography>}</Grid>
+        <Grid item xs={6} justifyContent="center" textAlign="center" alignItems="center" >{labels.right && <Typography variant="h4" >{labels.right}</Typography>}</Grid>
+      </Grid>
+      
+    </label>
+)};
 
 const TeamRow = ({team, pos}) => {
   const style = {
@@ -70,13 +112,13 @@ const ConferenceColumn = ({conference, teamData}) => {
         </Grid>
         ))
       }
-      {/*<Grid item xs={12}>
+      <Grid item xs={12}>
         <Typography variant="button" style={textStyles} color={"#440EBD"} sx={{marginBottom:2, cursor: "pointer"}}> See all </Typography>
-      </Grid>*/}
+      </Grid>
     </div> 
 )};
 
-const WesternConference = () => {
+const WesternConferencePreview = () => {
   const teamLogos = "/static/images/team_logos/" 
   const teamData = [
   {
@@ -97,94 +139,66 @@ const WesternConference = () => {
     name:"Secure the Bag",
     record:"1 - 8"
   },
-  {
-    id:4,
-    logo:teamLogos+"chipNation-nobg.png",
-    name:"Chip Name",
-    record:"1 - 8"
-  },
-  {
-    id:5,
-    logo:teamLogos+"firingSquad-nobg.png",
-    name:"Firing Squad",
-    record:"1 - 8"
-  },
   ];
   return(
-    <div style={{display:"flex", flexDirection:"column", width:"100%"}}>
-    <Typography variant="h4" style={{color:"white", display:"flex", justifyContent:"center"}}> WEST </Typography>
     <ConferenceColumn conference={"WEST"} teamData={teamData} />
-    </div>
 )};
 
-const EasternConference = () => {
+const EasternConferencePreview = () => {
   const teamLogos = "/static/images/team_logos/"
   const teamData = [
     {
-      id:6,
+      id:4,
       logo:teamLogos+"betTheHouse-nobg.png",
       name:"Bet the House",
       record:"9 - 0"
-    },
+  },
     {
-      id:7,
+      id:5,
       logo:teamLogos+"getMoney-nobg.png",
       name:"Get Money",
       record:"6 - 3"
-    },
+  },
     {
-      id:8,
+      id:6,
       logo:teamLogos+"bullyBall-nobg.png",
       name:"Bully Ball",
       record:"1 - 8"
-    },
-    {
-      id:9,
-      logo:teamLogos+"slaughterGang-nobg.png",
-      name:"Slaughter Gang",
-      record:"1 - 8"
-    },
-    {
-      id:10,
-      logo:teamLogos+"splashZone-nobg.png",
-      name:"Splash Zone",
-      record:"1 - 8"
-    },
+  },
   ];
 return(
-  <div style={{display:"flex", flexDirection:"column", width:"100%"}}>
-  <Typography variant="h4" style={{color:"white", display:"flex", justifyContent:"center"}}>EAST</Typography>
   <ConferenceColumn conference={"EAST"} teamData={teamData} />
-  </div>
 )};
 
-// Parent component
-const Standings = () => {
-  const screenWidth = 1000;
-  const flexDirection = "row";
-  const standingsContainer = {
-    background:"radial-gradient(circle at 50% 50%, #260880, #000)",
-    display:"flex",
-    flexDirection:flexDirection,
-    justifyContent:"space-around",
-    gap:5,
-    marginTop:"100px",
-    minHeight:100,
-    padding:5,
-    paddingBottom:"30px",
-  }
-  const conferenceContainer = {
-    backgroundColor:"red",
-    height:99,
-    width:"50%",
-    borderRadius:10,
-  }
-  return (
-    <div style={standingsContainer}>
-      <EasternConference />
-      <WesternConference />
+const StandingsPreview = () => {
+  const [conference, setConference] = useState(false);
+  
+  const toggleConference = () => {
+    setConference(!conference);
+  };
+
+
+  return(
+    <div style={{
+      border: "2px solid #260880",
+      background: 'radial-gradient(circle at -50% 50%, #260880 10%, #000 80%)', // Example gradient from red to blue
+      borderRadius:10,
+      width:"100%", 
+      height:"100%"
+    }}>
+    
+    <div style={{width:"100%", minHeight:"10%",display:"flex", justifyContent:"center", marginTop:10}}>
+      <ToggleSwitch changeState={toggleConference} labels={{left:"East", right:"West"}}/>
     </div>
-  );
+    {
+    conference
+    ?
+    <WesternConferencePreview  />
+    :
+    <EasternConferencePreview  />
+    }
+    </div >
+    )
 };
 
-export default Standings;
+export default StandingsPreview;
