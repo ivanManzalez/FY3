@@ -46,7 +46,6 @@ const App = () => {
     */}
         <Route exact path='/commissioner' element={<PrivateRoute />}>
           
-
           {/*Refactor*/}
           <Route path="/commissioner"         element={< Commissioner  />}/>
           <Route path="/commissioner/players" element={< Players       />}/>

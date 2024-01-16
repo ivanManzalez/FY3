@@ -17,29 +17,9 @@ import ListItem from '@mui/material/ListItem';
 import { useMediaQuery, useTheme} from "@mui/material";
 
 // 
+import PlayerCard from "../players/PlayerCard"
 import Carousel from "../carousel/Carousel"
-
-
-const PlayerCard = (props) => {
-  const fy3Logo = "/static/images/fy3-logo.png";
-
-  return(
-    <Card >
-     <Typography variant="h6" component="div"> {props.name} </Typography>
-     <CardMedia
-        component="img"
-        width="100"
-        height="100"
-        image={fy3Logo}
-        alt="team logo"
-        margin="right"
-      />
-     {props.ppg && <Typography variant="p" component="div">{props.ppg} PPG</Typography>}
-     {props.rpg && <Typography variant="p" component="div">{props.rpg} RPG</Typography>}
-     {props.apg && <Typography variant="p" component="div">{props.apg} APG</Typography>}
-    </Card>
-  )
-}
+// 
 
 const TeamPositionCard = (props) => {
   const teamImgsDir = "/static/images/";
@@ -190,26 +170,6 @@ const Home = (props) => {
     },
   ]
 
-  
-  const responsive = {
-    superLargeDesktop: {
-      // the naming can be any, depends on you.
-      breakpoint: { max: 4000, min: 3000 },
-      items: 5
-    },
-    desktop: {
-      breakpoint: { max: 3000, min: 1024 },
-      items: 3
-    },
-    tablet: {
-      breakpoint: { max: 1024, min: 464 },
-      items: 2
-    },
-    mobile: {
-      breakpoint: { max: 464, min: 0 },
-      items: 1
-    }
-  };
 
   const handleLogout = async () =>{
     setError('');
@@ -219,15 +179,7 @@ const Home = (props) => {
     }catch{
       setError('Failed to logout');
     }
-  }
-  {/*<Grid item xs={3} key={key} style={{ display: 'inline-block' }}>*/}
-  {/*<GameCard 
-    homeTeamAbbr={game.homeTeamAbbr}
-    awayTeamAbbr={game.awayTeamAbbr}
-    homeRecord={game.homeRecord}
-    awayRecord={game.awayRecord}
-    date={game.date}
-    />*/}
+  };
                   
   return(
     <div>

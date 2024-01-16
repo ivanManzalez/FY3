@@ -151,3 +151,23 @@ a{
 .eventsWheelContainer::-webkit-scrollbar {
   display: none;
 }
+
+.glass{
+  background: linear-gradient(
+    135deg, 
+    rgba(255, 255, 255,  0.1),
+    rgba(255, 255, 255,  0)
+    );
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  border-radius: 10px;
+  box-shadow: 0 8px 32px 0;
+}
+
+.blur-content{
+  -webkit-filter: blur(1px);
+  -moz-filter: blur(1px);
+  -o-filter: blur(1px);
+  -ms-filter: blur(1px);
+  filter: blur(1px);
+}

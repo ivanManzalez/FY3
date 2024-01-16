@@ -11,14 +11,17 @@ import StandingIcon from "./StandingIcon";
 const StyledSidebar = styled(Drawer)(({ theme }) => ({
   width: "300px",
   flexShrink: 0,
+
   "& .MuiDrawer-paper": {
     width: "250px",
     border: "none",
-    backgroundColor: "#221F3B",//"#6F4A8E",//"#090619",//"#0b091e",
+    background: `linear-gradient(135deg, rgba(34, 31, 59, 0.99), rgba(27, 9, 82, 0.95), rgba(34, 31, 59, 0.99))`,
+    // backgroundColor: 'rgba(34, 31, 59, 0.99)',//"#221F3B",//"#6F4A8E",//"#090619",//"#0b091e",
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
     height: "100%", 
+    // zIndex:5,
   },
 }));
 

@@ -15,9 +15,16 @@ import MenuIcon from '@mui/icons-material/Menu';
 
 
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
-  background: "#221F3B",//"linear-gradient(#221F3B 90%, transparent)",//"linear-gradient(#1936d2, transparent)" //'#090619' //#1936d2
-  boxShadow: "1px",
+
+  // background: "transparent",//"#221F3B",//"linear-gradient(#221F3B 90%, transparent)",//"linear-gradient(#1936d2, transparent)" //'#090619' //#1936d2
+  // boxShadow: "1px",
+  marginTop:"10px",
   maxHeight:"30%",
+  background: `linear-gradient(135deg, rgba(34, 31, 59, 0.95), rgba(27, 9, 82, 0.9), rgba(34, 31, 59, 0.95))`,
+  // backdropFilter: "blur(15px)",
+  WebkitBackdropFilter: "blur(15px)",
+  borderRadius: "10px",
+  boxShadow: "0 8px 32px 0 rgba(0, 0, 0, 1)", // Adjust the color and other properties as needed
 }));
 
 
@@ -173,7 +180,9 @@ const Navbar = ({isLarge, isXlarge}) => {
           flexShrink: 0,
           '& .MuiDrawer-paper': {
             width: drawerWidth,
+            height:"100%",
             boxSizing: 'border-box',
+            backgroundColor:"transparent",
           },
         }}
         variant="persistent"
